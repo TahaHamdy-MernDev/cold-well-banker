@@ -1,0 +1,29 @@
+.navbar{
+  z-index: 99999999999999;
+}
+.sidebar {
+    height: 100vh;
+    padding-top: 80px !important;
+  }
+  .main-content {
+    margin-top: 56px !important;
+    min-height: 90vh;
+  }
+  @media (max-width: 992px) {
+    .sidebar {
+      display: none;
+    }
+    .main-content {
+      margin-left: 0;
+    }
+  }
+  .nav-link.active {
+    background-color: #01216a;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .nav-link.active:hover {
+    background-color: #418fde; 
+    color: white;
+  }

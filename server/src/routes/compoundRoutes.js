@@ -9,8 +9,8 @@ const multerConfig = require("../utils/multer");
 
 const router = require("express").Router();
 router.post(
-  "/create",
-  multerConfig.fields([{ name: "images" }, { name: "thumbnail" }]),
+  "/create", 
+  multerConfig.fields([{ name: "thumbnail" },{name:"images", maxCount:8}]),
   createCompound
 );
 router.put(

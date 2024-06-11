@@ -18,6 +18,7 @@ exports.createArea = asyncHandler(async (req, res) => {
   await uploadImages("images", req);
   const data = { ...req.body };
   const newArea = await dbService.create(areaModel, data);
+  console.log(newArea);
   return res.success({ data: newArea });
 });
 exports.updateArea = asyncHandler(async (req, res) => {

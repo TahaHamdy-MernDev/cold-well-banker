@@ -27,7 +27,7 @@ export default function TopAreas() {
     <section className="container-xxl section-padding">
       <div className="container card-style">
         <Title title={t('topArea')} />
-        <div className="row g-4 ">
+        <div className="row    gy-5 ">
           {topArea?.map((area, index) => {
             const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${area?.images[0].url}`
             const name = area.title[i18n.language]
@@ -36,13 +36,13 @@ export default function TopAreas() {
                 data-aos="fade-up"
                 data-aos-duration="1000"
                 data-aos-delay={300 * index}
-                className="area-card col-md-3 px-2 py-5 border rounded-2"
+                className="col-md-3 "
                 key={index}
               >
                 <Link
                   key={index}
                   to={`/properties-in/${area._id}`}
-                  className=" d-flex  flex-column gap-2  align-items-center justify-content-center mb-2"
+                  className="area-card px-2 py-5 border rounded-2 d-flex  flex-column gap-2  align-items-center justify-content-center mb-2"
                 >
                   <img
                     loading="lazy"

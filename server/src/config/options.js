@@ -1,6 +1,6 @@
 module.exports = {
     corsOptions: {
-      origin: ["http://127.0.0.1:5500","http://localhost:5173","http://localhost:3002"],
+      origin: ["http://127.0.0.1:5500","http://localhost:5173","http://localhost:3000"],
       credentials: true,
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       preflightContinue: false,
@@ -10,7 +10,7 @@ module.exports = {
     helmetOptions: {
       crossOriginEmbedderPolicy: false, 
       crossOriginResourcePolicy: {
-        allowOrigins: ["http://127.0.0.1:5500","http://localhost:5173","http://localhost:3001"],
+        allowOrigins: ["http://127.0.0.1:5500","http://localhost:5173","http://localhost:3000"],
       },
       contentSecurityPolicy: {
         directives: {

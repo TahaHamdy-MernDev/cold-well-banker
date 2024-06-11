@@ -6,11 +6,13 @@ const {
   deleteDeveloper,
 } = require("../controllers/developerController");
 const multerConfig = require("../utils/multer");
-
+const { validateRequestBody } = require("../utils/validate");
+const {developerSchema} =require('../utils/validation/developerValidation')
 const router = require("express").Router();
 router.post(
   "/create",
   multerConfig.fields([{ name: "images" }]),
+  validateRequestBody( developerSchema ),
   createDeveloper
 );
 router.put(
