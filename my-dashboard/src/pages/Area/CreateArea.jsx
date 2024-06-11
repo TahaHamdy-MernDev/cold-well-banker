@@ -15,6 +15,7 @@ import MapPicker from "../../components/MapPicker";
 import ReactQuill from "react-quill";
 import ImageUploader from "../../components/ImageUploader";
 import Api from "../../Api";
+import { notify } from "../../components/Toaster";
 
 const schema = Joi.object({
   title: Joi.object({
@@ -72,28 +73,24 @@ export default function CreateArea() {
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
 
-  
-
   const [useRichTextEditor, setUseRichTextEditor] = useState(true);
   const [areaImages, setAreaImages] = useState(null);
-const handleFilesSelect = (files) => {
+  const handleFilesSelect = (files) => {
     setAreaImages(files);
     console.log("Selected files:", files);
   };
   const onSubmit = async (data) => {
     data = { ...data, images: areaImages[0] };
     try {
-      const response = await Api.post("/area/create", data, {
+      await Api.post("/area/create", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Form submission response:", response);
+      notify();
     } catch (error) {
       console.error("Form submission error:", error);
     }
-    console.log("errors", errors);
-    console.log("Form data:", data);
   };
 
   return (

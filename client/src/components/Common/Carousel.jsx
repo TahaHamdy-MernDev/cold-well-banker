@@ -7,7 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-export default function Carousel({ items = [], Component, settings = {} }) {
+export default function Carousel({ items = [], Component, settings = {},def=3, sm=1,md=2.5,lg=3.5 }) {
   console.log("items", items);
   const { i18n } = useTranslation();
   const direction = i18n.language === 'ar' ? 'rtl' : 'ltr';
@@ -15,22 +15,22 @@ export default function Carousel({ items = [], Component, settings = {} }) {
 
   const defaultSettings = {
     spaceBetween: 50,
-    slidesPerView: 3,
+    slidesPerView: def,
     navigation: true,
     pagination: false,
     scrollbar: false,
-    modules: [Navigation, Pagination, A11y],
+    modules:[Navigation, Pagination, A11y],
     breakpoints: {
       320: {
-        slidesPerView: 1,
+        slidesPerView: sm,
         spaceBetween: 20,
       },
       768: {
-        slidesPerView: 2.5,
+        slidesPerView: md,
         spaceBetween: 40,
       },
       1024: {
-        slidesPerView: 3.5,
+        slidesPerView: lg,
         spaceBetween: 50,
       },
     },
@@ -44,10 +44,11 @@ export default function Carousel({ items = [], Component, settings = {} }) {
         <div className={`carousel-container ${direction}`}>
           <Swiper
             dir={rtlSwitch}
-            {...swiperSettings}
+           
             onSwiper={(swiper) => console.log(swiper)}
             onSlideChange={() => console.log('slide change')}
             key={i18n.language}
+            {...swiperSettings}
           >
             {items.map((item, index) => (
               <SwiperSlide key={index}>

@@ -4,6 +4,7 @@ const {
   getDeveloper,
   getAllDevelopers,
   deleteDeveloper,
+  getDeveloperNames,
 } = require("../controllers/developerController");
 const multerConfig = require("../utils/multer");
 const { validateRequestBody } = require("../utils/validate");
@@ -23,6 +24,7 @@ router.put(
 
 router.get("/get/:developerId", getDeveloper);
 router.get("/get-all", getAllDevelopers);
+router.get("/get-names", getDeveloperNames);
 router.delete("/delete/:developerId", deleteDeveloper);
 
 module.exports = router;

@@ -1,4 +1,29 @@
 const mongoose = require("mongoose");
+// const paymentPlanSchema = new mongoose.Schema({
+//   equal_installments: {
+//     amount: {
+//       type: Number,
+//       required: true,
+//     },
+//     periodicity: {
+//       type: String,
+//       required: true,
+//       enum: ["monthly", "quarterly", "yearly"],
+//     },
+//   },
+//   down_payment: {
+//     amount: {
+//       type: Number,
+//       required: true,
+//     },
+//   },
+//   years: {
+//     type: Number,
+//     required: true,
+//   },
+// });
+// amenities: [amenitySchema],
+// payment_plans: [paymentPlanSchema],
 
 const multiLanguage = {
   en: {
@@ -22,36 +47,7 @@ const locationSchema = new mongoose.Schema({
   },
 });
 
-const amenitySchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true, 
-  },
-});
 
-const paymentPlanSchema = new mongoose.Schema({
-  equal_installments: {
-    amount: {
-      type: Number,
-      required: true,
-    },
-    periodicity: {
-      type: String,
-      required: true,
-      enum: ["monthly", "quarterly", "yearly"],
-    },
-  },
-  down_payment: {
-    amount: {
-      type: Number,
-      required: true,
-    },
-  },
-  years: {
-    type: Number,
-    required: true,
-  },
-});
 
 
 const propertySchema = new mongoose.Schema(
@@ -138,10 +134,9 @@ const propertySchema = new mongoose.Schema(
 
     contactUs:Number,
     max_unit_area:Number,
-    amenities: [amenitySchema],
     location: locationSchema,
     description: multiLanguage,
-    payment_plans: [paymentPlanSchema],
+   
     area: [
       {
         type: mongoose.Schema.Types.ObjectId,

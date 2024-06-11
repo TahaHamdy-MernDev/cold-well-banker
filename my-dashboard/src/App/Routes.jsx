@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRoutes } from 'react-router-dom';
 import MainLayout from '../Layout/MainLayout';
-import { CreateDeveloper,CreateArea, CreateCompound } from '../pages';
+import { CreateDeveloper,CreateArea, CreateCompound, CreateType, CreateProperty } from '../pages';
 
 const Home = ()=>{
     return (
@@ -23,10 +23,10 @@ export default function ProjectRoutes() {
             { path: 'create-developer', element: <CreateDeveloper /> },
             // { path: 'update-developer', element: <UpdateDeveloper /> },
             // { path: 'show-all-developers', element: <ShowAllDevelopers /> },
-            // { path: 'create-type', element: <CreateType /> },
+            { path: 'create-type', element: <CreateType /> },
             // { path: 'update-type', element: <UpdateType /> },
             // { path: 'show-all-types', element: <ShowAllTypes /> },
-            // { path: 'create-property', element: <CreateProperty /> },
+            { path: 'create-property', element: <CreateProperty /> },
             // { path: 'update-property', element: <UpdateProperty /> },
             // { path: 'show-all-properties', element: <ShowAllProperties /> },
           ],

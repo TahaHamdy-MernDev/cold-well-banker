@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Col,
@@ -16,6 +16,7 @@ import ReactQuill from "react-quill";
 import LocationPicker from "../../components/LocationPicker";
 import MapPicker from "../../components/MapPicker";
 import Api from "../../Api";
+import { notify } from "../../components/Toaster";
 
 const multiLanguageSchema = Joi.object({
   en: Joi.string().required().messages({
@@ -49,30 +50,20 @@ const compoundSchema = Joi.object({
   name: multiLanguageSchema,
   description: multiLanguageSchema,
   location: locationSchema,
-  area: Joi.array()
-    .items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/))
+  area: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
     .messages({
       "array.base": "Area must be an array",
       "string.pattern.base": "Area ID must be a valid ObjectId",
     }),
-  developer: Joi.array()
-    .items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/))
+  developer: Joi.string()
+    .pattern(/^[0-9a-fA-F]{24}$/)
     .messages({
       "array.base": "Developer must be an array",
       "string.pattern.base": "Developer ID must be a valid ObjectId",
     }),
 });
-const areas = [
-  { id: "area1", name: "Area 1" },
-  { id: "area2", name: "Area 2" },
-  // Add more areas as needed
-];
 
-const developers = [
-  { id: "developer1", name: "Developer 1" },
-  { id: "developer2", name: "Developer 2" },
-  // Add more developers as needed
-];
 export default function CreateCompound() {
   const {
     register,
@@ -83,7 +74,22 @@ export default function CreateCompound() {
   } = useForm({
     resolver: joiResolver(compoundSchema),
   });
+  const [areas, setAreas] = useState([]);
+  const [developers, setDevelopers] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const areas = await Api.get("/area/get-names");
+        const developer = await Api.get("/developer/get-names");
+        setAreas(areas.data.data);
+        setDevelopers(developer.data.data);
+      } catch (error) {
+        console.error("Error fetching areas:", error);
+      }
+    };
 
+    fetchData();
+  }, []);
   const [useRichTextEditor, setUseRichTextEditor] = useState(true);
   const [images, setImages] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
@@ -121,14 +127,16 @@ export default function CreateCompound() {
       formData.append("description.ar", data.description.ar);
       formData.append("location.lat", data.location.lat);
       formData.append("location.lng", data.location.lng);
+      formData.append("area[0]", data.area);
+      formData.append("developer[0]", data.developer);
       formData.append("thumbnail", thumbnail[0]);
 
-      const response = await Api.post("/compound/create", formData, {
+      await Api.post("/compound/create", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Form submission response:", response);
+      notify();
     } catch (error) {
       console.error("Form submission error:", error);
     }
@@ -177,8 +185,8 @@ export default function CreateCompound() {
               >
                 <option value="">Select Area</option>
                 {areas.map((area) => (
-                  <option key={area.id} value={area.id}>
-                    {area.name}
+                  <option key={area._id} value={area._id}>
+                    {area.name.en}
                   </option>
                 ))}
               </Form.Control>
@@ -197,8 +205,8 @@ export default function CreateCompound() {
               >
                 <option value="">Select Developer</option>
                 {developers.map((developer) => (
-                  <option key={developer.id} value={developer.id}>
-                    {developer.name}
+                  <option key={developer._id} value={developer._id}>
+                    {developer.name.en}
                   </option>
                 ))}
               </Form.Control>

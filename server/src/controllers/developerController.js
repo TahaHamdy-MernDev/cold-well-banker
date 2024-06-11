@@ -5,7 +5,18 @@ const propertyModel = require("../models/propertyModel");
 const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
 const { deleteImages, updateAndSet, uploadImages } = require("../utils/upload");
-
+exports.getDeveloperNames = asyncHandler(async (req, res) => {
+  const developers = await dbService.findMany(developerModel,{});
+  
+  const formattedDevelopers = developers.map((developer) => ({
+    _id: developer._id,
+    name: {
+      en: developer.name.en,
+      ar: developer.name.ar,
+    },
+  }));
+  return res.success({ data: formattedDevelopers });
+});
 exports.createDeveloper = asyncHandler(async (req, res) => {
   await uploadImages("images", req);
   const data = { ...req.body };

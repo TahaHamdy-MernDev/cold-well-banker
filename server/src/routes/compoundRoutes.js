@@ -4,6 +4,7 @@ const {
   getAllCompounds,
   getCompound,
   topCompounds,
+  getCompoundsNames,
 } = require("../controllers/compoundController");
 const multerConfig = require("../utils/multer");
 
@@ -21,4 +22,5 @@ router.put(
 router.get("/get-all", getAllCompounds);
 router.get("/get/:compoundId", getCompound);
 router.get("/get-top", topCompounds);
+router.get("/get-names", getCompoundsNames);
 module.exports = router;

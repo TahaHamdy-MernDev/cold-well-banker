@@ -16,6 +16,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import ImageUploader from "../../components/ImageUploader";
 import Api from "../../Api";
+import { notify } from "../../components/Toaster";
 
 // Joi validation schema
 const schema = Joi.object({
@@ -55,11 +56,9 @@ export default function CreateDeveloper() {
   });
   const [areas, setAreas] = useState([]);
   useEffect(() => {
-
     const fetchAreas = async () => {
       try {
         const response = await Api.get("/area/get-names");
-        console.log(response.data.data);
         setAreas(response.data.data);
       } catch (error) {
         console.error("Error fetching areas:", error);
@@ -73,7 +72,7 @@ export default function CreateDeveloper() {
 
   const handleFilesSelect = (files) => {
     setDeveloperImages(files);
-    console.log("Selected file : ",files);
+  
   };
 
   const onSubmit = async (data) => {
@@ -81,14 +80,14 @@ export default function CreateDeveloper() {
       ...data,
       images:developerImage[0]
     };
-console.log(data);
+
     try {
       const response = await Api.post("/developer/create", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Form submission response:", response);
+      notify()
     } catch (error) {
       console.error("Form submission error:", error);
     }

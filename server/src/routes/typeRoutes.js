@@ -9,10 +9,10 @@ const {
 const multerConfig = require("../utils/multer");
 
 const router = require("express").Router();
-router.post("/create", multerConfig.fields([{ name: "images" }]), createType);
+router.post("/create", createType);
+// multerConfig.fields([{ name: "images" }])
 router.put(
   "/update/:typeId",
-  multerConfig.fields([{ name: "images" }]),
   updateType
 );
 router.get("/get", getAllTypes);

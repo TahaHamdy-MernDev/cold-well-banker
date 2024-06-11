@@ -4,7 +4,7 @@ const dbService = require("../utils/dbService");
 const { uploadImages, updateAndSet, deleteImages } = require("../utils/upload");
 
 exports.createType = asyncHandler(async (req, res) => {
-  await uploadImages("images", req);
+  // await uploadImages("images", req);
   const newType = await dbService.create(typeModel, { ...req.body });
   return res.success({ data: newType });
 });
@@ -14,7 +14,7 @@ exports.updateType = asyncHandler(async (req, res) => {
   if (!type) {
     return res.recordNotFound({ message: "type not found..." });
   }
-  await updateAndSet(type, "images", req);
+  // await updateAndSet(type, "images", req);
   const updatedType = await dbService.updateOne(typeModel, query, req.body);
   return res.success({ data: updatedType });
 });

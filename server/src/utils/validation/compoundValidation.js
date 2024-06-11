@@ -34,11 +34,11 @@ const compoundSchema = Joi.object({
   description: multiLanguageSchema,
   location: locationSchema,
  
-  area: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)).messages({
+  area:Joi.string().pattern(/^[0-9a-fA-F]{24}$/).messages({
     'array.base': 'Area must be an array',
     'string.pattern.base': 'Area ID must be a valid ObjectId',
   }),
-  developer: Joi.array().items(Joi.string().pattern(/^[0-9a-fA-F]{24}$/)).messages({
+  developer: Joi.string().pattern(/^[0-9a-fA-F]{24}$/).messages({
     'array.base': 'Developer must be an array',
     'string.pattern.base': 'Developer ID must be a valid ObjectId',
   }),

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Navbar, Button, Row, Col, Offcanvas, Nav } from 'react-bootstrap';
 import { Link, Outlet, useLocation } from 'react-router-dom';
+import Toaster from '../components/Toaster';
 
 function Sidebar({ onLinkClick }) {
   const location = useLocation();
@@ -78,6 +79,7 @@ export default function MainLayout() {
           <Sidebar onLinkClick={handleSidebarToggle} />
         </Offcanvas.Body>
       </Offcanvas>
+      <Toaster/>
     </React.Fragment>
   );
 }

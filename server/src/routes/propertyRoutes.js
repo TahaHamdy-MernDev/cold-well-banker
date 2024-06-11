@@ -6,11 +6,14 @@ const {
   getProperty,
 } = require("../controllers/propertyController");
 const multerConfig = require("../utils/multer");
+const { validateRequestBody } = require("../utils/validate");
+const { propertySchema } = require("../utils/validation/propertyValidation");
 
 const router = require("express").Router();
 router.post(
   "/create",
-  multerConfig.fields([{ name: "images" }, { name: "thumbnail" }]),
+  multerConfig.fields([{ name: "images" , maxCount:6 }, { name: "thumbnail" }]),
+validateRequestBody(propertySchema),
   createProperty
 );
 router.put(

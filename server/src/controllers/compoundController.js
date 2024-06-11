@@ -3,12 +3,24 @@ const developerModel = require("../models/developerModel");
 const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
 const { deleteImages, uploadImages } = require("../utils/upload");
-
+exports.getCompoundsNames = asyncHandler(async (req, res) => {
+  const compounds = await dbService.findMany(compoundModel,{});
+  
+  const formattedCompounds = compounds.map((compound) => ({
+    _id: compound._id,
+    name: {
+      en: compound.name.en,
+      ar: compound.name.ar,
+    },
+  }));
+  return res.success({ data: formattedCompounds });
+});
 exports.createCompound = asyncHandler(async (req, res) => {
   await uploadImages("images", req);
   await uploadImages("thumbnail", req);
 
   const data = { ...req.body };
+console.log(data);
   const newCompound = await dbService.create(compoundModel, data);
 
   const developer = await dbService.findOne(developerModel, { _id: req.body.developer });
@@ -54,15 +66,24 @@ exports.topCompounds = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         name: 1,
-        thumbnail:1,
+        thumbnail: 1,
         properties: 1,
         numberOfProperties: { $size: "$properties" },
       },
     },
+    {
+      $match: {
+        numberOfProperties: { $gt: 0 },
+      },
+    },
+    {
+      $limit: 12,
+    },
   ]);
-  
+
   return res.success({ data: intermediateResults });
 });
+
 
 exports.getCompound = asyncHandler(async (req, res) => {
   const query = { _id: req.params.compoundId };

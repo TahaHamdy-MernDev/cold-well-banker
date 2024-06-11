@@ -14,15 +14,15 @@ const multiLanguage = {
 const typeSchema = new mongoose.Schema(
   {
     name: multiLanguage,
-    images: [
-      {
-        url: {
-          type: String,
-          required: true,
-          trim: true,
-        },
-      },
-    ],
+    // images: [
+    //   {
+    //     url: {
+    //       type: String,
+    //       required: true,
+    //       trim: true,
+    //     },
+    //   },
+    // ],
     properties: [
       {
         type: mongoose.Schema.Types.ObjectId,
