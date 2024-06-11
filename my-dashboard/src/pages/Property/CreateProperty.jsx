@@ -2,13 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
-import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import {
+  Button,
+  Col,
+  Container,
+  Form,
+  Row,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "react-bootstrap";
 import Api from "../../Api";
+import MapPicker from "../../components/MapPicker";
+import ReactQuill from "react-quill";
 export default function CreateProperty() {
   const {
     register,
     setValue,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
   const [areas, setAreas] = useState([]);
@@ -42,6 +53,19 @@ export default function CreateProperty() {
 
   const handleThumbnailChange = (e) => {
     setThumbnail(e.target.files[0]);
+  };
+  const [useRichTextEditor, setUseRichTextEditor] = useState(true);
+  const [useMap, setUseMap] = useState(true);
+  const [mapLocation, setMapLocation] = useState({
+    longitude: 31.23586166241668,
+    latitude: 30.04426189357251,
+    zoom: 5,
+  });
+
+  const handleLocationSelect = ({ latitude, longitude }) => {
+    setValue("location.lat", latitude);
+    setValue("location.long", longitude);
+    setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
 
   const onSubmit = async (data) => {
@@ -181,7 +205,7 @@ export default function CreateProperty() {
                 <option disabled value="">
                   Select Compound
                 </option>
-                { compound.map((compound) => (
+                {compound.map((compound) => (
                   <option key={compound._id} value={compound._id}>
                     {compound.name.en}
                   </option>
@@ -244,27 +268,23 @@ export default function CreateProperty() {
             </Form.Group>
           </Col>
           <Col col={4}>
-             <Form.Group className="mb-3">
-          <Form.Label>Currency</Form.Label>
-          <Form.Control
-            as="select"
-            {...register("currency")}
-            isInvalid={!!errors.currency}
-          >
-            <option value="">Select Currency</option>
-            <option value="Dollar">Dollar</option>
-            <option value="EGP">EGP</option>
-          </Form.Control>
-          <Form.Control.Feedback type="invalid">
-            {errors.currency?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-          
+            <Form.Group className="mb-3">
+              <Form.Label>Currency</Form.Label>
+              <Form.Control
+                as="select"
+                {...register("currency")}
+                isInvalid={!!errors.currency}
+              >
+                <option value="">Select Currency</option>
+                <option value="Dollar">Dollar</option>
+                <option value="EGP">EGP</option>
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.currency?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
           </Col>
-
         </Row>
-
-     
 
         <Row>
           <Col md={4}>
@@ -294,21 +314,18 @@ export default function CreateProperty() {
             </Form.Group>
           </Col>
           <Col md={4}>
-          <Form.Group className="mb-3">
-          <Form.Label>Size</Form.Label>
-          <Form.Control
-            type="number"
-            {...register("max_unit_area")}
-            isInvalid={!!errors.max_unit_area}
-            />
-          <Form.Control.Feedback type="invalid">
-            {errors.max_unit_area?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-            </Col>
-        
-
-
+            <Form.Group className="mb-3">
+              <Form.Label>Size</Form.Label>
+              <Form.Control
+                type="number"
+                {...register("max_unit_area")}
+                isInvalid={!!errors.max_unit_area}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.max_unit_area?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
         </Row>
 
         <Form.Group className="mb-3">
@@ -344,25 +361,21 @@ export default function CreateProperty() {
         <Form.Group className="mb-3">
           <Form.Label>Property Type</Form.Label>
           <Form.Control
-            type="text"
-            {...register("property_type.name")}
-            isInvalid={!!errors.property_type?.name}
-          />
-           <Form.Control
-                as="select"
-                {...register("developer")}
-                isInvalid={!!errors.developer}
-                defaultValue=""
-              >
-                <option disabled value="">
-                  Select Developer
-                </option>
-                {developers.map((developer) => (
-                  <option key={developer._id} value={developer._id}>
-                    {developer.name.en}
-                  </option>
-                ))}
-              </Form.Control>
+            as="select"
+            {...register("type")}
+            isInvalid={!!errors.type?.name}
+            defaultValue=""
+          >
+            <option disabled value="">
+              Select Type
+            </option>
+            {types.map((type) => (
+              <option key={type._id} value={type._id}>
+                {type.name.en}
+              </option>
+            ))}
+          </Form.Control>
+
           <Form.Control.Feedback type="invalid">
             {errors.property_type?.name?.message}
           </Form.Control.Feedback>
@@ -385,8 +398,11 @@ export default function CreateProperty() {
             as="select"
             {...register("sale_type")}
             isInvalid={!!errors.sale_type}
+            defaultValue=""
           >
-            <option value="">Select Sale Type</option>
+            <option value="" disabled>
+              Select Sale Type
+            </option>
             <option value="Developer Sale">Developer Sale</option>
           </Form.Control>
           <Form.Control.Feedback type="invalid">
@@ -439,37 +455,148 @@ export default function CreateProperty() {
           </Form.Control.Feedback>
         </Form.Group>
 
+        <Form.Group className="my-3">
+          <Form.Label>Location</Form.Label>
+          <ToggleButtonGroup
+            type="radio"
+            name="locationOptions"
+            defaultValue={useMap ? 1 : 2}
+            className="mb-3"
+          >
+            <ToggleButton
+              id="tbg-radio-1"
+              value={1}
+              onClick={() => setUseMap(true)}
+            >
+              Choose from Map
+            </ToggleButton>
+            <ToggleButton
+              id="tbg-radio-2"
+              value={2}
+              onClick={() => setUseMap(false)}
+            >
+              Enter Coordinates
+            </ToggleButton>
+          </ToggleButtonGroup>
+
+          {useMap ? (
+            <MapPicker
+              initialViewport={mapLocation}
+              onLocationSelect={handleLocationSelect}
+            />
+          ) : (
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Latitude</Form.Label>
+                  <Form.Control
+                    type="number"
+                    step="any"
+                    {...register("location.lat")}
+                    isInvalid={!!errors.location?.lat}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.location?.lat?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Longitude</Form.Label>
+                  <Form.Control
+                    type="number"
+                    step="any"
+                    {...register("location.long")}
+                    isInvalid={!!errors.location?.long}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.location?.long?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </Col>
+            </Row>
+          )}
+        </Form.Group>
+
+        <Form.Group className="mb-4 p-3 border rounded">
+          <Form.Label className="mb-2">Rich Text Editor</Form.Label>
+          <ToggleButtonGroup
+            type="radio"
+            name="richTextEditorOptions"
+            defaultValue={useRichTextEditor ? 1 : 2}
+            className="mb-3"
+          >
+            <ToggleButton
+              id="tbg-radio-1"
+              value={1}
+              variant="outline-primary"
+              className={`px-4 py-2 ${useRichTextEditor ? "active" : ""}`}
+              onClick={() => setUseRichTextEditor(true)}
+            >
+              Enable Rich Text Editor
+            </ToggleButton>
+            <ToggleButton
+              id="tbg-radio-2"
+              value={2}
+              variant="outline-secondary"
+              className={`px-4 py-2 ${!useRichTextEditor ? "active" : ""}`}
+              onClick={() => setUseRichTextEditor(false)}
+            >
+              Disable Rich Text Editor
+            </ToggleButton>
+          </ToggleButtonGroup>
+        </Form.Group>
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Latitude</Form.Label>
-              <Form.Control
-                type="number"
-                step="0.000001"
-                {...register("location.lat")}
-                isInvalid={!!errors.location?.lat}
-              />
+              <Form.Label>Description (English)</Form.Label>
+              {useRichTextEditor ? (
+                <ReactQuill
+                  theme="snow"
+                  value={watch("description.en") || ""}
+                  onChange={(value) => setValue("description.en", value)}
+                  onBlur={() => {}}
+                />
+              ) : (
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  {...register("description.en")}
+                  isInvalid={!!errors.description?.en}
+                />
+              )}
               <Form.Control.Feedback type="invalid">
-                {errors.location?.lat?.message}
+                {errors.description?.en?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Longitude</Form.Label>
-              <Form.Control
-                type="number"
-                step="0.000001"
-                {...register("location.long")}
-                isInvalid={!!errors.location?.long}
-              />
+              <Form.Label>Description (Arabic)</Form.Label>
+              {useRichTextEditor ? (
+                <ReactQuill
+                  theme="snow"
+                  value={watch("description.ar") || ""}
+                  onChange={(value) => setValue("description.ar", value)}
+                  onBlur={() => {}}
+                />
+              ) : (
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  {...register("description.ar")}
+                  isInvalid={!!errors.description?.ar}
+                />
+              )}
               <Form.Control.Feedback type="invalid">
-                {errors.location?.long?.message}
+                {errors.description?.ar?.message}
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
-        <Form.Group className="mb-3">
+       
+
+        {/* <Form.Group className="mb-3">
           <Form.Label>Description (English)</Form.Label>
           <Form.Control
             as="textarea"
@@ -492,7 +619,7 @@ export default function CreateProperty() {
           <Form.Control.Feedback type="invalid">
             {errors.description?.ar?.message}
           </Form.Control.Feedback>
-        </Form.Group>
+        </Form.Group> */}
         <Form.Group className="mb-3">
           <Form.Label>Images</Form.Label>
           <Form.Control type="file" multiple onChange={handleImagesChange} />
