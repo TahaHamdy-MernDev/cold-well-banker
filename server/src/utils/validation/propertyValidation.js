@@ -5,43 +5,33 @@ const multiLanguage = Joi.object({
 });
 
 const locationSchema = Joi.object({
-  lat: Joi.number().required(),
-  long: Joi.number().required()
+  lat: Joi.string().required(),
+  long: Joi.string().required()
 });
 
 const propertySchema = Joi.object({
-  images: Joi.array().items(
-    Joi.object({
-      url: Joi.string().uri().required()
-    })
-  ).min(1).required(),
+ 
   
-  thumbnail: Joi.array().items(
-    Joi.object({
-      url: Joi.string().uri().required()
-    })
-  ).min(1).required(),
+  reference_No: Joi.string().optional(),
   
-  reference_No: Joi.number().optional(),
+  name: multiLanguage,
+  addressLocality: multiLanguage,
   
-  name: multiLanguage.required(),
-  addressLocality: multiLanguage.required(),
-  
-  min_price: Joi.number().required(),
-  max_price: Joi.number().required(),
+  min_price: Joi.string().required(),
+  max_price: Joi.string().required(),
   
   currency: Joi.string().trim().required(),
   
-  number_of_bathrooms: Joi.number().required(),
-  number_of_bedrooms: Joi.number().required(),
+  number_of_bathrooms: Joi.string().required(),
+  number_of_bedrooms: Joi.string().required(),
   
   finishing: Joi.string().valid("Not Finished", "Semi Finished", "Finished", "Furnished").required().trim(),
   
-  resale: Joi.boolean().default(false),
+  resale: Joi.string().default(false),
   
   property_type: Joi.object({
-    name: Joi.string().trim().required()
-  }).required(),
+    name: Joi.string().trim()
+  }),
   
   type: Joi.array().items(
     Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()  
@@ -51,27 +41,27 @@ const propertySchema = Joi.object({
   
   sale_type: Joi.string().optional(),
   
-  forSale: Joi.boolean().default(false),
-  forRent: Joi.boolean().default(false),
-  featured: Joi.boolean().default(false),
+  forSale: Joi.string().default(false),
+  forRent: Joi.string().default(false),
+  featured: Joi.string().default(false),
   
-  contactUs: Joi.number().optional(),
-  max_unit_area: Joi.number().optional(),
+  contactUs: Joi.string().optional(),
+  max_unit_area: Joi.string().optional(),
   
   location: locationSchema.required(),
   
   description: multiLanguage.optional(),
   
   area: Joi.array().items(
-    Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()  
+    Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
   ).optional(),
   
   compound: Joi.array().items(
-    Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()  
+    Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
   ).optional(),
   
   developer: Joi.array().items(
-    Joi.string().pattern(/^[0-9a-fA-F]{24}$/).required()
+    Joi.string().pattern(/^[0-9a-fA-F]{24}$/)
   ).optional(),
   
 }).unknown(false)  

@@ -64,4 +64,13 @@ export const FetchAllLaunches = async()=>{
    const response= await  Api.get(`launch/get-all`)
    return response.data.data
 }
+export const FetchAllCompoundsNames = async()=>{
+   const response= await Api.get("/compound/get-names");
+   return response.data.data
+}
+
+export const FetchAlTypesNames = async()=>{
+   const response= await Api.get("/type/get");
+   return response.data.data
+}
 

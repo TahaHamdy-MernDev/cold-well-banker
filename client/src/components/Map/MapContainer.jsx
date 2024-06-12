@@ -8,7 +8,7 @@ mapboxgl.accessToken =
 export default function MapComponent({ width, height, locations = [] }) {
   const mapContainer = useRef(null)
   const map = useRef(null)
-  const [zoom, setZoom] = useState(10)
+  const [zoom, setZoom] = useState(5)
 const {i18n} = useTranslation()
   useEffect(() => {
     if (map.current) return

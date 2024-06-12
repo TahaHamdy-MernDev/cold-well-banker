@@ -126,37 +126,28 @@ export default function CreateDeveloper() {
           </Col>
         </Row>
         <Row>
-
         <Form.Group className="mb-3">
-          <Form.Label>Select Area</Form.Label>
-          <Controller
-            name="areaId"
-            control={control}
-            defaultValue=""
-            render={({ field }) => (
-              <Dropdown onSelect={(areaId) => setValue("areaId", areaId)}>
-                <Dropdown.Toggle variant="primary" id="dropdown-basic">
-                  {field.value ? (
-                    areas.find((area) => area._id === field.value)?.name.en
-                    ) : (
-                      "Select Area"
-                      )}
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                  {areas.map((area) => (
-                    <Dropdown.Item key={area._id} eventKey={area._id}>
-                      {area.name.en}
-                    </Dropdown.Item>
-                  ))}
-                </Dropdown.Menu>
-              </Dropdown>
-            )}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.areaId?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
+              <Form.Label>Area</Form.Label>
+              <Form.Control
+                as="select"
+                {...register("area")}
+                isInvalid={!!errors.area}
+                defaultValue=""
+              >
+                <option disabled value="">
+                  Select Area
+                </option>
+                {areas.map((area) => (
+                  <option key={area._id} value={area._id}>
+                    {area.name.en}
+                  </option>
+                ))}
+              </Form.Control>
+              <Form.Control.Feedback type="invalid">
+                {errors.area?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+   
                 </Row>
 
         <Row>

@@ -187,6 +187,15 @@
     "Button": "Get Started"
   },
   "Search": {
+    "compound":"Compound",
+    "beds":"Bedrooms",
+    "price":"Price",
+
+    "price1":"1M To 4M",
+    "price2":"4M To 10M",
+    "price3":"10M To 15M",
+    "price4":"15M To 30M",
+    "price5":"30M To 50M",
     "Search Keyword": "Search Keyword",
     "Property Type": "Property Type",
     "Option 1": "Option 1",

@@ -19,12 +19,22 @@ exports.createProperty = asyncHandler(async (req, res) => {
   if (!compound) {
     return res.recordNotFound({ message: "compound not found..." });
   }
-  const developer = await dbService.findOne(developerModel, {
+
+  if(req.body.developer){
+     const developer = await dbService.findOne(developerModel, {
     _id: req.body.developer[0],
   });
   if (!developer) {
     return res.recordNotFound({ message: "developer not found..." });
   }
+
+  await dbService.updateOne(
+    developerModel,
+    { _id: req.body.developer[0] },
+    updateData
+  );
+  }
+ 
   const newProperty = await dbService.create(propertyModel, req.body);
   const updateData = { $push: { properties: newProperty._id } };
   await dbService.updateOne(
@@ -37,11 +47,7 @@ exports.createProperty = asyncHandler(async (req, res) => {
     { _id: req.body.compound[0] },
     updateData
   );
-  await dbService.updateOne(
-    developerModel,
-    { _id: req.body.developer[0] },
-    updateData
-  );
+
   return res.success({ data: newProperty });
 });
 exports.updateProperty = asyncHandler(async (req, res) => {

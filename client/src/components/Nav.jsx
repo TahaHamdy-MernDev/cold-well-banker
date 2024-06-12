@@ -26,8 +26,11 @@ export default function Nav() {
   }, [i18n])
 
   return (
-    <div className="nav-bar sticky-top" id="app-header">
-      <nav className="navbar navbar-expand-lg bg-white shadow navbar-light py-0 px-4 rounded-bottom-1">
+    // <div className="" id="app-header">
+      <nav className="navbar nav-bar sticky-top navbar-expand-lg bg-white shadow navbar-light py-0 px-4 rounded-bottom-1">
+       <div className="container">
+
+  
         <Link
           to="/"
           className="navbar-brand d-flex align-items-center text-center"
@@ -69,7 +72,6 @@ export default function Nav() {
           <div className="d-flex flex-column flex-md-row justify-content-center align-items-start gap-1">
             <Link
               to="/create-property"
-              // className="btn button-primary mb-0 border-0 px-2 d-none d-lg-flex"
             >
               <button className=" btn button-primary mb-0">
                 {t('Nav.addProperty')}
@@ -83,7 +85,8 @@ export default function Nav() {
             </button>
           </div>
         </div>
+        </div>
       </nav>
-    </div>
+    // </div>
   )
 }

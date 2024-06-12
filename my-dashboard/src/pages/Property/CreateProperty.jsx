@@ -14,6 +14,45 @@ import {
 import Api from "../../Api";
 import MapPicker from "../../components/MapPicker";
 import ReactQuill from "react-quill";
+import ImageUploader from "../../components/ImageUploader";
+
+const schema = Joi.object({
+  name: Joi.object({
+    en: Joi.string().required().label("Name (English)"),
+    ar: Joi.string().required().label("Name (Arabic)"),
+  }),
+  addressLocality: Joi.object({
+    en: Joi.string().required().label("Address Locality (English)"),
+    ar: Joi.string().required().label("Address Locality (Arabic)"),
+  }),
+  min_price: Joi.number().required().label("Min Price"),
+  max_price: Joi.number().required().label("Max Price"),
+  currency: Joi.string().required().label("Currency"),
+  reference_No: Joi.number().required().label("reference_No"),
+  number_of_bathrooms: Joi.number().required().label("Number of Bathrooms"),
+  number_of_bedrooms: Joi.number().required().label("Number of Bedrooms"),
+  max_unit_area: Joi.number().required().label("Size"),
+  finishing: Joi.string().required().label("Finishing"),
+  type: Joi.string().required().label("Property Type"),
+  delivery_in: Joi.string().required().label("Delivery In"),
+  sale_type: Joi.string().required().label("Sale Type"),
+  contactUs: Joi.number().required().label("Contact Us"),
+  location: Joi.object({
+    lat: Joi.number().required().label("Latitude"),
+    long: Joi.number().required().label("Longitude"),
+  }),
+  description: Joi.object({
+    en: Joi.string().required().label("Description (English)"),
+    ar: Joi.string().required().label("Description (Arabic)"),
+  }),
+  forSale: Joi.boolean(),
+  forRent: Joi.boolean(),
+  featured: Joi.boolean(),
+  resale: Joi.boolean(),
+  area: Joi.string().required().label("Area"),
+  developer: Joi.string().allow('').optional().label("Developer"),
+  compound: Joi.string().required().label("Compound"),
+});
 export default function CreateProperty() {
   const {
     register,
@@ -21,7 +60,7 @@ export default function CreateProperty() {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: joiResolver(schema),});
   const [areas, setAreas] = useState([]);
   const [developers, setDevelopers] = useState([]);
   const [compound, setCompound] = useState([]);
@@ -47,12 +86,11 @@ export default function CreateProperty() {
   const [images, setImages] = useState([]);
   const [thumbnail, setThumbnail] = useState(null);
 
-  const handleImagesChange = (e) => {
-    setImages([...e.target.files]);
+  const handleFilesSelect = (files) => {
+    setImages(files);
   };
-
-  const handleThumbnailChange = (e) => {
-    setThumbnail(e.target.files[0]);
+  const handleThumbnailSelect = (file) => {
+    setThumbnail(file);
   };
   const [useRichTextEditor, setUseRichTextEditor] = useState(true);
   const [useMap, setUseMap] = useState(true);
@@ -69,12 +107,13 @@ export default function CreateProperty() {
   };
 
   const onSubmit = async (data) => {
+    console.log(data);
     const formData = new FormData();
 
-    formData.append("name.en", data.name.en);
-    formData.append("name.ar", data.name.ar);
-    formData.append("addressLocality.en", data.addressLocality.en);
-    formData.append("addressLocality.ar", data.addressLocality.ar);
+    formData.append("name[en]", data.name.en);
+    formData.append("name[ar]", data.name.ar);
+    formData.append("addressLocality[en]", data.addressLocality.en);
+    formData.append("addressLocality[ar]", data.addressLocality.ar);
     formData.append("min_price", data.min_price);
     formData.append("max_price", data.max_price);
     formData.append("currency", data.currency);
@@ -82,32 +121,45 @@ export default function CreateProperty() {
     formData.append("number_of_bedrooms", data.number_of_bedrooms);
     formData.append("finishing", data.finishing);
     formData.append("resale", data.resale);
-    formData.append("property_type.name", data.property_type.name);
     formData.append("delivery_in", data.delivery_in);
     formData.append("sale_type", data.sale_type);
+    formData.append("reference_No", data.reference_No);
     formData.append("forSale", data.forSale);
     formData.append("forRent", data.forRent);
     formData.append("featured", data.featured);
     formData.append("contactUs", data.contactUs);
     formData.append("max_unit_area", data.max_unit_area);
-    formData.append("location.lat", data.location.lat);
-    formData.append("location.long", data.location.long);
-    formData.append("description.en", data.description.en);
-    formData.append("description.ar", data.description.ar);
-    images.forEach((image, index) => formData.append(`images`, image));
-    if (thumbnail) formData.append("thumbnail", thumbnail);
+    formData.append("location[lat]", data.location.lat);
+    formData.append("location[long]", data.location.long);
+    formData.append("description[en]", data.description.en);
+    formData.append("description[ar]", data.description.ar);
+
+    formData.append("type[0]", data.type);
+    formData.append("area[0]", data.area);
+    if (data.developer){
+      formData.append("developer[0]", data.developer);
+    }
+    formData.append("compound[0]", data.compound);
+
+    images.forEach((image) => formData.append("images", image));
+    if (thumbnail) formData.append("thumbnail", thumbnail[0]);
 
     try {
-      const response = await Api.post("/property/create", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      console.log("Form submission response:", response.data);
+        const response = await Api.post(
+            "/property/create",
+            formData,
+            {
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                },
+            }
+        );
+        console.log("Form submission response:", response.data);
     } catch (error) {
-      console.error("Form submission error:", error);
+        console.error("Form submission error:", error);
     }
-  };
+};
+
 
   return (
     <Container>
@@ -116,8 +168,9 @@ export default function CreateProperty() {
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Name (English)</Form.Label>
+              <Form.Label className="required">Name (English)</Form.Label>
               <Form.Control
+                required
                 type="text"
                 {...register("name.en")}
                 isInvalid={!!errors.name?.en}
@@ -129,9 +182,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Name (Arabic)</Form.Label>
+              <Form.Label className="required">Name (Arabic)</Form.Label>
               <Form.Control
                 type="text"
+                required
                 {...register("name.ar")}
                 isInvalid={!!errors.name?.ar}
               />
@@ -144,9 +198,12 @@ export default function CreateProperty() {
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Address Locality (English)</Form.Label>
+              <Form.Label className="required">
+                Address Locality (English)
+              </Form.Label>
               <Form.Control
                 type="text"
+                required
                 {...register("addressLocality.en")}
                 isInvalid={!!errors.addressLocality?.en}
               />
@@ -157,9 +214,12 @@ export default function CreateProperty() {
           </Col>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Address Locality (Arabic)</Form.Label>
+              <Form.Label className="required">
+                Address Locality (Arabic)
+              </Form.Label>
               <Form.Control
                 type="text"
+                required
                 {...register("addressLocality.ar")}
                 isInvalid={!!errors.addressLocality?.ar}
               />
@@ -170,11 +230,67 @@ export default function CreateProperty() {
           </Col>
         </Row>
         <Row>
+          <Col md={3}>
+            <Form.Group className="mb-3 d-flex gap-2 ">
+              <Form.Label className="required">For Sale</Form.Label>
+              <Form.Check
+                type="checkbox"
+                {...register("forSale")}
+                isInvalid={!!errors.forSale}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.forSale?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group className="mb-3 d-flex gap-2">
+              <Form.Label className="required">For Rent</Form.Label>
+              <Form.Check
+                type="checkbox"
+                {...register("forRent")}
+                isInvalid={!!errors.forRent}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.forRent?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group className="mb-3 d-flex gap-2">
+              <Form.Label className="required">Featured</Form.Label>
+              <Form.Check
+                type="checkbox"
+                {...register("featured")}
+                isInvalid={!!errors.featured}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.featured?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+          <Col md={3}>
+            <Form.Group className="mb-3 d-flex gap-2">
+              <Form.Label className="required">Resale</Form.Label>
+              <Form.Check
+                type="checkbox"
+                {...register("resale")}
+                isInvalid={!!errors.resale}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.resale?.message}
+              </Form.Control.Feedback>
+            </Form.Group>
+          </Col>
+        </Row>
+
+        <Row>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Area</Form.Label>
+              <Form.Label className="required">Area</Form.Label>
               <Form.Control
                 as="select"
+                required
                 {...register("area")}
                 isInvalid={!!errors.area}
                 defaultValue=""
@@ -195,9 +311,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Compound</Form.Label>
+              <Form.Label className="required">Compound</Form.Label>
               <Form.Control
                 as="select"
+                required
                 {...register("compound")}
                 isInvalid={!!errors.compound}
                 defaultValue=""
@@ -216,11 +333,13 @@ export default function CreateProperty() {
               </Form.Control.Feedback>
             </Form.Group>
           </Col>
+
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Developer</Form.Label>
+              <Form.Label className="required">Developer</Form.Label>
               <Form.Control
                 as="select"
+              
                 {...register("developer")}
                 isInvalid={!!errors.developer}
                 defaultValue=""
@@ -240,12 +359,25 @@ export default function CreateProperty() {
             </Form.Group>
           </Col>
         </Row>
+        <Form.Group className="mb-3">
+          <Form.Label className="required">reference_No</Form.Label>
+          <Form.Control
+            type="number"
+            required
+            {...register("reference_No")}
+            isInvalid={!!errors.reference_No}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.reference_No?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
         <Row>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Min Price</Form.Label>
+              <Form.Label className="required">Min Price</Form.Label>
               <Form.Control
                 type="number"
+                required
                 {...register("min_price")}
                 isInvalid={!!errors.min_price}
               />
@@ -256,9 +388,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Max Price</Form.Label>
+              <Form.Label className="required">Max Price</Form.Label>
               <Form.Control
                 type="number"
+                required
                 {...register("max_price")}
                 isInvalid={!!errors.max_price}
               />
@@ -269,9 +402,10 @@ export default function CreateProperty() {
           </Col>
           <Col col={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Currency</Form.Label>
+              <Form.Label className="required">Currency</Form.Label>
               <Form.Control
                 as="select"
+                required
                 {...register("currency")}
                 isInvalid={!!errors.currency}
               >
@@ -289,9 +423,10 @@ export default function CreateProperty() {
         <Row>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Number of Bathrooms</Form.Label>
+              <Form.Label className="required">Number of Bathrooms</Form.Label>
               <Form.Control
                 type="number"
+                required
                 {...register("number_of_bathrooms")}
                 isInvalid={!!errors.number_of_bathrooms}
               />
@@ -302,9 +437,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Number of Bedrooms</Form.Label>
+              <Form.Label className="required">Number of Bedrooms</Form.Label>
               <Form.Control
                 type="number"
+                required
                 {...register("number_of_bedrooms")}
                 isInvalid={!!errors.number_of_bedrooms}
               />
@@ -315,9 +451,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={4}>
             <Form.Group className="mb-3">
-              <Form.Label>Size</Form.Label>
+              <Form.Label className="required">Size</Form.Label>
               <Form.Control
                 type="number"
+                required
                 {...register("max_unit_area")}
                 isInvalid={!!errors.max_unit_area}
               />
@@ -329,13 +466,17 @@ export default function CreateProperty() {
         </Row>
 
         <Form.Group className="mb-3">
-          <Form.Label>Finishing</Form.Label>
+          <Form.Label className="required">Finishing</Form.Label>
           <Form.Control
             as="select"
+            required
+            defaultValue=""
             {...register("finishing")}
             isInvalid={!!errors.finishing}
           >
-            <option value="">Select Finishing</option>
+            <option disabled value="">
+              Select Finishing
+            </option>
             <option value="Not Finished">Not Finished</option>
             <option value="Semi Finished">Semi Finished</option>
             <option value="Finished">Finished</option>
@@ -347,21 +488,10 @@ export default function CreateProperty() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Resale</Form.Label>
-          <Form.Check
-            type="checkbox"
-            {...register("resale")}
-            isInvalid={!!errors.resale}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.resale?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-
-        <Form.Group className="mb-3">
-          <Form.Label>Property Type</Form.Label>
+          <Form.Label className="required">Property Type</Form.Label>
           <Form.Control
             as="select"
+            required
             {...register("type")}
             isInvalid={!!errors.type?.name}
             defaultValue=""
@@ -381,9 +511,10 @@ export default function CreateProperty() {
           </Form.Control.Feedback>
         </Form.Group>
         <Form.Group className="mb-3">
-          <Form.Label>Delivery In</Form.Label>
+          <Form.Label className="required">Delivery In</Form.Label>
           <Form.Control
             type="text"
+            required
             {...register("delivery_in")}
             isInvalid={!!errors.delivery_in}
           />
@@ -393,9 +524,10 @@ export default function CreateProperty() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Sale Type</Form.Label>
+          <Form.Label className="required">Sale Type</Form.Label>
           <Form.Control
             as="select"
+            required
             {...register("sale_type")}
             isInvalid={!!errors.sale_type}
             defaultValue=""
@@ -411,42 +543,10 @@ export default function CreateProperty() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>For Sale</Form.Label>
-          <Form.Check
-            type="checkbox"
-            {...register("forSale")}
-            isInvalid={!!errors.forSale}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.forSale?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>For Rent</Form.Label>
-          <Form.Check
-            type="checkbox"
-            {...register("forRent")}
-            isInvalid={!!errors.forRent}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.forRent?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Featured</Form.Label>
-          <Form.Check
-            type="checkbox"
-            {...register("featured")}
-            isInvalid={!!errors.featured}
-          />
-          <Form.Control.Feedback type="invalid">
-            {errors.featured?.message}
-          </Form.Control.Feedback>
-        </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Contact Us</Form.Label>
+          <Form.Label className="required">Contact Us</Form.Label>
           <Form.Control
             type="number"
+            required
             {...register("contactUs")}
             isInvalid={!!errors.contactUs}
           />
@@ -455,18 +555,19 @@ export default function CreateProperty() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="my-3">
-          <Form.Label>Location</Form.Label>
+        <Form.Group className=" p-3 ">
           <ToggleButtonGroup
             type="radio"
             name="locationOptions"
             defaultValue={useMap ? 1 : 2}
-            className="mb-3"
+            className="mb-3 row d-flex"
           >
             <ToggleButton
               id="tbg-radio-1"
               value={1}
+              variant="outline-primary"
               onClick={() => setUseMap(true)}
+              className={`px-4 col-6  py-2 ${useMap ? "active" : ""}`}
             >
               Choose from Map
             </ToggleButton>
@@ -474,11 +575,15 @@ export default function CreateProperty() {
               id="tbg-radio-2"
               value={2}
               onClick={() => setUseMap(false)}
+              variant="outline-secondary"
+              className={`px-4 col-6 py-2 ${!useMap ? "active" : ""}`}
             >
               Enter Coordinates
             </ToggleButton>
           </ToggleButtonGroup>
+        </Form.Group>
 
+        <Form.Group className="my-3">
           {useMap ? (
             <MapPicker
               initialViewport={mapLocation}
@@ -488,9 +593,10 @@ export default function CreateProperty() {
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Latitude</Form.Label>
+                  <Form.Label className="required">Latitude</Form.Label>
                   <Form.Control
                     type="number"
+                    required
                     step="any"
                     {...register("location.lat")}
                     isInvalid={!!errors.location?.lat}
@@ -502,9 +608,10 @@ export default function CreateProperty() {
               </Col>
               <Col md={6}>
                 <Form.Group className="mb-3">
-                  <Form.Label>Longitude</Form.Label>
+                  <Form.Label className="required">Longitude</Form.Label>
                   <Form.Control
                     type="number"
+                    required
                     step="any"
                     {...register("location.long")}
                     isInvalid={!!errors.location?.long}
@@ -518,28 +625,31 @@ export default function CreateProperty() {
           )}
         </Form.Group>
 
-        <Form.Group className="mb-4 p-3 border rounded">
-          <Form.Label className="mb-2">Rich Text Editor</Form.Label>
+        <Form.Group className=" p-3 ">
           <ToggleButtonGroup
             type="radio"
             name="richTextEditorOptions"
             defaultValue={useRichTextEditor ? 1 : 2}
-            className="mb-3"
+            className="mb-3 row d-flex"
           >
             <ToggleButton
-              id="tbg-radio-1"
+              id="tbg-radio-12"
               value={1}
               variant="outline-primary"
-              className={`px-4 py-2 ${useRichTextEditor ? "active" : ""}`}
+              className={`px-4 col-6  py-2 ${
+                useRichTextEditor ? "active" : ""
+              }`}
               onClick={() => setUseRichTextEditor(true)}
             >
               Enable Rich Text Editor
             </ToggleButton>
             <ToggleButton
-              id="tbg-radio-2"
+              id="tbg-radio-22"
               value={2}
               variant="outline-secondary"
-              className={`px-4 py-2 ${!useRichTextEditor ? "active" : ""}`}
+              className={`px-4 col-6 py-2 ${
+                !useRichTextEditor ? "active" : ""
+              }`}
               onClick={() => setUseRichTextEditor(false)}
             >
               Disable Rich Text Editor
@@ -549,9 +659,12 @@ export default function CreateProperty() {
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Description (English)</Form.Label>
+              <Form.Label className="required">
+                Description (English)
+              </Form.Label>
               {useRichTextEditor ? (
                 <ReactQuill
+                  required
                   theme="snow"
                   value={watch("description.en") || ""}
                   onChange={(value) => setValue("description.en", value)}
@@ -572,9 +685,10 @@ export default function CreateProperty() {
           </Col>
           <Col md={6}>
             <Form.Group className="mb-3">
-              <Form.Label>Description (Arabic)</Form.Label>
+              <Form.Label className="required">Description (Arabic)</Form.Label>
               {useRichTextEditor ? (
                 <ReactQuill
+                  required
                   theme="snow"
                   value={watch("description.ar") || ""}
                   onChange={(value) => setValue("description.ar", value)}
@@ -594,40 +708,27 @@ export default function CreateProperty() {
             </Form.Group>
           </Col>
         </Row>
-       
 
-        {/* <Form.Group className="mb-3">
-          <Form.Label>Description (English)</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            {...register("description.en")}
-            isInvalid={!!errors.description?.en}
+        <Form.Group className="mb-3">
+          <Form.Label className="required">Upload Images</Form.Label>
+          <ImageUploader
+            maxImages={6}
+            required
+            name="images"
+            onFilesSelect={handleFilesSelect}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.description?.en?.message}
-          </Form.Control.Feedback>
         </Form.Group>
+
         <Form.Group className="mb-3">
-          <Form.Label>Description (Arabic)</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={3}
-            {...register("description.ar")}
-            isInvalid={!!errors.description?.ar}
+          <Form.Label className="required">Upload Thumbnail</Form.Label>
+          <ImageUploader
+            maxImages={1}
+            required
+            name="thumbnail"
+            onFilesSelect={handleThumbnailSelect}
           />
-          <Form.Control.Feedback type="invalid">
-            {errors.description?.ar?.message}
-          </Form.Control.Feedback>
-        </Form.Group> */}
-        <Form.Group className="mb-3">
-          <Form.Label>Images</Form.Label>
-          <Form.Control type="file" multiple onChange={handleImagesChange} />
         </Form.Group>
-        <Form.Group className="mb-3">
-          <Form.Label>Thumbnail</Form.Label>
-          <Form.Control type="file" onChange={handleThumbnailChange} />
-        </Form.Group>
+
         <Button variant="primary" type="submit">
           Create Property
         </Button>

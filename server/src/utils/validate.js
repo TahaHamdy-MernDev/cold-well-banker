@@ -5,6 +5,7 @@ const validateRequestBody = (validationSchema) => {
     const validationResult = validationSchema.validate(req.body, {
       abortEarly: false,
       convert: false,
+      context: { index: 0 },
     });
 
     if (validationResult.error) {

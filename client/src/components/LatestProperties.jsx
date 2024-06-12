@@ -31,11 +31,11 @@ export default function LatestProperties() {
         spaceBetween: 20,
       },
       768: {
-        slidesPerView: 2.2,
+        slidesPerView: 2,
         spaceBetween: 20,
       },
       1024: {
-        slidesPerView: 3.1,
+        slidesPerView: 3,
         spaceBetween: 30,
       },
     },

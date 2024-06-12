@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
-import {
-  MapPin,
-} from 'lucide-react'
+import { MapPin } from 'lucide-react'
 
 import { Link, useParams } from 'react-router-dom'
 import { FetchProperty } from '../Api/ApiCalls'
 import ShareDropdown from '../components/Common/Share'
 import { useTranslation } from 'react-i18next'
-import {  FaPrint } from 'react-icons/fa'
+import { FaPrint } from 'react-icons/fa'
 import { formatNumber } from '../assets/common'
 import Gallery from '../components/Common/Gallery'
 import { ContactUs, Whatsapp } from '../components/Common/Buttons'
@@ -16,46 +14,51 @@ import MapComponent from '../components/Map/MapContainer'
 import Spinner from '../components/Common/Spinner'
 
 export default function PropertyDetails() {
-  const { t, i18n } = useTranslation();
-  const { id } = useParams();
+  const { t, i18n } = useTranslation()
+  const { id } = useParams()
 
-  const [property, setProperty] = useState(null); 
-  const [location, setLocation] = useState(null);
+  const [property, setProperty] = useState(null)
+  const [location, setLocation] = useState(null)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const data = await FetchProperty(id);
-        setProperty(data);
-        setLocation([{
-          lng: data?.location.lng,
-          lat: data?.location.lat,
-          name: data?.name[i18n.language],
-        }]);
+        const data = await FetchProperty(id)
+        setProperty(data)
+        console.log(data.location);
+        setLocation([
+          {
+            lng: data?.location?.long,
+            lat: data?.location?.lat,
+            name: data?.name[i18n.language],
+          },
+        ])
       } catch (error) {
-        console.error('Error fetching developers:', error);
+        console.error('Error fetching property:', error)
       }
     }
-    fetchData();
-  }, [i18n.language, id]);
+    fetchData()
+  }, [i18n.language, id])
 
   if (!property) {
-    return <Spinner />; 
+    return <Spinner />
   }
 
+  // Developer handling
+  let developerImage = ''
+  if (property.developer && property.developer[0]) {
+    developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${property.developer[0].images[0]?.url}`
+  }
 
-
-  const developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${property?.developer[0].images[0].url}`
+  // Property description and finishing translation
   const propertyDescription = property?.description[i18n.language]
   const finishingTranslations = {
     'Not Finished': t('propertyDetails.not_finished'),
     'Semi Finished': t('propertyDetails.semi_finished'),
-    'Finished': t('propertyDetails.finished'),
-    'Furnished': t('propertyDetails.furnished'),
+    Finished: t('propertyDetails.finished'),
+    Furnished: t('propertyDetails.furnished'),
   }
-
-  let type = property?.finishing
-  const translatedFinishing = finishingTranslations[type]
+  const translatedFinishing = finishingTranslations[property?.finishing]
 
   return (
     <>
@@ -71,8 +74,24 @@ export default function PropertyDetails() {
           <ShareDropdown />
         </div>
         <div className="row">
-          <div className="col-md-12 d-flex flex-column flex-md-row mx-auto">
-            <div className="col-md-2 d-flex justify-content-md-center align-items-center ">
+          <div className="col-md-12 d-flex flex-column justify-content-center flex-md-row mx-auto">
+            {property?.developer && property?.developer[0] && (
+              <div className="col-md-2 d-flex justify-content-md-center align-items-center">
+                <Link to={`/developer-details/${property?.developer[0]._id}`}>
+                  <img
+                    loading="lazy"
+                    src={developerImage}
+                    className=" object-fit-cover rounded-4 border shadow"
+                    draggable="false"
+                    width="140"
+                    height="140"
+                    alt="developer logo"
+                  />
+                </Link>
+              </div>
+            )}
+            {/* <div className="col-md-2 d-flex justify-content-md-center align-items-center ">
+
               <Link to={`/developer-details/${property?.developer[0]._id}`}>
                 <img
                   loading="lazy"
@@ -84,7 +103,7 @@ export default function PropertyDetails() {
                   alt="developer logo"
                 />
               </Link>
-            </div>
+            </div> */}
             <div
               className="col-md-10 d-flex flex-column mt-2 "
               style={{ marginRight: '15px' }}
@@ -101,10 +120,10 @@ export default function PropertyDetails() {
                   </h1>
                 </div>
 
-                <div className=" d-flex gap-1 justify-content-start">
+                <div className="d-flex gap-1 justify-content-start">
                   <MapPin size={16} />
-                  <p className="">
-                    {property?.area[0].title[i18n.language]},{' '}
+                  <p>
+                    {property?.area[0]?.title[i18n.language]},{' '}
                     {property?.addressLocality[i18n.language]}
                   </p>
                 </div>
@@ -130,11 +149,14 @@ export default function PropertyDetails() {
                   </div>
                   <div className=" mt-2 d-flex justify-content-start flex-wrap align-items-center justify-content-md-end gap-2">
                     <ContactUs number={property?.contactUs} />
-                    <Whatsapp
+                    {property?.developer && property?.developer[0] && (
+                       <Whatsapp
                       number={property?.contactUs}
                       itemName={property?.name[i18n.language]}
                       developerName={property?.developer[0].name[i18n.language]}
-                    />
+                    /> 
+                    )}
+                  
                   </div>
                 </div>
               </div>
@@ -280,26 +302,24 @@ export default function PropertyDetails() {
               </div>
               </div> */}
               <div className=" row card-style mb-4">
-                  <h2 className="title">
-                    {t('propertyDetails.about')} {property?.name[i18n.language]}
-                  </h2>
-                  <div
-                    className="description"
-                    dangerouslySetInnerHTML={{ __html: propertyDescription }}
+                <h2 className="title">
+                  {t('propertyDetails.about')} {property?.name[i18n.language]}
+                </h2>
+                <div
+                  className="description"
+                  dangerouslySetInnerHTML={{ __html: propertyDescription }}
+                />
+              </div>
+              <div className="row  card-style">
+                <h2 className="title">{t('launches.viewMap')}</h2>
+                <div className="map-container">
+                  <MapComponent
+                    locations={location}
+                    width="100%"
+                    height="100%"
                   />
                 </div>
-                <div className="row  card-style">
-            <h2 className="title">{t('launches.viewMap')}</h2>
-            <div className="map-container">
-              <MapComponent
-                locations={
-                  location
-                }
-                width="100%"
-                height="100%"
-              />
-            </div>
-          </div>
+              </div>
             </div>
             <div className="col-md-3">
               <div

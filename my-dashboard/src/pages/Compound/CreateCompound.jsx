@@ -97,6 +97,9 @@ export default function CreateCompound() {
   const handleFilesSelect = (files) => {
     setImages(files);
   };
+   const handleThumbnailSelect = (file) => {
+    setThumbnail(file);
+  };
   const [useMap, setUseMap] = useState(true);
   const [mapLocation, setMapLocation] = useState({
     longitude: 31.23586166241668,
@@ -110,9 +113,7 @@ export default function CreateCompound() {
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
 
-  const handleThumbnailSelect = (file) => {
-    setThumbnail(file);
-  };
+ 
 
   const onSubmit = async (data) => {
     try {
@@ -174,6 +175,7 @@ export default function CreateCompound() {
             </Form.Group>
           </Col>
         </Row>
+        
         <Row>
           <Col md={6}>
             <Form.Group className="mb-3">

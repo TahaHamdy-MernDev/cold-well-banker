@@ -30,7 +30,7 @@ function Sidebar({ onLinkClick }) {
   ];
 
   return (
-    <Nav className="flex-column p-2">
+    <Nav className="flex-column p-2 h-100 ">
       {links.map(link => (
         <Link
           key={link.to}
@@ -60,17 +60,18 @@ export default function MainLayout() {
         </Container>
       </Navbar>
 
-      <Row className="w-100">
-        <Col md={2} className="bg-white sidebar d-none d-lg-block shadow">
+      
+      <Row className="pt-5">
+        <Col md={2} className=" sidebar d-none d-lg-block position-relative">
           <Sidebar />
         </Col>
-        <Col md={10} className="main-content">
-          <Container className=" my-4 p-2 bg-white shadow rounded-2">
+        <Col md={10} className='main-content my-4  rounded-2 '>
+        <div className='p-2'>
           <Outlet />
-          </Container>
+
+        </div>
         </Col>
       </Row>
-
       <Offcanvas show={showSidebar} onHide={handleSidebarToggle} className="d-lg-none">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menu</Offcanvas.Title>
