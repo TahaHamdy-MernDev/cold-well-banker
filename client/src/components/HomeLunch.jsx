@@ -22,7 +22,7 @@ export default function HomeLunch() {
   const settings = {
     dots: false,
     speed: 500,
-    slidesToShow: 3.2,
+    slidesToShow: 3,
     slidesToScroll: 1,
     infinite: false,
     autoplay: false,
@@ -55,6 +55,8 @@ export default function HomeLunch() {
         </div>
         <div className="row">
           <Carousel
+          md={2.2}
+          lg={3.2}
             items={lunch?.map((item) => item)}
             Component={LaunchCard}
             settings={settings}

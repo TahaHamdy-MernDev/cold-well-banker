@@ -5,6 +5,7 @@
 @import url('https://fonts.cdnfonts.com/css/bein-black');
 #root{
   width: 100%;
+  position: relative;
   overflow: hidden;
 }
 :root {

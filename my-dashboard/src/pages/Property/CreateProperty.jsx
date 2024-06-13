@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useFieldArray, useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 import {
@@ -15,7 +15,13 @@ import Api from "../../Api";
 import MapPicker from "../../components/MapPicker";
 import ReactQuill from "react-quill";
 import ImageUploader from "../../components/ImageUploader";
-
+import { notify } from "../../components/Toaster";
+import { toast } from "react-toastify";
+const paymentPlanSchema = Joi.object({
+  monthly: Joi.number().required().label('Monthly Payment'),
+  downPayment: Joi.number().required().label('Down Payment'),
+  duration: Joi.number().required().label('Duration (Years)')
+});
 const schema = Joi.object({
   name: Joi.object({
     en: Joi.string().required().label("Name (English)"),
@@ -52,6 +58,7 @@ const schema = Joi.object({
   area: Joi.string().required().label("Area"),
   developer: Joi.string().allow('').optional().label("Developer"),
   compound: Joi.string().required().label("Compound"),
+  paymentPlans: Joi.array().items(paymentPlanSchema).min(1).label('Payment Plans')
 });
 export default function CreateProperty() {
   const {
@@ -59,8 +66,18 @@ export default function CreateProperty() {
     setValue,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
-  } = useForm({ resolver: joiResolver(schema),});
+  } = useForm({ resolver: joiResolver(schema)
+    ,
+    defaultValues: {
+      paymentPlans: [{ monthly: '', downPayment: '', duration: '' }]
+    }});
+
+    const { fields, append, remove } = useFieldArray({
+      control,
+      name: 'paymentPlans'
+    });
   const [areas, setAreas] = useState([]);
   const [developers, setDevelopers] = useState([]);
   const [compound, setCompound] = useState([]);
@@ -105,11 +122,11 @@ export default function CreateProperty() {
     setValue("location.long", longitude);
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
-
+  console.log(errors)
   const onSubmit = async (data) => {
-    console.log(data);
+    const loadingToastId = toast.loading("Submitting your data...");
     const formData = new FormData();
-
+   
     formData.append("name[en]", data.name.en);
     formData.append("name[ar]", data.name.ar);
     formData.append("addressLocality[en]", data.addressLocality.en);
@@ -133,6 +150,12 @@ export default function CreateProperty() {
     formData.append("location[long]", data.location.long);
     formData.append("description[en]", data.description.en);
     formData.append("description[ar]", data.description.ar);
+    data.paymentPlans.map((plan,index)=>{
+      formData.append(`paymentPlans[${index}][downPayment]`, plan.downPayment);
+      formData.append(`paymentPlans[${index}][duration]`, plan.duration);
+      formData.append(`paymentPlans[${index}][monthly]`, plan.monthly);
+
+    })
 
     formData.append("type[0]", data.type);
     formData.append("area[0]", data.area);
@@ -143,6 +166,7 @@ export default function CreateProperty() {
 
     images.forEach((image) => formData.append("images", image));
     if (thumbnail) formData.append("thumbnail", thumbnail[0]);
+   
 
     try {
         const response = await Api.post(
@@ -154,9 +178,21 @@ export default function CreateProperty() {
                 },
             }
         );
+        toast.update(loadingToastId, {
+          render: "Successfully Created!",
+          type: "success",
+          isLoading: false,
+          autoClose: 1000,
+        });
         console.log("Form submission response:", response.data);
     } catch (error) {
-        console.error("Form submission error:", error);
+      toast.update(loadingToastId, {
+        render: "Failed to submit. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 2000,
+      });
+      console.error("Form submission error:", error);
     }
 };
 
@@ -229,7 +265,9 @@ export default function CreateProperty() {
             </Form.Group>
           </Col>
         </Row>
-        <Row>
+
+    
+     <Row>
           <Col md={3}>
             <Form.Group className="mb-3 d-flex gap-2 ">
               <Form.Label className="required">For Sale</Form.Label>
@@ -541,6 +579,65 @@ export default function CreateProperty() {
             {errors.sale_type?.message}
           </Form.Control.Feedback>
         </Form.Group>
+        <Row className="align-items-center">
+          <Col>
+            <h2>Payment Plans</h2>
+          </Col>
+          <Col className="text-end">
+            <Button variant="secondary" onClick={() => append({  monthly: '', downPayment: '', duration: '' })}>
+              Add Payment Plan
+            </Button>
+          </Col>
+        </Row>
+        {fields.map((field, index) => (
+          <Row key={field.id} className="mb-3 align-items-end">
+            <Col md={3}>
+              <Form.Group>
+                <Form.Label className="required">Monthly Payment</Form.Label>
+                <Form.Control
+                  type="number"
+                  {...register(`paymentPlans.${index}.monthly`)}
+                  isInvalid={!!errors.paymentPlans?.[index]?.monthly}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.paymentPlans?.[index]?.monthly?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={3}>
+              <Form.Group>
+                <Form.Label className="required">Down Payment</Form.Label>
+                <Form.Control
+                  type="number"
+                  {...register(`paymentPlans.${index}.downPayment`)}
+                  isInvalid={!!errors.paymentPlans?.[index]?.downPayment}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.paymentPlans?.[index]?.downPayment?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={3}>
+              <Form.Group>
+                <Form.Label className="required">Duration (Years)</Form.Label>
+                <Form.Control
+                  type="number"
+                  {...register(`paymentPlans.${index}.duration`)}
+                  isInvalid={!!errors.paymentPlans?.[index]?.duration}
+                />
+                <Form.Control.Feedback type="invalid">
+                  {errors.paymentPlans?.[index]?.duration?.message}
+                </Form.Control.Feedback>
+              </Form.Group>
+            </Col>
+            <Col md={2}>
+              <Button variant="danger" onClick={() => remove(index)}>
+                Remove Plan
+              </Button>
+            </Col>
+          </Row>
+        ))}
+
 
         <Form.Group className="mb-3">
           <Form.Label className="required">Contact Us</Form.Label>

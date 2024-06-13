@@ -35,7 +35,7 @@ export default function Nav() {
           to="/"
           className="navbar-brand d-flex align-items-center text-center"
         >
-          <img className="img-fluid nav-bar-logo" src="/logo.png" alt="Logo" />
+          <img loading='lazy' className="img-fluid nav-bar-logo" src="/logo.png" alt="Logo" />
         </Link>
         <div className="d-flex">
           <button onClick={toggleLanguage} className="btn d-lg-none lang-switcher ">

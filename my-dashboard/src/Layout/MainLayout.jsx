@@ -30,18 +30,18 @@ function Sidebar({ onLinkClick }) {
   ];
 
   return (
-    <Nav className="flex-column p-2 h-100 ">
-      {links.map(link => (
-        <Link
-          key={link.to}
-          to={link.to}
-          className={`nav-link ${location.pathname === `/${link.to}` ? 'active' : ''}`}
-          onClick={onLinkClick}
-        >
-          {link.label}
-        </Link>
-      ))}
-    </Nav>
+    <Nav className="flex-column p-2 h-100 position-fixed">
+    {links.map(link => (
+      <Link
+        key={link.to}
+        to={link.to}
+        className={`nav-link ${location.pathname === `/${link.to}` ? 'active' : ''}`}
+        onClick={onLinkClick}
+      >
+        {link.label}
+      </Link>
+    ))}
+  </Nav>
   );
 }
 
@@ -60,16 +60,14 @@ export default function MainLayout() {
         </Container>
       </Navbar>
 
-      
-      <Row className="pt-5">
-        <Col md={2} className=" sidebar d-none d-lg-block position-relative">
+      <Row className="pt-5 position-relative" >
+        <Col md={2} className="d-none d-lg-block">
           <Sidebar />
         </Col>
-        <Col md={10} className='main-content my-4  rounded-2 '>
-        <div className='p-2'>
-          <Outlet />
-
-        </div>
+        <Col md={10} className='main-content my-4'>
+          <div className='p-2'>
+            <Outlet />
+          </div>
         </Col>
       </Row>
       <Offcanvas show={showSidebar} onHide={handleSidebarToggle} className="d-lg-none">
@@ -80,7 +78,7 @@ export default function MainLayout() {
           <Sidebar onLinkClick={handleSidebarToggle} />
         </Offcanvas.Body>
       </Offcanvas>
-      <Toaster/>
+      <Toaster />
     </React.Fragment>
   );
 }

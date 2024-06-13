@@ -2,27 +2,32 @@
 import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { BathRoom, BedRoom, FT } from '../../assets/icons'
-import { MapPin } from 'lucide-react';
-import { formatNumber } from '../../assets/common';
+import { MapPin } from 'lucide-react'
+import { formatNumber } from '../../assets/common'
 export default function Property({ item, index = 1 }) {
-  const { t, i18n } = useTranslation();
-  const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`;
-  
+  const { t, i18n } = useTranslation()
+  const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`
+
   // Handle developer
-  const developer = Array.isArray(item.developer) ? item.developer[0] : item.developer;
-  const developerImage = developer ? `${import.meta.env.VITE_IMAGE_ORIGIN}/${developer.images[0]?.url}` : '';
+  const developer = Array.isArray(item.developer)
+    ? item.developer[0]
+    : item.developer
+  const developerImage = developer
+    ? `${import.meta.env.VITE_IMAGE_ORIGIN}/${developer.images[0]?.url}`
+    : ''
 
   // Handle formatted price
-  const formattedPrice = formatNumber(item.max_price);
-  
+  const formattedPrice = formatNumber(item.max_price)
+
   // Handle property name and description
-  const words = item.name[i18n.language].split(' ');
-  const firstTwoWords = words.slice(0, 3).join(' ');
+  const words = item.name[i18n.language].split(' ')
+  const firstTwoWords = words.slice(0, 3).join(' ')
 
   // Handle location details
-  const areaTitle = item.area[0]?.title[i18n.language] || item?.area?.title[i18n.language];
-  const locality = item.addressLocality[i18n.language];
-
+  const areaTitle =
+    item.area[0]?.title[i18n.language] || item?.area?.title[i18n.language]
+  const locality = item.addressLocality[i18n.language]
+  console.log('----------------------------------item', item)
   return (
     <div
       className="custom-property-unit bg-white rounded-2"
@@ -43,7 +48,13 @@ export default function Property({ item, index = 1 }) {
               </span>
             )}
             <span className="custom-type position-absolute top-0 end-0 custom-type-sale p-1 rounded-4">
-              {item.forRent ? "Rent" : item.forSale ? "Sale" ?item.Resale :"Resale":""}
+              {item.forRent
+                ? 'Rent'
+                : item.forSale
+                  ? 'Sale'
+                  : item.resale
+                    ? 'Resale'
+                    : ''}
             </span>
           </div>
         </div>
@@ -56,26 +67,30 @@ export default function Property({ item, index = 1 }) {
           alt={item.title}
         />
         <span className="position-absolute custom-developer-logo">
-          {developer &&
-<Link to={`/developer-details/${developer?._id}`}>
-            <img
-              className="w-100 h-100 rounded-circle"
-              src={developerImage}
-              alt={developer?.name[i18n.language] || ''}
-            />
-          </Link>
-          }
-          
+          {developer && (
+            <Link to={`/developer-details/${developer?._id}`}>
+              <img
+                className="w-100 h-100 rounded-circle"
+                src={developerImage}
+                alt={developer?.name[i18n.language] || ''}
+              />
+            </Link>
+          )}
         </span>
       </div>
       <div className="custom-property-unit-information-wrapper p-2">
         <p className="custom-property-unit_description mb-1">
           <MapPin size={18} /> {areaTitle}, {locality}
         </p>
-        <Link className="custom-property-unit_name" to={`/property-details/${item._id}`}>
+        <Link
+          className="custom-property-unit_name"
+          to={`/property-details/${item._id}`}
+        >
           <h3>{firstTwoWords}</h3>
         </Link>
-        <p className="custom-property-unit_price mb-1">${formattedPrice} {t('egp')}</p>
+        <p className="custom-property-unit_price mb-1">
+          ${formattedPrice} {t('egp')}
+        </p>
         <div className="d-flex justify-content-start gap-4 py-1">
           <span className="d-flex justify-content-center align-items-center gap-2 text-primary-blue">
             <BathRoom />
@@ -92,20 +107,20 @@ export default function Property({ item, index = 1 }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
 // export default function Property({ item, index = 1 }) {
 
 //   const { t,i18n } = useTranslation()
 //   let itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`;
- 
+
 //   let developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.developer[0]?.images[0]?.url|| item.developer.images[0].url}`;
 //   const formattedPrice = formatNumber(item.max_price)
 //   // Number().toLocaleString('en-US');
 //   const words = item.name[i18n.language].split(' ');
 //   const firstTwoWords = words.slice(0, 3).join(' ');
 //   const description = item.description[i18n.language].slice(0, 250 - 3) + '...';
-  
+
 //   return (
 //     <div
 //       className="custom-property-unit bg-white rounded-2"
@@ -127,7 +142,7 @@ export default function Property({ item, index = 1 }) {
 //             )
 
 //             }
-           
+
 //             <span className="custom-type position-absolute top-0 end-0 custom-type-sale p-1 rounded-4">
 //             {item.forRent&& "Rent"|| item.forSale &&"Sale"}
 //             </span>
@@ -159,7 +174,7 @@ export default function Property({ item, index = 1 }) {
 //         >
 //          <h3>
 //          {firstTwoWords}
-//           </h3> 
+//           </h3>
 //         </Link>
 //         <p className="custom-property-unit_price mb-1">${formattedPrice} {t('egp')}</p>
 //         <div className="d-flex justify-content-start gap-4 py-1">

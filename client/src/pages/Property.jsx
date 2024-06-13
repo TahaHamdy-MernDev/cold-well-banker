@@ -44,13 +44,12 @@ export default function PropertyDetails() {
     return <Spinner />
   }
 
-  // Developer handling
+
   let developerImage = ''
   if (property.developer && property.developer[0]) {
     developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${property.developer[0].images[0]?.url}`
   }
 
-  // Property description and finishing translation
   const propertyDescription = property?.description[i18n.language]
   const finishingTranslations = {
     'Not Finished': t('propertyDetails.not_finished'),
