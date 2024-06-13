@@ -5,9 +5,8 @@ import Title from '../components/Common/Title'
 
 export default function AboutUs() {
   const { t } = useTranslation()
-  const TopSales = ({ item }) => {
-    return <img height="300" className="rounded-2" src={item} alt="Top Sales" />
-  }
+  const TopSales = ({ item }) => ( <img height="300" className="rounded-2" src={item} alt="Top Sales" />)
+
 
   const topSalesImages = [
     '/top-sales/top-sales.jpg',
@@ -38,31 +37,40 @@ export default function AboutUs() {
       </section>
       <section className="container-xxl section-padding">
         <div className="container ">
-          <div className="title">{t('aboutUs.founder')}</div>
-          <div className="d-flex justify-content-center align-items-center">
-            <div className="col-md-3 card-style">
+          <div className="row card-style">
+               <Title title={t('aboutUs.founder')}/>
+          <div className="d-flex justify-content-start align-items-center">
+            <div className="col-md-3">
               <img
                 src="/founder.jpg"
                 alt="founder "
-                className=" object-fit-cover rounded-2"
-                width="250"
-                height="350"
+                className=" object-fit-cover rounded-2 mb-2"
+                // width="250"
+                width="100%"
+                height="380"
               />
               <div className=" text-center d-flex justify-content-center flex-column align-items-center gap-1">
-                <p className=' m-0' style={{fontSize:"16px"}}>CEO <br/> COLDWELL BANKER NEW|ALEX</p>
+                <h5 className=' fs-5 m-0'> 
+                CEO <br/>
+                 {/* COLDWELL BANKER NEW|ALEX */}
+                 </h5>
 
-                <p className='mb-0'>Mr Hussein Younis</p>
+                <p className='mb-0' style={{fontSize:"22px"}}> <strong>
+                   Mr Hussein Younis </strong></p>
               </div>
             </div>
           </div>
+          </div>
+     
         </div>
       </section>
       <section className="container-xxl section-padding">
         <div className="container">
-          <div className="title">
-            {t('aboutUs.services')}
-          </div>
-          <div className="row card-style mb-3 ">
+          <div className="row card-style">
+          <Title title={t('aboutUs.services')}/>
+
+        
+          <div  className="row card-style mb-3" style={{background:"#f8f8f8 !important"}}>
             <div className="col-md-3 p-3">
               <span>
                 <img src="/findHome.png" alt="findHome.png" width="" />
@@ -81,7 +89,7 @@ export default function AboutUs() {
               </p>
             </div>
           </div>
-          <div className="row card-style mb-3 ">
+          <div  className="row card-style mb-3" style={{background:"#f8f8f8 !important"}}>
             <div className="col-md-3 p-3">
               <span>
                 <img src="/resale.png" alt="resale.png" width="" />
@@ -99,7 +107,7 @@ export default function AboutUs() {
             </div>
           </div>
 
-          <div className="row card-style mb-3 ">
+          <div  className="row card-style mb-3" style={{background:"#f8f8f8 !important"}}>
             <div className="col-md-3 p-3">
               <span>
                 <img
@@ -122,7 +130,7 @@ export default function AboutUs() {
             </div>
           </div>
 
-          <div className="row card-style mb-3 ">
+          <div  className="row card-style mb-3" style={{background:"#f8f8f8 !important"}}>
             <div className="col-md-3 p-3">
               <span>
                 <img
@@ -145,7 +153,7 @@ export default function AboutUs() {
             </div>
           </div>
 
-          <div className="row card-style mb-3 ">
+          <div  className="row card-style mb-3" style={{background:"#f8f8f8 !important"}}>
             <div className="col-md-3 p-3">
               <span>
                 <img
@@ -166,17 +174,22 @@ export default function AboutUs() {
                 <br />
               </p>
             </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="container-xxl section-padding">
         <div className="container top-sales">
+          <div className="row card-style">
+          <Title title={ t('aboutUs.topSalers')}/>
+       
           <Carousel
             items={topSalesImages.map((image) => image)}
             Component={TopSales}
             settings={settings}
-          />
+            />
+            </div>
         </div>
       </section>
     </React.Fragment>
