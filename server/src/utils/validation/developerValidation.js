@@ -19,7 +19,7 @@ const developerSchema = Joi.object({
     'number.base': 'Call Us Number must be a valid',
     'any.required': 'Call Us Number is valid',
   }),
-  areaId:Joi.string()
+  area:Joi.string()
 });
 module.exports = {
   developerSchema

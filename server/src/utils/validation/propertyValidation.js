@@ -6,7 +6,7 @@ const multiLanguage = Joi.object({
 
 const locationSchema = Joi.object({
   lat: Joi.string().required(),
-  long: Joi.string().required(),
+  lng: Joi.string().required(),
 });
 
 const paymentPlanSchema = Joi.object({

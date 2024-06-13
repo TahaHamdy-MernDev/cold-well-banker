@@ -45,7 +45,7 @@ const schema = Joi.object({
   contactUs: Joi.number().required().label("Contact Us"),
   location: Joi.object({
     lat: Joi.number().required().label("Latitude"),
-    long: Joi.number().required().label("Longitude"),
+    lng: Joi.number().required().label("Longitude"),
   }),
   description: Joi.object({
     en: Joi.string().required().label("Description (English)"),
@@ -119,11 +119,12 @@ export default function CreateProperty() {
 
   const handleLocationSelect = ({ latitude, longitude }) => {
     setValue("location.lat", latitude);
-    setValue("location.long", longitude);
+    setValue("location.lng", longitude);
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
-  console.log(errors)
   const onSubmit = async (data) => {
+    console.log(data)
+    
     const loadingToastId = toast.loading("Submitting your data...");
     const formData = new FormData();
    
@@ -147,7 +148,7 @@ export default function CreateProperty() {
     formData.append("contactUs", data.contactUs);
     formData.append("max_unit_area", data.max_unit_area);
     formData.append("location[lat]", data.location.lat);
-    formData.append("location[long]", data.location.long);
+    formData.append("location[lng]", data.location.lng);
     formData.append("description[en]", data.description.en);
     formData.append("description[ar]", data.description.ar);
     data.paymentPlans.map((plan,index)=>{
@@ -710,7 +711,7 @@ export default function CreateProperty() {
                     type="number"
                     required
                     step="any"
-                    {...register("location.long")}
+                    {...register("location.lng")}
                     isInvalid={!!errors.location?.long}
                   />
                   <Form.Control.Feedback type="invalid">

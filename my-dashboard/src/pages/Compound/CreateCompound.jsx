@@ -50,12 +50,7 @@ const compoundSchema = Joi.object({
   name: multiLanguageSchema,
   description: multiLanguageSchema,
   location: locationSchema,
-  area: Joi.string()
-    .pattern(/^[0-9a-fA-F]{24}$/)
-    .messages({
-      "array.base": "Area must be an array",
-      "string.pattern.base": "Area ID must be a valid ObjectId",
-    }),
+  area: Joi.string().required().label("Area"),
   developer: Joi.string()
     .pattern(/^[0-9a-fA-F]{24}$/)
     .messages({

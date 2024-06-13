@@ -10,13 +10,7 @@ const CopyRight=()=>{
 
       <p className='mb-0 text-secondary-blue text-center text-md-start'>&copy; {currentYear} Cold Well Banker New Alex. {t("footer.copyRights")}</p>
 
-    {/* <div className="col-md-6 d-flex justify-content-end">
-      <ul className="list-inline text-center text-md-end">
-        <li className="list-inline-item"><a className='text-primary-white' href="#">{t("footer.privacy")}</a></li>
-        <li className="list-inline-item"><a className='text-primary-white' href="#">{t("footer.Terms")}</a></li>
-        <li className="list-inline-item"><a className='text-primary-white' href="#">{t("footer.Cookie")}</a></li>
-      </ul>
-    </div> */}
+
   </div>
   )
 }
@@ -24,7 +18,7 @@ export default function MainLayout() {
   return (
    <div style={{ minHeight:"100vh"}}>
       <Nav />
-            <main className=' overflow-hidden'>
+            <main className='overflow-hidden'>
               <Outlet />
             </main>
 

@@ -22,7 +22,7 @@ exports.createDeveloper = asyncHandler(async (req, res) => {
   const data = { ...req.body };
   const newDeveloper = await dbService.create(developerModel, data);
 
-  const areaId= req.body.areaId
+  const areaId= req.body.area
   const updateData = { $push: { developers: newDeveloper._id } };
   const getArea = await dbService.findOne(areaModel,{_id: areaId})
  await dbService.updateOne(areaModel,{_id:getArea._id},updateData)

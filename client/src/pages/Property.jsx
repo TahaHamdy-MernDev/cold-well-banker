@@ -28,7 +28,7 @@ export default function PropertyDetails() {
         console.log(data.location);
         setLocation([
           {
-            lng: data?.location?.long,
+            lng: data?.location?.lng,
             lat: data?.location?.lat,
             name: data?.name[i18n.language],
           },

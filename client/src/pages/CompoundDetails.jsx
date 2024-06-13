@@ -28,27 +28,10 @@ export default function CompoundDetails() {
     }
     FetchData()
   }, [id])
-
   const developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${compound?.developer[0].images[0].url}`
   const compoundDescription = compound?.description[i18n.language]
   const locations = details[0]?.allPropertyLocations
-  const setting = {
-    breakpoints: {
-      320: {
-        slidesPerView: 1,
-        spaceBetween: 20,
-      },
-      768: {
-        slidesPerView: 2.2,
-        spaceBetween: 40,
-      },
-      1024: {
-        slidesPerView: 3.2,
-        spaceBetween: 50,
-      },
-    },
-  }
-
+ 
   return (
     <React.Fragment>
       <Gallery property={compound} />
@@ -177,8 +160,11 @@ export default function CompoundDetails() {
               {t('titles.exploreUnits')} {compound?.name[i18n.language]}
             </h2>
             <Carousel
+sm={1.1}
+md={2.2}
+lg={3.2}
               items={recommendations?.map((item) => item)}
-              settings={setting}
+            
               Component={Property}
             />
           </div>

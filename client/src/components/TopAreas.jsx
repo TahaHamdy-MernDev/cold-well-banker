@@ -33,9 +33,9 @@ export default function TopAreas() {
             const name = area.title[i18n.language]
             return (
               <div
-                data-aos="fade-up"
-                data-aos-duration="1000"
-                data-aos-delay={300 * index}
+                // data-aos="fade-up"
+                // data-aos-duration="1000"
+                // data-aos-delay={300 * index}
                 className="col-md-3 "
                 key={index}
               >

@@ -91,6 +91,7 @@ exports.getLatestPropertiesForRent = asyncHandler(async (req, res) => {
 exports.getProperty= asyncHandler(async(req,res)=>{
   const query = { _id: req.params.propertyId };
   const property = await dbService.findOne(propertyModel, query);
+  console.log(property)
   if (!property) {
     return res.recordNotFound({ message: "Property not found." });
   }

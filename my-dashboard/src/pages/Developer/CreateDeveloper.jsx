@@ -39,9 +39,7 @@ const schema = Joi.object({
   callUsNumber: Joi.string().required().messages({
     "string.empty": "Call Us Number is required",
   }),
-  areaId: Joi.string().required().messages({
-    "string.empty": "Area is required",
-  }),
+  area: Joi.string().required().label("Area"),
 });
 
 export default function CreateDeveloper() {

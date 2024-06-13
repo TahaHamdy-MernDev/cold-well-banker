@@ -12,8 +12,8 @@ export default function CompoundCard({ item }) {
         <img
           loading="lazy"
           alt="compound"
-          width="200"
-          height="200"
+          width="100%"
+          height="220"
           className=" object-fit-cover rounded-2"
           src={compoundImage}
         />

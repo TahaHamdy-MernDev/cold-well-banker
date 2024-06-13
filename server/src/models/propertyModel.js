@@ -27,10 +27,10 @@ const multiLanguage = {
 
 const locationSchema = new mongoose.Schema({
   lat: {
-    type: Number,
-    required: true,
+    type: Number, 
+    required: true, 
   },
-  long: {
+  lng: {
     type: Number,
     required: true,
   },
