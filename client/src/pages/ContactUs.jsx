@@ -7,9 +7,10 @@ export default function ContactUs() {
   return (
    <React.Fragment>  
  <section
-        className=" position-relative w-100"
+        className=" position-relative container"
         style={{ 
-          height: "700px",
+            marginTop:"2rem",
+          height: "467px",
         }}
       > 
       {/* ,  */}

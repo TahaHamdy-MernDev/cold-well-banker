@@ -12,7 +12,7 @@ export default function ContactForm() {
         </div>
         <div className="col-md-6 hidden-sm">
           <img
-            src="/contact-us.webp"
+            src="/contact-us.jpg"
             width="100%"
             className="contact-img object-fit-cover"
             height="600"
