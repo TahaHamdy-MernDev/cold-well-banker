@@ -337,7 +337,7 @@ export default function CreateProperty() {
                 <option disabled value="">
                   Select Area
                 </option>
-                {areas.map((area) => (
+                {areas?.map((area) => (
                   <option key={area._id} value={area._id}>
                     {area.name.en}
                   </option>
@@ -361,7 +361,7 @@ export default function CreateProperty() {
                 <option disabled value="">
                   Select Compound
                 </option>
-                {compound.map((compound) => (
+                {compound?.map((compound) => (
                   <option key={compound._id} value={compound._id}>
                     {compound.name.en}
                   </option>
@@ -386,7 +386,7 @@ export default function CreateProperty() {
                 <option disabled value="">
                   Select Developer
                 </option>
-                {developers.map((developer) => (
+                {developers?.map((developer) => (
                   <option key={developer._id} value={developer._id}>
                     {developer.name.en}
                   </option>

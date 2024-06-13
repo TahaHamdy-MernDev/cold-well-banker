@@ -201,7 +201,7 @@ export default function CreateCompound() {
                 isInvalid={!!errors.developer}
               >
                 <option value="">Select Developer</option>
-                {developers.map((developer) => (
+                {developers?.map((developer) => (
                   <option key={developer._id} value={developer._id}>
                     {developer.name.en}
                   </option>
