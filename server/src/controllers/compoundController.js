@@ -1,3 +1,4 @@
+const areaModel = require("../models/areaModel");
 const compoundModel = require("../models/compoundModel");
 const developerModel = require("../models/developerModel");
 const asyncHandler = require("../utils/asyncHandler");
@@ -20,17 +21,21 @@ exports.createCompound = asyncHandler(async (req, res) => {
   await uploadImages("thumbnail", req);
 
   const data = { ...req.body };
-console.log(data);
   const newCompound = await dbService.create(compoundModel, data);
 
   const developer = await dbService.findOne(developerModel, { _id: req.body.developer });
-
-
-  const updateData = { $push: { compounds: newCompound._id } };
+  const area = await dbService.findOne(developerModel, { _id: req.body.area });
+  const updateDeveloper = { $push: { compounds: newCompound._id } };
+  const updateArea = { $push: { compounds: area._id } };
   await dbService.updateOne(
     developerModel,
-    { _id: req.body.developer },
-    updateData
+    { _id: developer._id },
+    updateDeveloper
+  );
+  await dbService.updateOne(
+    areaModel,
+    { _id: area._id },
+    updateArea
   );
 
   return res.success({ data: newCompound });

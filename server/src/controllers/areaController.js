@@ -1,10 +1,11 @@
 const areaModel = require("../models/areaModel");
+const compoundModel = require("../models/compoundModel");
 const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
 const { uploadImages, updateAndSet, deleteImages } = require("../utils/upload");
 exports.getAreaNames = asyncHandler(async (req, res) => {
-  const areas = await dbService.findMany(areaModel,{});
-  
+  const areas = await dbService.findMany(areaModel, {});
+
   const formattedAreas = areas.map((area) => ({
     _id: area._id,
     name: {
@@ -40,11 +41,28 @@ exports.getAllArea = asyncHandler(async (req, res) => {
   return res.success({ data: areas });
 });
 exports.getArea = asyncHandler(async (req, res) => {
-  const area = await dbService.findOne(areaModel, { _id: req.params.areaId });
+  const { areaId } = req.params;
+  const { page = 1, size = 10 } = req.query;
+  const pageNumber = parseInt(page);
+  const pageSize = parseInt(size);
+  const area = await dbService.findOne(areaModel, { _id: areaId });
   if (!area) {
     return res.recordNotFound({ message: "this area not found..." });
   }
-  return res.success({ data: area });
+
+  const skip = (pageNumber - 1) * pageSize;
+  const compounds = await compoundModel
+    .find({ area: areaId })
+    .skip(skip)
+    .limit(pageSize)
+    .populate("developer")
+    .populate("area");
+
+  const totalCompounds = await compoundModel.countDocuments({ area: areaId });
+
+  const totalPages = Math.ceil(totalCompounds / pageSize);
+
+  return res.success({ data: { area , pagination: {totalpages, totalCompounds,compounds} } });
 });
 exports.topAreas = asyncHandler(async (req, res) => {
   const top4Areas = await areaModel.aggregate([

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-
+const compression = require('compression');
 const cors = require("cors");
 const mongoSanitize = require("express-mongo-sanitize");
 
@@ -18,7 +18,7 @@ global.__basedir = path.resolve(__dirname, '..');
 app.use(require("../utils/response/responseHandler"));
 
 app.use(cors(corsOptions));
-
+app.use(compression());
 app.use(logger("dev"));
 
 app.use(cookieParser());
