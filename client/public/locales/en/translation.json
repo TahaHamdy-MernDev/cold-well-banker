@@ -15,6 +15,9 @@
     "ourPartners":"Our Partners",
     "addProperty": "Add Property"
   },
+  "areaDetails":{
+    "propertiesAvailable":"Properties Available"
+  },
   "search":{
     "propertyTypes": "Property Types",
     

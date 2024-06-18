@@ -33,3 +33,4 @@ export const FetchTopCompounds = () => fetchData('/compound/get-top');
 export const FetchAllLaunches = () => fetchData('/launch/get-all');
 export const FetchAllCompoundsNames = () => fetchData('/compound/get-names');
 export const FetchAllTypesNames = () => fetchData('/type/get');
+export const FetchAreaDetails = (areaId) => fetchData(`/area/get/${areaId}`);

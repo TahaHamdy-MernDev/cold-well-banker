@@ -15,6 +15,9 @@
     "ourPartners ":"شركائنا",
     "addProperty": "إضافة عقار"
   },
+  "areaDetails":{
+    "propertiesAvailable":" وحدات متاحة"
+  },
   "search":{
     "propertyTypes": "نوع الوحده",
     "categories": "التصنيفات",

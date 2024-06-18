@@ -3,7 +3,6 @@ import Title from './Common/Title';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { FetchTopAreas } from '../Api/ApiCalls';
-import DataLoader from './Common/DataLoader';
 
 const TopAreas = React.memo(() => {
   const { t, i18n } = useTranslation();
@@ -35,7 +34,7 @@ const TopAreas = React.memo(() => {
             return (
               <div className="col-md-3" key={index}>
                 <Link
-                  to={`/properties-in/${area._id}`}
+                  to={`/area-details/${area._id}`}
                   className="area-card px-2 py-5 border rounded-2 d-flex flex-column gap-2 align-items-center justify-content-center mb-2"
                 >
                   <img

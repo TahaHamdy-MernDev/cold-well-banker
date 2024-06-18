@@ -2,6 +2,7 @@ import React, { Suspense, useEffect, useState } from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Common/Spinner";
+import AreaDetails from "../pages/AreaDetails";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Developers = React.lazy(() => import("../pages/Developers"));
@@ -25,6 +26,7 @@ const ProjectRoutes = () => {
         { path: "/property-details/:id", element: <PropertyDetails /> },
         { path: "/launch-details/:id", element: <LunchDetails /> },
         { path: "/compound-details/:id", element: <CompoundDetails /> },
+        { path: "/area-details/:id", element: <AreaDetails /> },
         { path: "/all-launches", element: <AllLaunches /> },
         { path: "/contact-us", element: <ContactUs /> },
         { path: "/about-us", element: <AboutUs /> },

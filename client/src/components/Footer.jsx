@@ -31,8 +31,8 @@ const Footer = () => {
   }, []);
 
   return (
-    <footer className="container-xxl mt-5" dir="ltr">
-      <div className="d-flex flex-column">
+    <footer className="container-xxl mt-5">
+      <div className="container d-flex flex-column">
         <div className="row gy-4 gx-5 d-flex justify-content-between">
           {/* Contact Us */}
           <div className="col-md-4">
@@ -55,7 +55,7 @@ const Footer = () => {
               {/* Phone */}
               <div className="mb-2 d-flex gap-1 justify-content-start align-items-start">
                 <Phone style={{ size: '20px', width: '20px', height: '20px' }} />
-                <p className="text-primary-black">
+                <p className="text-primary-black" dir='ltr'>
                   +2 03-4242098 - 012 22 24 24 88
                 </p>
               </div>

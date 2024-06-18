@@ -1,0 +1,51 @@
+a:focus-visible {
+  outline: none;
+}
+/* Reusable */
+.flex__center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Description */
+.description-title {
+  font-size: 1.7rem;
+}
+.description strong {
+  color: rgb(33, 36, 39) !important;
+  font-size: 20px;
+}
+
+.description p span {
+    font-family: 'Inter', sans-serif !important;
+  font-size: 18px;
+  font-weight: 400;
+  color: rgb(33, 36, 39) !important;
+}
+/* Area */
+.area-title {
+  font-size: 1.5rem;
+}
+
+.p-custom {
+  font-size: 14px;
+  color: rgb(33, 36, 39);
+  margin-bottom: 0;
+}
+
+/* buttons  */
+
+.btn-call__us {
+  width: 140px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  height: 45px;
+  background-color: rgb(228, 235, 242);
+  padding: 8px 16px;
+  color: rgb(30, 65, 100);
+  transition: 0.2s ease-out;
+}
+.btn-call__us:hover {
+  background-color: rgb(212, 219, 226);
+}
