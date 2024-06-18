@@ -17,6 +17,7 @@
   },
   "areaDetails":{
     "propertiesAvailable":"Properties Available"
+ ,"compoundsIn":"Compounds In "
   },
   "search":{
     "propertyTypes": "Property Types",

@@ -150,6 +150,7 @@
 }
 
 /* Property Card */
+.custom-compound,
 .custom-property-unit {
   overflow: hidden;
   border-radius: 10px;

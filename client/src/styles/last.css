@@ -23,6 +23,7 @@ a:focus-visible {
   color: rgb(33, 36, 39) !important;
 }
 /* Area */
+.sup-title,
 .area-title {
   font-size: 1.5rem;
 }

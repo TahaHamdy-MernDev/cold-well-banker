@@ -24,7 +24,7 @@ exports.createCompound = asyncHandler(async (req, res) => {
   const newCompound = await dbService.create(compoundModel, data);
 
   const developer = await dbService.findOne(developerModel, { _id: req.body.developer });
-  const area = await dbService.findOne(developerModel, { _id: req.body.area });
+  const area = await dbService.findOne(areaModel, { _id: req.body.area });
   const updateDeveloper = { $push: { compounds: newCompound._id } };
   const updateArea = { $push: { compounds: area._id } };
   await dbService.updateOne(

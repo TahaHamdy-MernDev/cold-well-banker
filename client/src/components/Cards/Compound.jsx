@@ -6,21 +6,25 @@ import { MapPin } from 'lucide-react';
 
 const Compound = ({ item, index }) => {
   const { i18n } = useTranslation();
+  console.log("compound------------------>" , item);
 
-  const itemImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.thumbnail[0].url}`, [item.thumbnail]);
-  const developerImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.developer?.images[0]?.url}`, [item.developer?.images]);
+  const itemImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.thumbnail[0]?.url}`);
+  console.log(item?.developer[0]);
+  const developerImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.developer[0]?.images[0]?.url}`);
 
-  const firstTwoWords = useMemo(() => item.name[i18n.language].split(' ').slice(0, 3).join(' '), [item.name, i18n.language]);
-  const description = useMemo(() => item.description[i18n.language].slice(0, 250 - 3) + '...', [item.description, i18n.language]);
+  const firstTwoWords = useMemo(() => item.name[i18n.language].split(' ').slice(0, 3).join(' '));
+  const description = useMemo(() => item.description[i18n.language].slice(0, 250 - 3));
 
   return (
-    <div className="custom-compound-unit bg-white rounded-2">
+    <div className="col-md-4 ">
+      <div className="p-0 overflow-hidden rounded-2 ">
+
       <div className="custom-compound-image position-relative">
         <img
-          className="w-100 custom-compound-thumbnail"
-          width="auto"
+        loading="lazy"
+          className="custom-compound-thumbnail"
+          width="100%"
           height="250"
-          loading="lazy"
           src={itemImage}
           alt={item.name[i18n.language]}
         />
@@ -44,16 +48,14 @@ const Compound = ({ item, index }) => {
         <Link className="custom-compound-unit_name" to={`/compound-details/${item._id}`}>
           <h3>{firstTwoWords}</h3>
         </Link>
-        <p className="custom-compound-unit_description">{description}</p>
-        <div className="d-flex justify-content-start gap-2 py-1">
-          {item.amenities.map((amenity) => (
-            <span key={amenity._id} className="badge bg-primary-blue text-white">
-              {amenity.name}
-            </span>
-          ))}
-        </div>
+        <div
+        className="description"
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
+
       </div>
-    </div>
+    </div> 
+     </div>
   );
 };
 

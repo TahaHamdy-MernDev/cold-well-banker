@@ -8,6 +8,7 @@ import { formatNumber } from '../../assets/common';
 import LazyLoad from 'react-lazyload';
 
 const Property = ({ item }) => {
+  console.log("-------------------------------------------------->>>>" , item);
   const { t, i18n } = useTranslation();
 
   // Memoize URLs and computed values to avoid recomputation

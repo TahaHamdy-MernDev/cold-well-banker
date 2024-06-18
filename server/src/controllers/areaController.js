@@ -62,7 +62,7 @@ exports.getArea = asyncHandler(async (req, res) => {
 
   const totalPages = Math.ceil(totalCompounds / pageSize);
 
-  return res.success({ data: { area , pagination: {totalpages, totalCompounds,compounds} } });
+  return res.success({ data: { area , pagination: {totalPages, totalCompounds,compounds} } });
 });
 exports.topAreas = asyncHandler(async (req, res) => {
   const top4Areas = await areaModel.aggregate([
