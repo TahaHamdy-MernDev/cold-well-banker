@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
-// import { Facebook, Pinterest, Whatsapp, Share2 } from 'lucide-react';
 import { FaFacebookF, FaPinterestP, FaShare, FaWhatsapp } from 'react-icons/fa'
 
 const ShareDropdown = () => {
@@ -80,61 +79,3 @@ const ShareDropdown = () => {
 }
 
 export default ShareDropdown
-
-// class ShareDropdown extends React.Component {
-//   handleShare(platform) {
-//     const shareUrl = window.location.href;
-//     const encodedUrl = encodeURIComponent(shareUrl);
-
-//     let url = '';
-//     switch (platform) {
-//       case 'facebook':
-//         url = `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`;
-//         break;
-//       case 'pinterest':
-//         url = `https://pinterest.com/pin/create/button/?url=${encodedUrl}`;
-//         break;
-//       case 'whatsapp':
-//         url = `https://api.whatsapp.com/send?text=${encodedUrl}`;
-//         break;
-//       default:
-//         return;
-//     }
-
-//     window.open(url, '_blank', 'noopener,noreferrer');
-//   }
-
-//   render() {
-//     return (
-//       <div className="dropdown">
-//         <button
-//           className="btn bg-primary-white dropdown-toggle"
-//           type="button"
-//           id="dropdownMenuButton"
-//           data-toggle="dropdown"
-//           aria-haspopup="true"
-//           aria-expanded="false"
-//         >
-//           <FaShare size={20} />
-//           <span className="ms-2">Share</span>
-//         </button>
-//         <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-//           <button className="dropdown-item" onClick={() => this.handleShare('facebook')}>
-//             <FaFacebookF size={20} />
-//             <span className="ms-2">Share on Facebook</span>
-//           </button>
-//           <button className="dropdown-item" onClick={() => this.handleShare('pinterest')}>
-//             <FaPinterestP size={20} />
-//             <span className="ms-2">Share on Pinterest</span>
-//           </button>
-//           <button className="dropdown-item" onClick={() => this.handleShare('whatsapp')}>
-//             <FaWhatsapp size={20} />
-//             <span className="ms-2">Share on WhatsApp</span>
-//           </button>
-//         </div>
-//       </div>
-//     );
-//   }
-// }
-
-// export default ShareDropdown;

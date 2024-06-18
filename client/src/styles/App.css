@@ -1,3 +1,19 @@
+.back-to-top {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.back-to-top i {
+  font-size: 1.5rem;
+}
 .nav-bar {
   position: relative;
   /* padding: 0 3rem; */
@@ -121,10 +137,7 @@
   background-color: transparent;
   background-image: linear-gradient(180deg, #053a63 0%, #01111b 100%);
   opacity: 0.23;
-  transition:
-    background 0.3s,
-    border-radius 0.3s,
-    opacity 0.3s;
+  transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
 }
 
 .search-select {
@@ -226,79 +239,55 @@
 }
 
 /* loader */
+/* Loader styles */
 .data-loader {
   z-index: 1001;
   width: 80px;
   height: 80px;
   margin: -40px 0 0 -40px;
   border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
   border: 3px solid transparent;
   border-top-color: var(--primary-blue);
-  -webkit-animation: PreloaderSpin 2s linear infinite;
   animation: PreloaderSpin 2s linear infinite;
+  position: relative; /* Ensure absolute children are positioned correctly */
+}
+
+.data-loader:before,
+.data-loader:after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid transparent;
 }
 
 .data-loader:before {
-  content: '';
-  position: absolute;
   top: 4px;
   left: 4px;
   right: 4px;
   bottom: 4px;
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border: 3px solid transparent;
   border-top-color: var(--primary-black);
-  -webkit-animation: PreloaderSpin 3s linear infinite;
   animation: PreloaderSpin 3s linear infinite;
 }
 
 .data-loader:after {
-  content: '';
-  position: absolute;
   top: 10px;
   left: 10px;
   right: 10px;
   bottom: 10px;
-  border-radius: 50%;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border: 3px solid transparent;
   border-top-color: var(--secondary-gray);
-  -webkit-animation: PreloaderSpin 1.5s linear infinite;
   animation: PreloaderSpin 1.5s linear infinite;
 }
 
-@-webkit-keyframes PreloaderSpin {
-  0% {
-    -webkit-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
-    transform: rotate(0deg);
-  }
-
-  100% {
-    -webkit-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
-    transform: rotate(360deg);
-  }
-}
-
+/* Spin animations */
 @keyframes PreloaderSpin {
   0% {
-    -webkit-transform: rotate(0deg);
-    -ms-transform: rotate(0deg);
     transform: rotate(0deg);
   }
-
   100% {
-    -webkit-transform: rotate(360deg);
-    -ms-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }
+
 
 .area-card{
   transition: all .3s ease;

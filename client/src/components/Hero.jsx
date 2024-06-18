@@ -1,48 +1,46 @@
+import React, { useEffect, useState, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
-import {
-  FetchAllTypesNames,
-  FetchAllAreaNames,
-  FetchAllCompoundsNames,
-} from '../Api/ApiCalls';
-import {
-  Button,
-  Col,
-  Form,
-  Row,
-} from 'react-bootstrap';
+import { Button, Col, Form, Row } from 'react-bootstrap';
+import { FetchAllTypesNames, FetchAllAreaNames, FetchAllCompoundsNames } from '../Api/ApiCalls';
 
-export default function Hero() {
+
+const Hero = React.memo(() => {
   const { t, i18n } = useTranslation();
   const { register, handleSubmit } = useForm();
 
   const [areas, setAreas] = useState(null);
   const [compounds, setCompounds] = useState(null);
   const [types, setTypes] = useState(null);
+ 
+  const [error, setError] = useState(null);
+
+  const fetchData = useCallback(async () => {
+    try {
+      const [areasData, compoundsData, typesData] = await Promise.all([
+        FetchAllAreaNames(),
+        FetchAllCompoundsNames(),
+        FetchAllTypesNames(),
+      ]);
+      setAreas(areasData);
+      setCompounds(compoundsData);
+      setTypes(typesData);
+    } catch (err) {
+      setError(err.message);
+    } 
+  }, []);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const [areasData, compoundsData, typesData] = await Promise.all([
-          FetchAllAreaNames(),
-          FetchAllCompoundsNames(),
-          FetchAllTypesNames(),
-        ]);
-        setAreas(areasData);
-        setCompounds(compoundsData);
-        setTypes(typesData);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    }
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   const onSubmit = (data) => {
     console.log(data);
     // Implement your form submission logic here
   };
+
+ 
+  if (error) return <div>{t('error.loadingData')}</div>;
 
   return (
     <section className="hero-section w-100 overflow-hidden position-relative" style={{ height: '750px' }}>
@@ -58,7 +56,7 @@ export default function Hero() {
         <p className="mb-4 pb-2 text-secondary-blue text-center">
           {t('Header.SubHeading')}
         </p>
-        <form onSubmit={handleSubmit(onSubmit)} style={{ padding: '32px' }} className="search row rounded-2 d-flex justify-content-center align-items-center px-0">
+        <Form onSubmit={handleSubmit(onSubmit)} style={{ padding: '32px' }} className="search row rounded-2 d-flex justify-content-center align-items-center px-0">
           <Row className="d-flex justify-content-center align-items-center gap-2">
             {/* Compound */}
             <Col md={3} className="p-0">
@@ -119,8 +117,10 @@ export default function Hero() {
               </Button>
             </Col>
           </Row>
-        </form>
+        </Form>
       </div>
     </section>
   );
-}
+});
+
+export default Hero;

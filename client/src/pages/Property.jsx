@@ -63,15 +63,6 @@ export default function PropertyDetails() {
     <>
       <Gallery property={property} />
       <section className=" position-relative container-xxl section-padding">
-        <div className="mt-2 w-100 position-absolute d-none top-0 d-md-flex justify-content-end align-items-center gap-2 px-4">
-          <button
-            style={{ cursor: 'pointer' }}
-            className=" btn font-inter bg-white rounded-2 p-2 shadow-sm"
-          >
-            <FaPrint /> {t('print')}
-          </button>
-          <ShareDropdown />
-        </div>
         <div className="row">
           <div className="col-md-12 d-flex flex-column justify-content-center flex-md-row mx-auto">
             {property?.developer && property?.developer[0] && (
@@ -89,29 +80,11 @@ export default function PropertyDetails() {
                 </Link>
               </div>
             )}
-            {/* <div className="col-md-2 d-flex justify-content-md-center align-items-center ">
-
-              <Link to={`/developer-details/${property?.developer[0]._id}`}>
-                <img
-                  loading="lazy"
-                  src={developerImage}
-                  className=" object-fit-cover rounded-4 border shadow"
-                  draggable="false"
-                  width="140"
-                  height="140"
-                  alt="developer logo"
-                />
-              </Link>
-            </div> */}
+       
             <div
               className="col-md-10 d-flex flex-column mt-2 "
               style={{ marginRight: '15px' }}
             >
-              {/* <div className=" d-flex">
-                <span className="tag tag-blue text-white">
-                  {t(property?.forRent ? 'rent' : 'sale')}
-                </span>
-              </div> */}
               <div className=" col-md-12 d-flex flex-column ">
                 <div className=" d-flex flex-column flex-md-row">
                   <h1 className="property-title fs-3 mt-2 col-md-10 justify-content-center align-items-center">

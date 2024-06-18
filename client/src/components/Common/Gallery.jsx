@@ -1,135 +1,145 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
-import Slider from 'react-slick';
-import { X } from 'lucide-react';
+import PropTypes from 'prop-types';
 import LazyLoad from 'react-lazyload';
 import { useTranslation } from 'react-i18next';
-export default function Gallery({ property }) {
-  const {t,i18n} =useTranslation()
+import styled from 'styled-components';
+import { Spinner } from 'react-bootstrap';
+
+const Lightbox = React.lazy(() => import('./Lightbox'));
+
+const Gallery = React.memo(({ property }) => {
+  const { i18n } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const openLightbox = (index) => {
+
+  const openLightbox = useCallback((index) => {
     setActiveIndex(index);
     setIsOpen(true);
-  };
+  }, []);
 
-  const closeLightbox = () => {
+  const closeLightbox = useCallback(() => {
     setIsOpen(false);
-  };
+  }, []);
 
-  const handleMouseEnter = (index) => {
-    setActiveIndex(index);
-  };
-
-  const handleMouseLeave = () => {
-    setActiveIndex(0);
-  };
+  const handleMouseEnter = useCallback((index) => {
+    if (activeIndex !== index) {
+      setActiveIndex(index);
+    }
+  }, [activeIndex]);
 
   const settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1
-  };
-  const onSubmit = (data) => {
-    console.log(data); // Log form data
+    slidesToScroll: 1,
   };
 
+  const onSubmit = useCallback((data) => {
+    console.log(data);
+  }, []);
 
   return (
     <section className="container-xxl section-padding mb-2">
       <div className="container">
-        <div className="image-gallery">
+        <ImageGallery>
           {property?.images.map((image, index) => (
-            <div
-              className={`image-container ${index === activeIndex ? 'active' : ''}`}
+            <ImageContainer
+              className={index === activeIndex ? 'active' : ''}
               key={index}
-              onClick={() => openLightbox(index)}
               onMouseEnter={() => handleMouseEnter(index)}
-              onMouseLeave={handleMouseLeave}
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  openLightbox(index);
+                }
+              }}
             >
-              <LazyLoad height={200} offset={100}>
-                <img
+              <LazyLoad height={200} offset={100} once placeholder={<Placeholder />}>
+                <GalleryImage
                   loading="lazy"
                   src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
-                  alt={`Image ${index + 1}`}
-                  className="gallery-image"
+                  alt={`${index + 1}`}
                 />
               </LazyLoad>
-            </div>
+            </ImageContainer>
           ))}
-        </div>
+        </ImageGallery>
         {isOpen && (
-          <div className="lightbox_property_wrapper">
-            <div className="lightbox_property_wrapper_level2">
-              <div className="lighbox-image-close"> <X onClick={closeLightbox} /> </div>
-              <div className="lightbox_property_content row">
-                <div className="lightbox_property_slider col-md-10">
-                  <Slider {...settings}>
-                    {property.images.map((image, index) => (
-                      <div key={index}>
-                        <img
-                          loading="lazy"
-                          src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
-                          className="property-slider"
-                          alt={`Image ${index + 1}`}
-                        />
-                      </div>
-                    ))}
-                  </Slider>
-                </div>
-                <div className=" col-md-3">
-                <div className="d-flex flex-column gap-2 mt-4 p-2">
-                    <h3 className=" fs-5">{property?.name[i18n.language]}</h3>
-                    <h4 className=" fs-6">Want to find out more?</h4>
-                    <form onSubmit={handleSubmit(onSubmit)} className=" p-3">
-                      <input
-                        className="form-control mb-3"
-                        {...register("firstName", { required: true })}
-                        placeholder="Your Name"
-                      />
-                      {errors.firstName && <span>This field is required</span>}
-                      <input
-                        className="form-control mb-3"
-                        {...register("phone", { required: true })}
-                        placeholder="Your Phone"
-                      />
-                      {errors.phone && <span>This field is required</span>}
-                      <input
-                        className="form-control mb-3"
-                        {...register("email", { required: true })}
-                        placeholder="Your Email"
-                      />
-                      {errors.email && <span>This field is required</span>}
-                      <textarea
-                        id="agent_comment"
-                        {...register("comment", { required: true })}
-                        className="form-control mb-3"
-                        cols="45"
-                        rows="6"
-                        aria-required="true"
-                        placeholder="Comment"
-                      />
-                      {errors.comment && <span>This field is required</span>}
-                      <button
-                        type="submit"
-                        className="btn button-primary w-100"
-                      >
-                        Send Email
-                      </button>
-                    </form>
-                  </div>
-             
-         
-                </div>
-              </div>
-            </div>
-            <div className="lighbox_overlay" onClick={closeLightbox}></div>
-          </div>
+          <Suspense fallback={<Spinner />}>
+            <Lightbox
+              property={property}
+              activeIndex={activeIndex}
+              settings={settings}
+              closeLightbox={closeLightbox}
+              handleSubmit={handleSubmit}
+              register={register}
+              errors={errors}
+              onSubmit={onSubmit}
+              i18n={i18n}
+            />
+          </Suspense>
         )}
       </div>
     </section>
   );
-}
+});
+
+Gallery.propTypes = {
+  property: PropTypes.shape({
+    images: PropTypes.arrayOf(
+      PropTypes.shape({
+        url: PropTypes.string.isRequired,
+      })
+    ).isRequired,
+    name: PropTypes.objectOf(PropTypes.string).isRequired,
+  }),
+};
+
+const Placeholder = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #f0f0f0;
+`;
+
+const ImageGallery = styled.div`
+  height: 500px;
+  max-width: 100%;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  border-radius: 8px;
+  overflow: hidden;
+`;
+
+const ImageContainer = styled.div`
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  position: relative;
+  transition: flex 0.3s ease-in-out;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+
+  &.active {
+    flex: 5;
+  }
+
+  &:not(.active) {
+    flex: 1;
+  }
+`;
+
+const GalleryImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+`;
+
+export default Gallery;

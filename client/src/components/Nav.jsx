@@ -26,7 +26,7 @@ export default function Nav() {
   }, [i18n])
 
   return (
-    // <div className="" id="app-header">
+
       <nav className="navbar nav-bar sticky-top navbar-expand-lg bg-white shadow navbar-light py-0 px-4 rounded-bottom-1">
        <div className="container">
 
@@ -62,11 +62,15 @@ export default function Nav() {
             <Link to="/about-us" className="nav-item nav-link">
               {t('Nav.about')}
             </Link>
+            
             <Link
               to="/contact-us"
               className="nav-item nav-link d-flex flex-nowrap"
             >
               {t('Nav.contact')}
+            </Link>
+              <Link to="/our-partners " className="nav-item nav-link">
+              {t('Nav.ourPartners')}
             </Link>
           </div>
           <div className="d-flex flex-column flex-md-row justify-content-center align-items-start gap-1">
@@ -87,6 +91,5 @@ export default function Nav() {
         </div>
         </div>
       </nav>
-    // </div>
   )
 }
