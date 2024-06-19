@@ -25,8 +25,10 @@ const TopAreas = React.memo(() => {
 
   return (
     <section className="container-xxl section-padding">
-      <div className="container card-style">
-        <Title title={t('topArea')} />
+      <div className="container p-2">
+        <h2 className="sup-title">
+          {t('topArea')}
+        </h2>
         <div className="row gy-5">
           {topAreas.map((area, index) => {
             const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${area.images[0].url}`;

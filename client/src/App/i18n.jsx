@@ -12,7 +12,7 @@ i18n
   .init({
     supportedLngs: ['en', 'ar'],
     fallbackLng,
-    debug: process.env.NODE_ENV === 'development',
+    // debug: process.env.NODE_ENV === 'development',
     detection: {
       order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
       caches: ['cookie'],

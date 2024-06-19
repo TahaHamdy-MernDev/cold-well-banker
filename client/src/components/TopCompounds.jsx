@@ -31,8 +31,11 @@ const TopCompounds = React.memo(() => {
   
   return (
     <section className="container-xxl section-padding">
-      <div className="container card-style">
-        <Title title={t('compoundDetails.topCompound')} />
+      <div className="container p-2">
+        <h2 className=' sup-title'>
+{t('compoundDetails.topCompound')}
+        </h2>
+        {/* <Title title= /> */}
         <div className="row">
           <Carousel
             lg={carouselSettings.lg}

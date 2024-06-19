@@ -12,14 +12,14 @@
     "testimonial": "الشهادات",
     "lunch": "الغداء",
     "error404": "خطأ 404",
-    "ourPartners":"شركائنا",
+    "ourPartners": "شركائنا",
     "addProperty": "إضافة عقار"
   },
-  "areaDetails":{
-    "propertiesAvailable":" وحدات متاحة"
-  ,"compoundsIn":"كمبوندات في"
+  "areaDetails": {
+    "propertiesAvailable": " وحدات متاحة",
+    "compoundsIn": "كمبوندات في"
   },
-  "search":{
+  "search": {
     "propertyTypes": "نوع الوحده",
     "categories": "التصنيفات",
     "city": "الموقع",
@@ -29,7 +29,6 @@
     "one": "واحد",
     "two": "اثنان",
     "three": "ثلاثة"
-  
   },
   "footer": {
     "dir": "سموحه امام جرين بلازا تقاطع ش 14 مايو ش الهيلتون عماره المعمرون بلازا عماره مطعم ابو راويه عماره ج الدور٢ اداري شقه101",
@@ -48,9 +47,9 @@
   },
 
   "titles": {
-    "compounds": "كمبوندات" ,
-"propertiesAvailable":" وحدات متاحة",
-    "exploreUnits":"اكتشف وحدات",
+    "compounds": "كمبوندات",
+    "propertiesAvailable": " وحدات متاحة",
+    "exploreUnits": "اكتشف وحدات",
     "newLaunches": "المشاريع الجديدة",
     "topCompounds": "الكمبوندات الأكثر بحثًا",
     "topAreas": "أهم المناطق",
@@ -62,18 +61,18 @@
     "formTitle": "تحتاج إلى مساعدة عقارية؟",
     "formText": "املأ بياناتك و سوف يقوم خبير عقارى بالاتصال بك فى اقرب وقت",
     "inputName": "الاسم",
-    "inputEmail":"بريدك الالكتروني",
+    "inputEmail": "بريدك الالكتروني",
     "inputLocation": "الموقع المفضل",
     "inputPhone": "رقم الهاتف",
     "yourMessage": "رسالتك",
     "send": "ارسال"
   },
-  "compoundDetails":{
-"topCompound":"الكمبوندات الأكثر بحثًا"
+  "compoundDetails": {
+    "topCompound": "الكمبوندات الأكثر بحثًا"
   },
   "aboutUs": {
-    "topSalers":"أعلى البائعين",
-   
+    "topSalers": "أعلى البائعين",
+
     "founder": "المؤسسين",
     "services": "خدماتنا",
     "findHomeTitle": "ابحث عن سكن",
@@ -95,7 +94,7 @@
     "whatsapp": "واتساب"
   },
   "launches": {
-    "launchingSoon":"إطلاقات قريبة",
+    "launchingSoon": "إطلاقات قريبة",
     "details": "وصف المشروع",
     "viewMap": "المكان على الخريطة",
     "launchDescription": "تفاصيل المشروع",
@@ -186,25 +185,21 @@
     "faqs": "الأسئلة الشائعة"
   },
   "Header": {
-    "Heading": {
-      "findA": "أعثر على",
-      "perfectHome": "منزل مثالى",
-      "toLive": "للعيش مع عائلتك"
-    },
+    "perfectHome": "أعثر على منزل مثالي للعيش مع عائلتك",
     "SubHeading": "استكشف قوائمنا الواسعة، والإرشاد الخبير، والخدمة الشخصية لجعل رحلتك في شراء أو بيع المنزل ناجحة",
     "Button": "Get Started"
   },
   "Search": {
     "Search Keyword": "كلمة البحث",
     "Property Type": "نوع العقار",
-    "beds":"غرف نوم",
-    "price":"السعر",
-    "compound":"كمبوند",
-    "price1":"1م إلى 4م",
-    "price2":"4م إلى 10م",
-    "price3":"10م إلى 15م",
-    "price4":"15م إلى 30م",
-    "price5":"30م إلى 50م",
+    "beds": "غرف نوم",
+    "price": "السعر",
+    "compound": "كمبوند",
+    "price1": "1م إلى 4م",
+    "price2": "4م إلى 10م",
+    "price3": "10م إلى 15م",
+    "price4": "15م إلى 30م",
+    "price5": "30م إلى 50م",
     "BedRooms": "غرف النوم",
     "Option 4": "الخيار 4",
     "Option 5": "الخيار 5",

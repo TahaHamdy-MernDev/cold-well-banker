@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types' // Import PropTypes
 import { useTranslation } from 'react-i18next'
-import { MapPin } from 'lucide-react'
 
 const Compound = ({ item, index }) => {
   const { i18n } = useTranslation()

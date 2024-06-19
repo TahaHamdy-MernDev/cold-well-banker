@@ -9,7 +9,6 @@ import LazyLoad from 'react-lazyload';
 
 const Property = ({ item }) => {
   const { t, i18n } = useTranslation();
-
   // Memoize URLs and computed values to avoid recomputation
   const itemImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`, [item?.thumbnail]);
   const developer = useMemo(() => Array.isArray(item.developer) ? item.developer[0] : item.developer, [item.developer]);
@@ -99,8 +98,6 @@ const Property = ({ item }) => {
     </div>
   );
 };
-
-
 Property.propTypes = {
   item: PropTypes.shape({
     _id: PropTypes.string.isRequired,
@@ -142,12 +139,15 @@ Property.propTypes = {
       en: PropTypes.string.isRequired,
       ar: PropTypes.string.isRequired,
     }).isRequired,
-    area: PropTypes.shape({
+    area: PropTypes.arrayOf(
+      PropTypes.shape({
+        _id: PropTypes.string.isRequired,
         title: PropTypes.shape({
           en: PropTypes.string,
           ar: PropTypes.string,
         }),
-      }) .isRequired,
+      })
+    ).isRequired,
     addressLocality: PropTypes.shape({
       en: PropTypes.string.isRequired,
       ar: PropTypes.string.isRequired,
