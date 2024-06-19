@@ -50,3 +50,55 @@ a:focus-visible {
 .btn-call__us:hover {
   background-color: rgb(212, 219, 226);
 }
+
+
+/* navigation */
+.paginate  ul{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  list-style: none;
+}
+.paginate ul li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  font-size: 14px;
+  text-align: center;
+  color: var(--primary-white);
+ 
+  border-radius: 5px;
+  margin-inline-end: 8px;
+}
+.paginate ul li a{
+  color: var(--primary-blue) !important;
+}
+.paginate ul li.selected a{
+  color: var(--primary-white) !important ;
+}
+.paginate ul li.selected{
+  background-color: var(--primary-blue);
+}
+/* Compound */
+.compound{
+  border: 1px solid gray;
+}
+.compound_description svg{
+width: 16px !important;
+height: 16px !important;
+}
+.compound-title{
+font-size: 1rem;  
+}
+
+/* RTL */
+
+[dir='rtl'] {
+  .custom-prev-button,
+  .custom-next-button{
+    transform: rotate(180deg);
+  }
+}

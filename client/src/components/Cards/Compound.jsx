@@ -6,10 +6,7 @@ import { MapPin } from 'lucide-react';
 
 const Compound = ({ item, index }) => {
   const { i18n } = useTranslation();
-  console.log("compound------------------>" , item);
-
   const itemImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.thumbnail[0]?.url}`);
-  console.log(item?.developer[0]);
   const developerImage = useMemo(() => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.developer[0]?.images[0]?.url}`);
 
   const firstTwoWords = useMemo(() => item.name[i18n.language].split(' ').slice(0, 3).join(' '));
@@ -17,10 +14,11 @@ const Compound = ({ item, index }) => {
 
   return (
     <div className="col-md-4 ">
-      <div className="p-0 overflow-hidden rounded-2 ">
+      <div className="p-0 overflow-hidden rounded-2 compound ">
 
       <div className="custom-compound-image position-relative">
-        <img
+      <Link className="custom-compound-unit_name" to={`/compound-details/${item._id}`}>
+       <img
         loading="lazy"
           className="custom-compound-thumbnail"
           width="100%"
@@ -28,6 +26,8 @@ const Compound = ({ item, index }) => {
           src={itemImage}
           alt={item.name[i18n.language]}
         />
+      </Link>
+       
         {item.developer && (
           <span className="position-absolute custom-developer-logo">
             <Link to={`/developer-details/${item.developer[0]._id}`}>
@@ -42,17 +42,12 @@ const Compound = ({ item, index }) => {
         )}
       </div>
       <div className="custom-compound-unit-information-wrapper p-2">
-        <p className="custom-compound-unit_description mb-1">
-          <MapPin size={18} /> {item.area[0].title[i18n.language]}
-        </p>
         <Link className="custom-compound-unit_name" to={`/compound-details/${item._id}`}>
-          <h3>{firstTwoWords}</h3>
+          <h2 className='compound-title mb-1'>{firstTwoWords}</h2>
         </Link>
-        <div
-        className="description"
-        dangerouslySetInnerHTML={{ __html: description }}
-      />
-
+       <p className="compound_description d-flex gap-1 justify-content-start align-items-center mb-1">
+       {item.area[0].title[i18n.language]}
+        </p>
       </div>
     </div> 
      </div>

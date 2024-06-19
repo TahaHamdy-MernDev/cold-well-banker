@@ -1,53 +1,79 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
+import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
-import Property from '../Cards/Property';
+import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 
-function Elements({ currentElements, Component }) {
-  console.log("----------------------" , currentElements);
+const CustomNextButton = () => (
+  <div className="custom-next-button">
+    <IoIosArrowForward />
+  </div>
+);
+
+const CustomPrevButton = () => (
+  <div className="custom-prev-button">
+    <IoIosArrowBack />
+  </div>
+);
+
+const Elements = memo(({ currentElements, Component }) => {
   return (
     <>
-      {currentElements &&
-        currentElements?.map((element, index) => (
-       <Component key={element._id} item={element}/>
-        ))}
+      {currentElements?.map((element) => (
+        <Component key={element._id} item={element} />
+      ))}
     </>
   );
-}
+});
 
-function PaginatedItems({ data, pageSize, initialPage = 0, Component }) {
+Elements.propTypes = {
+  currentElements: PropTypes.array.isRequired,
+  Component: PropTypes.elementType.isRequired,
+};
+
+function PaginatedItems({ data, pageSize, initialPage = 0, totalPages, fetchData, Component }) {
   const [currentItems, setCurrentItems] = useState([]);
-  const [pageCount, setPageCount] = useState(0);
+  const [pageCount, setPageCount] = useState(totalPages);
   const [itemOffset, setItemOffset] = useState(initialPage * pageSize);
 
   useEffect(() => {
     const endOffset = itemOffset + pageSize;
     setCurrentItems(data.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(data.length / pageSize));
-  }, [itemOffset, pageSize, data]);
+    setPageCount(totalPages);
+  }, [itemOffset, pageSize, data, totalPages]);
 
-  const handlePageClick = (event) => {
+  const handlePageClick = useCallback((event) => {
     const newOffset = (event.selected * pageSize) % data.length;
     setItemOffset(newOffset);
-  };
+    fetchData(event.selected + 1);
+  }, [fetchData, pageSize, data.length]);
 
   return (
     <>
-    <div className="row gy-4 gx-5">
-      <Elements currentElements={currentItems} Component={Component} />
-    </div>
-    <div className="row">
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel="next >"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={pageCount}
-        previousLabel="< previous"
-        renderOnZeroPageCount={null}
+      <div className="row gy-4 gx-5">
+        <Elements currentElements={currentItems} Component={Component} />
+      </div>
+      <div className="paginate row d-flex justify-content-center align-items-center mt-5">
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel={<CustomNextButton />}
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel={<CustomPrevButton />}
+          renderOnZeroPageCount={null}
         />
-        </div>
+      </div>
     </>
   );
 }
 
-export default PaginatedItems;
+PaginatedItems.propTypes = {
+  data: PropTypes.array.isRequired,
+  pageSize: PropTypes.number.isRequired,
+  initialPage: PropTypes.number,
+  totalPages: PropTypes.number.isRequired,
+  fetchData: PropTypes.func.isRequired,
+  Component: PropTypes.elementType.isRequired,
+};
+
+export default memo(PaginatedItems);

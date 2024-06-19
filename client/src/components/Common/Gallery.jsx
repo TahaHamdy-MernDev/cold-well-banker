@@ -29,6 +29,10 @@ const Gallery = React.memo(({ property }) => {
     }
   }, [activeIndex]);
 
+  const handleMouseLeave = useCallback(() => {
+    setActiveIndex(0);
+  }, []);
+
   const settings = {
     dots: true,
     infinite: true,
@@ -50,20 +54,20 @@ const Gallery = React.memo(({ property }) => {
               className={index === activeIndex ? 'active' : ''}
               key={index}
               onMouseEnter={() => handleMouseEnter(index)}
+              onMouseLeave={handleMouseLeave}
               tabIndex={0}
+              onClick={()=> openLightbox(index)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   openLightbox(index);
                 }
               }}
             >
-              <LazyLoad height={200} offset={100} once placeholder={<Placeholder />}>
-                <GalleryImage
-                  loading="lazy"
-                  src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
-                  alt={`${index + 1}`}
-                />
-              </LazyLoad>
+              <GalleryImage
+                loading="lazy"
+                src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
+                alt={`${index + 1}`}
+              />
             </ImageContainer>
           ))}
         </ImageGallery>

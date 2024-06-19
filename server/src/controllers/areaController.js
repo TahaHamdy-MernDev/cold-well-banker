@@ -42,7 +42,7 @@ exports.getAllArea = asyncHandler(async (req, res) => {
 });
 exports.getArea = asyncHandler(async (req, res) => {
   const { areaId } = req.params;
-  const { page = 1, size = 10 } = req.query;
+  const { page = 1, size = 12 } = req.query;
   const pageNumber = parseInt(page);
   const pageSize = parseInt(size);
   const area = await dbService.findOne(areaModel, { _id: areaId });
@@ -62,7 +62,7 @@ exports.getArea = asyncHandler(async (req, res) => {
 
   const totalPages = Math.ceil(totalCompounds / pageSize);
 
-  return res.success({ data: { area , pagination: {totalPages, totalCompounds,compounds} } });
+  return res.success({ data: { area ,totalCompounds, pagination: { totalPages, compounds, currentPage: pageNumber, pageSize } } });
 });
 exports.topAreas = asyncHandler(async (req, res) => {
   const top4Areas = await areaModel.aggregate([

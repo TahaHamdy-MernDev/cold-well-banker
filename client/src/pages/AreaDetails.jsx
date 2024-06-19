@@ -13,27 +13,26 @@ export default function AreaDetails() {
   const [areaDetails, setAreaDetails] = useState(null);
   const [compounds, setCompounds] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
-  const [page, setPage] = useState(1);
-  const pageSize = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalCompounds, setTotalCompounds] = useState(0);
+  const pageSize = 12;
 
-  const fetchData = useCallback(
-    async (pageNumber = 1) => {
+  const fetchData = useCallback(async (pageNumber = 1) => {
+    try {
       const data = await FetchAreaDetails(id, pageNumber, pageSize);
       setAreaDetails(data.area);
       setCompounds(data.pagination.compounds);
-      console.log(data.pagination);
       setTotalPages(data.pagination.totalPages);
-    },
-    [id, pageSize]
-  );
+      setCurrentPage(data.pagination.currentPage);
+      setTotalCompounds(data.totalCompounds);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }, [id, pageSize]);
 
   useEffect(() => {
-    fetchData(page);
-  }, [fetchData, page]);
-
-  const handlePageClick = (event) => {
-    setPage(event.selected + 1);
-  };
+    fetchData();
+  }, [fetchData]);
 
   const areaImage = areaDetails?.images
     ? `${import.meta.env.VITE_IMAGE_ORIGIN}/${areaDetails.images[0].url}`
@@ -59,7 +58,7 @@ export default function AreaDetails() {
                 {areaDetails?.title[i18n.language]}
               </h2>
               <p className="p-custom">
-                10 {t('areaDetails.propertiesAvailable')}
+                {totalCompounds} {t('areaDetails.propertiesAvailable')}
               </p>
             </div>
           </div>
@@ -74,18 +73,21 @@ export default function AreaDetails() {
           description={areaDetails?.description[i18n.language]}
         />
       </div>
-      <div className="container mt-5">
-<div className="sup-title mb-2">{t('areaDetails.compoundsIn')} {areaDetails?.title[i18n.language]} </div>
-
-        {compounds && (
+      {compounds && (
+        <div className="container mt-5">
+          <h2 className="sup-title mb-2">
+            {t('areaDetails.compoundsIn')} {areaDetails?.title[i18n.language]}
+          </h2>
           <PaginatedItems
-          data={compounds}
-          pageSize={4}
-          initialPage={page - 1}
-          Component={Compound}
+            data={compounds}
+            pageSize={pageSize}
+            initialPage={currentPage - 1}
+            totalPages={totalPages}
+            fetchData={fetchData}
+            Component={Compound}
           />
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
