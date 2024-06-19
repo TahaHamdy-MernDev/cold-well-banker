@@ -85,7 +85,7 @@ export default function Nav() {
               onClick={toggleLanguage}
               className="btn lang-switcher d-none d-lg-block"
             >
-              <span>{i18n.language.toUpperCase()}</span> <Globe size={20} />
+              <h6 className=' d-inline-block'>{i18n.language.toUpperCase()}</h6> <Globe size={20} />
             </button>
           </div>
         </div>

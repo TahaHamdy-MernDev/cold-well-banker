@@ -7,6 +7,9 @@ a:focus-visible {
   justify-content: center;
   align-items: center;
 }
+.blue-filter {
+  filter: brightness(0) saturate(100%) invert(31%) sepia(96%) saturate(7403%) hue-rotate(190deg) brightness(94%) contrast(103%);
+  }
 /* Description */
 .description-title {
   font-size: 1.7rem;
@@ -84,7 +87,10 @@ a:focus-visible {
 }
 /* Compound */
 .compound{
-  border: 1px solid gray;
+transition: all .3s ease-out;
+}
+.compound:hover{
+  box-shadow: 1px 1px 20px 6px rgb(8 8 8 / 15%)
 }
 .compound_description svg{
 width: 16px !important;
@@ -102,3 +108,4 @@ font-size: 1rem;
     transform: rotate(180deg);
   }
 }
+

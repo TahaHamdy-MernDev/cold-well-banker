@@ -31,11 +31,14 @@ export default function HomeLunch() {
 
   return (
     <section className="container-xxl section-padding">
-      <div className="container card-style">
+      <div className="container">
         <div className="d-flex justify-content-between align-items-start">
           <Title title={t('titles.newLaunches')} />
+          
           <div>
-            <Link to="/all-launches">{t('showMore')}</Link>
+          {lunch && lunch?.length>5 &&
+<Link to="/all-launches">{t('showMore')}</Link>
+          }
           </div>
         </div>
         <div className="row">

@@ -1,16 +1,18 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { useTranslation } from 'react-i18next'
+import React, { useMemo } from 'react';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
-export default function Description({ title, description }) {
-  const { t } = useTranslation()
+const Description = React.memo(({ title, description }) => {
+  const { t } = useTranslation();
 
-  const getFirstTwoWords = (str) => {
-    const words = str?.split(' ')
-    return words?.slice(0, 2).join(' ')
-  }
+  const getFirstTwoWords = useMemo(() => {
+    return (str) => {
+      const words = str?.split(' ');
+      return words?.slice(0, 2).join(' ');
+    };
+  }, []);
 
-  const truncatedTitle = getFirstTwoWords(title)
+  const truncatedTitle = getFirstTwoWords(title);
 
   return (
     <div className="mt-5">
@@ -22,10 +24,12 @@ export default function Description({ title, description }) {
         dangerouslySetInnerHTML={{ __html: description }}
       />
     </div>
-  )
-}
+  );
+});
 
 Description.propTypes = {
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-}
+};
+
+export default Description;

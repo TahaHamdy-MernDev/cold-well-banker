@@ -4,6 +4,7 @@ const {
   latestProperties,
   getLatestPropertiesForRent,
   getProperty,
+  Search,
 } = require("../controllers/propertyController");
 const multerConfig = require("../utils/multer");
 const { validateRequestBody } = require("../utils/validate");
@@ -24,5 +25,6 @@ router.put(
 router.get("/get-latest", latestProperties);
 router.get("/get/:propertyId", getProperty);
 router.get("/for-rent", getLatestPropertiesForRent);
+router.get("/search", Search);
 
 module.exports = router;

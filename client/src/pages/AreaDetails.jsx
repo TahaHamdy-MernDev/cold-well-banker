@@ -1,43 +1,46 @@
-import React, { useCallback, useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { FetchAreaDetails } from '../Api/ApiCalls';
-import { useTranslation } from 'react-i18next';
-import { ContactUs } from '../components/Common/Buttons';
-import Description from '../components/Common/Description';
-import PaginatedItems from '../components/Common/PaginatedItems';
-import Compound from '../components/Cards/Compound';
+import React, { useCallback, useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { FetchAreaDetails } from '../Api/ApiCalls'
+import { useTranslation } from 'react-i18next'
+import { ContactUs } from '../components/Common/Buttons'
+import Description from '../components/Common/Description'
+import PaginatedItems from '../components/Common/PaginatedItems'
+import Compound from '../components/Cards/Compound'
 
 export default function AreaDetails() {
-  const { id } = useParams();
-  const { i18n, t } = useTranslation();
-  const [areaDetails, setAreaDetails] = useState(null);
-  const [compounds, setCompounds] = useState([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalCompounds, setTotalCompounds] = useState(0);
-  const pageSize = 12;
+  const { id } = useParams()
+  const { i18n, t } = useTranslation()
+  const [areaDetails, setAreaDetails] = useState(null)
+  const [compounds, setCompounds] = useState([])
+  const [totalPages, setTotalPages] = useState(0)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalCompounds, setTotalCompounds] = useState(0)
+  const pageSize = 12
 
-  const fetchData = useCallback(async (pageNumber = 1) => {
-    try {
-      const data = await FetchAreaDetails(id, pageNumber, pageSize);
-      setAreaDetails(data.area);
-      setCompounds(data.pagination.compounds);
-      setTotalPages(data.pagination.totalPages);
-      setCurrentPage(data.pagination.currentPage);
-      setTotalCompounds(data.totalCompounds);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  }, [id, pageSize]);
+  const fetchData = useCallback(
+    async (pageNumber = 1) => {
+      try {
+        const data = await FetchAreaDetails(id, pageNumber, pageSize)
+        setAreaDetails(data.area)
+        setCompounds(data.pagination.compounds)
+        setTotalPages(data.pagination.totalPages)
+        setCurrentPage(data.pagination.currentPage)
+        setTotalCompounds(data.totalCompounds)
+      } catch (error) {
+        console.error('Error fetching data:', error)
+      }
+    },
+    [id, pageSize]
+  )
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchData()
+  }, [fetchData])
 
   const areaImage = areaDetails?.images
     ? `${import.meta.env.VITE_IMAGE_ORIGIN}/${areaDetails.images[0].url}`
-    : '';
-
+    : ''
+  const areaTitle = areaDetails?.title[i18n.language]
   return (
     <div className="container-xxl my-5">
       <div className="container">
@@ -54,9 +57,7 @@ export default function AreaDetails() {
           </div>
           <div className="col-6 col-md-9 mb-4">
             <div className="d-flex flex-column justify-content-center">
-              <h2 className="area-title">
-                {areaDetails?.title[i18n.language]}
-              </h2>
+              <h2 className="area-title">{areaTitle}</h2>
               <p className="p-custom">
                 {totalCompounds} {t('areaDetails.propertiesAvailable')}
               </p>
@@ -67,16 +68,19 @@ export default function AreaDetails() {
           </div>
         </div>
       </div>
-      <div className="container">
-        <Description
-          title={areaDetails?.title[i18n.language]}
-          description={areaDetails?.description[i18n.language]}
-        />
-      </div>
+      {areaTitle && (
+        <div className="container">
+          <Description
+            title={areaTitle}
+            description={areaDetails?.description[i18n.language]}
+          />
+        </div>
+      )}
+
       {compounds && (
         <div className="container mt-5">
           <h2 className="sup-title mb-2">
-            {t('areaDetails.compoundsIn')} {areaDetails?.title[i18n.language]}
+            {t('areaDetails.compoundsIn')} {areaTitle}
           </h2>
           <PaginatedItems
             data={compounds}
@@ -89,5 +93,5 @@ export default function AreaDetails() {
         </div>
       )}
     </div>
-  );
+  )
 }

@@ -170,7 +170,6 @@
 .custom-property-thumbnail {
   display: block;
   width: 100%; 
-  height: auto; 
   object-fit: cover;
   border-radius: 10px 10px 0 0;
   transition: 0.3s linear !important;
@@ -356,7 +355,7 @@
   width: 40px;
   height: 40px;
   background: var(--primary-white);
-  box-shadow: 5px 2px 20px -7px rgba(12, 12, 12, 0.87);
+  /* box-shadow: 5px 2px 20px -7px rgba(12, 12, 12, 0.87); */
 }
 .developers-developer-logo {
   border-radius: 50%;

@@ -1,8 +1,7 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Common/Spinner";
-import AreaDetails from "../pages/AreaDetails";
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Developers = React.lazy(() => import("../pages/Developers"));
@@ -13,6 +12,9 @@ const CompoundDetails = React.lazy(() => import("../pages/CompoundDetails"));
 const AllLaunches = React.lazy(() => import("../pages/AllLaunches"));
 const ContactUs = React.lazy(() => import("../pages/ContactUs"));
 const AboutUs = React.lazy(() => import("../pages/AboutUs"));
+const OurPartners= React.lazy(() => import("../pages/OurPartners"));
+const AreaDetails= React.lazy(() => import("../pages/AreaDetails"));
+const SearchResults= React.lazy(() => import("../pages/SearchResults"));
 
 const ProjectRoutes = () => {
   const element = useRoutes([
@@ -29,7 +31,9 @@ const ProjectRoutes = () => {
         { path: "/area-details/:id", element: <AreaDetails /> },
         { path: "/all-launches", element: <AllLaunches /> },
         { path: "/contact-us", element: <ContactUs /> },
+        { path: "/our-partners", element: <OurPartners /> },
         { path: "/about-us", element: <AboutUs /> },
+        { path: "/search-results", element: <SearchResults /> },
       ],
     },
   ]);

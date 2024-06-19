@@ -36,3 +36,10 @@ export const FetchAllTypesNames = () => fetchData('/type/get');
 export const FetchAreaDetails = (areaId, page = 1, pageSize = 10) => {
   return fetchData(`/area/get/${areaId}?page=${page}&pageSize=${pageSize}`);
 };
+export const SearchProperties = async (searchParams) => {
+  const { compound, type, beds, price } = searchParams;
+  const response = await Api.get('/property/search', {
+    params: { compound, type, beds, price },
+  });
+  return response.data.data;
+};

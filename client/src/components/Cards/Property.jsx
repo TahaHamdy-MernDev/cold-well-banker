@@ -8,7 +8,6 @@ import { formatNumber } from '../../assets/common';
 import LazyLoad from 'react-lazyload';
 
 const Property = ({ item }) => {
-  console.log("-------------------------------------------------->>>>" , item);
   const { t, i18n } = useTranslation();
 
   // Memoize URLs and computed values to avoid recomputation
@@ -39,7 +38,7 @@ const Property = ({ item }) => {
           <div className="position-relative w-100">
             {item.featured && (
               <span className="custom-type position-absolute top-0 start-0 custom-type-featured p-1 rounded-4">
-                {item.featured}
+                {item.featured&&"featured"}
               </span>
             )}
             <span className="custom-type position-absolute top-0 end-0 custom-type-sale p-1 rounded-4">
@@ -51,7 +50,7 @@ const Property = ({ item }) => {
           className="custom-property-thumbnail"
           width="100%"
           loading="lazy"
-          height="250"
+          height="230"
           src={itemImage}
           alt={firstTwoWords}
         />
