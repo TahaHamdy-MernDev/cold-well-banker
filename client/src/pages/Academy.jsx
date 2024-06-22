@@ -7,7 +7,7 @@ import { AcademyRequest } from '../Api/ApiCalls'
 import { toast } from 'react-toastify'
 
 const Academy = () => {
-  const { t } = useTranslation()
+  const { t , i18n } = useTranslation()
   const {
     register,
     handleSubmit,
@@ -16,8 +16,8 @@ const Academy = () => {
 
   const onSubmit = async(data) => {
     const loadingToastId = toast.loading("Submitting your data...");
-    console.log(data);
-    const response = await AcademyRequest(data)
+
+    await AcademyRequest(data)
     toast.update(loadingToastId, {
       render: "Successfully!",
       type: "success",
@@ -35,16 +35,17 @@ const Academy = () => {
 
       <Container
         fluid
-        className="d-flex justify-content-center align-items-center my-5"
+        className="academy-bg d-flex justify-content-center align-items-center"
       >
-        <Row className="w-100">
+        <Row className=' p-5'>
           <Col
-            xs={12}
-            md={6}
-            lg={4}
-            className="mx-auto p-4 border rounded shadow"
+            // xs={12}
+            md={4}
+            // lg={4}
+            className="p-4 border rounded shadow bg-white"
           >
-            <h2 className="text-center">{t('Academy.academy')}</h2>
+            <Row>
+              <h2 className="text-center">{t('Academy.academy')}</h2>
             <p className="text-center">{t('Academy.description')}</p>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="mb-3" controlId="formName">
@@ -75,6 +76,7 @@ const Academy = () => {
                 {/* <Form.Label>{t('Academy.phone')}</Form.Label> */}
                 <Form.Control
                   type="tel"
+                  dir={i18n.dir()}
                   placeholder={t('Academy.phone')}
                   {...register('phone', {
                     required: t('Academy.phoneRequired'),
@@ -88,6 +90,8 @@ const Academy = () => {
                 {t('Academy.registerNow')}
               </Button>
             </Form>
+            </Row>
+            
           </Col>
         </Row>
       </Container>

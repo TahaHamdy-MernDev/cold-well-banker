@@ -276,5 +276,24 @@
     "freePhotoShoots": "Free Photo Shoots",
     "professionalService": "Professional service",
     "moreAboutUs": "More about us"
+  },
+  "contactUsPage": {
+    "title": "Contact Us",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "nameError": "Name is required",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "emailError": "Email is required",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message",
+    "messageError": "Message is required",
+    "send": "Send",
+    "detailsTitle": "Contact Details",
+    "address": "1234 Street Name, City, State, 12345",
+    "emailContact": "Email: info@example.com",
+    "phone": "Phone",
+    "phonePlaceholder": "Enter You Phone",
+    "phoneError":"Phone is required"
   }
 }

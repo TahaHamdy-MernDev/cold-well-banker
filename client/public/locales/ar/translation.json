@@ -268,5 +268,24 @@
     "freePhotoShoots": "جلسات تصوير فوتوغرافية مجانية",
     "professionalService": "خدمة احترافية",
     "moreAboutUs": "المزيد عنا"
+  },
+  "contactUsPage": {
+    "title": "اتصل بنا",
+    "name": "الاسم",
+    "namePlaceholder": "ادخل اسمك",
+    "nameError": "الاسم مطلوب",
+    "email": "البريد الإلكتروني",
+    "emailPlaceholder": "ادخل بريدك الإلكتروني",
+    "emailError": "البريد الإلكتروني مطلوب",
+    "message": "رسالة",
+    "messagePlaceholder": "ادخل رسالتك",
+    "messageError": "الرسالة مطلوبة",
+    "send": "إرسال",
+    "detailsTitle": "تفاصيل الاتصال",
+    "address": "1234 اسم الشارع، المدينة، الولاية، 12345",
+    "emailContact": "البريد الإلكتروني: info@example.com",
+    "phone": "الهاتف",
+    "phonePlaceholder": "ادخل رقم الهاتف",
+    "phoneError" : "رقم الهاتف مطلوب"
   }
 }

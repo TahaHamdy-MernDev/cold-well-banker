@@ -26,7 +26,7 @@ export default function PropertyDetails() {
       try {
         const data = await FetchProperty(id)
         setProperty(data)
-        console.log(data.location);
+        console.log(data.location)
         setLocation([
           {
             lng: data?.location?.lng,
@@ -44,7 +44,6 @@ export default function PropertyDetails() {
   if (!property) {
     return <Spinner />
   }
-
 
   let developerImage = ''
   if (property?.developer[0]) {
@@ -64,8 +63,12 @@ export default function PropertyDetails() {
     <>
       <Gallery property={property} />
       <section className=" position-relative container-xxl section-padding">
-        <PropertyHeaderDetails t={t} i18n={i18n} property={property} developerImage={developerImage} />
-
+        <PropertyHeaderDetails
+          t={t}
+          i18n={i18n}
+          property={property}
+          developerImage={developerImage}
+        />
       </section>
       <section className="container-xxl section-padding">
         <div className="container">

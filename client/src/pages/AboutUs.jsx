@@ -2,14 +2,14 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import Carousel from '../components/Common/Carousel';
 import Title from '../components/Common/Title';
+import { Container, Row, Col, Card, Image } from 'react-bootstrap';
 
 const TopSalesItem = ({ item }) => (
-  <img src={item} alt="Top Sales" loading='lazy' className="rounded-2" height='300' />
+  <Image src={item} alt="Top Sales" loading='lazy' rounded fluid />
 );
 
 const AboutUs = () => {
   const { t } = useTranslation();
-
 
   const topSalesImages = [
     '/top-sales/top-sales.jpg',
@@ -27,15 +27,15 @@ const AboutUs = () => {
 
   // Service item component
   const ServiceItem = ({ icon, title, text }) => (
-    <div className="row mb-3 px-2 py-3 rounded-2 mx-auto" style={{ background: '#f2f2f0' }}>
-      <div className="col-md-3 p-3">
-        <img src={icon} alt={title} width="" />
+    <Row className="mb-3 px-2 py-3 rounded-2 mx-auto" style={{ background: '#f2f2f0' }}>
+      <Col md={3} className="p-3">
+        <Image src={icon} alt={title} fluid />
         <h3 className="font-weight-normal my-0 service-title">{title}</h3>
-      </div>
-      <div className="col-lg-8">
+      </Col>
+      <Col lg={8}>
         <p style={{ fontSize: '14px' }}>{text}</p>
-      </div>
-    </div>
+      </Col>
+    </Row>
   );
 
   return (
@@ -50,36 +50,42 @@ const AboutUs = () => {
 
       {/* Founder section */}
       <section className="container-xxl section-padding">
-        <div className="container">
-          <div className="row card-style">
-            <Title title={t('aboutUs.founder')} />
-            <div className="d-flex justify-content-start align-items-center">
-              <div className="col-md-3">
-                <img
-                  src="/founder.jpg"
-                  alt="founder"
-                  className="object-fit-cover rounded-2 mb-2"
-                  loading="lazy"
-                  width="100%"
-                  height="380"
+        <Container>
+          <Row >
+            {/* <Title title= /> */}
+            <h2 className=' sup-title'>
+            {t('aboutUs.founder')}
+            </h2>
+            <Col md={3} className="d-flex flex-column align-items-center">
+              <Card className=" bg-transparent p-2 text-center border-0 d-flex justify-content-center align-items-center">
+                <Card.Img 
+                  variant="top" 
+                  src="/founder.jpg" 
+                  alt="founder" 
+                  className="object-fit-cover rounded-2 mb-2" 
+                  loading="lazy" 
+                  style={{ width: '250px', height: '350px' }} 
                 />
-                <div className="text-center d-flex justify-content-center flex-column align-items-center gap-1">
-                  <h5 className="fs-5 m-0">CEO</h5>
-                  <p className="mb-0" style={{ fontSize: '22px' }}>
+                <Card.Body>
+                  <Card.Title>CEO</Card.Title>
+                  <Card.Text>
                     <strong>Mr Hussein Younis</strong>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
       </section>
 
       {/* Services section */}
       <section className="container-xxl section-padding">
-        <div className="container">
-          <div className="row card-style mx-auto">
-            <Title title={t('aboutUs.services')} />
+        <Container>
+          <Row className="mx-auto">
+            <h2 className='sup-tile'>
+              {t('aboutUs.services')} 
+            </h2>
+            {/* <Title title=/> */}
             <ServiceItem
               icon="/findHome.png"
               title={t('aboutUs.findHomeTitle')}
@@ -101,21 +107,22 @@ const AboutUs = () => {
               title={t('aboutUs.auctionServicesTitle')}
               text={t('aboutUs.auctionServicesText')}
             />
-          </div>
-        </div>
+          </Row>
+        </Container>
       </section>
 
       {/* Top Sales section */}
       <section className="container-xxl section-padding">
-        <div className="container top-sales">
-          <h2 className='sup-title'>
+        <Container className="top-sales">
 
-          </h2>
-          <div className="row card-style">
-            <Title title={t('aboutUs.topSalers')} />
+          <Row >
+            <h2 className=' sup-title'>
+            {t('aboutUs.topSalers')}
+            </h2>
+            {/* <Title title= /> */}
             <Carousel items={topSalesImages} Component={TopSalesItem} settings={carouselSettings} />
-          </div>
-        </div>
+          </Row>
+        </Container>
       </section>
     </>
   );
