@@ -1,0 +1,51 @@
+@font-face {
+  font-family: geometos;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('Geometos'),
+    url(../fonts/Geometos.woff) format('woff');
+}
+
+@font-face {
+  font-family: open sans;
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('Open Sans'),
+    url(../fonts/openSans/OpenSans-Regular.woff) format('woff');
+}
+
+@font-face {
+  font-family: open sans;
+  font-style: normal;
+  font-weight: 300;
+  src:
+    local('Open Sans'),
+    url(../fonts/openSans/OpenSans-Light.woff) format('woff');
+}
+
+@font-face {
+  font-family: open sans;
+  font-style: normal;
+  font-weight: 600;
+  src:
+    local('Open Sans'),
+    url(../fonts/openSans/OpenSans-SemiBold.woff) format('woff');
+}
+@font-face {
+  font-family: 'beIN Black';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('beIN Black'),
+    url('../fonts/beINBlack/ArbFONTSbeinarblack.woff') format('woff');
+}
+@font-face {
+  font-family: 'beIN Black';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    local('beIN Black'),
+    url('../fonts/beINBlack/beINBlack.woff') format('woff');
+}

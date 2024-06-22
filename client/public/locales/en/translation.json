@@ -12,16 +12,61 @@
     "testimonial": "Testimonial",
     "lunch": "Lunch",
     "error404": "404 Error",
-    "ourPartners":"Our Partners",
-    "addProperty": "Add Property"
+    "ourPartners": "Our Partners",
+    "addProperty": "Add Property",
+    "academy":"academy"
   },
-  "areaDetails":{
-    "propertiesAvailable":"Properties Available"
- ,"compoundsIn":"Compounds In "
+  "Academy":{
+    "academy": "Coldwell Banker New Alex ACADEMY",
+    "registerNow": "REGISTER NOW",
+    "description": "Get the industry-leading education and support you need to become A REAL ESTATE PROFESSIONAL",
+    "name": "Name",
+    "email": "Email address",
+    "phone": "Phone Number",
+    "emailRequired": "Please enter your email address.",
+    "phoneRequired": "Please enter your phone number.",
+    "nameRequired": "Please enter your name.",
+    "submit": "Submit"
   },
-  "search":{
+  "sellProperty": {
+    "title": "Sell Your Property With Us",
+    "steps": {
+      "step1": {
+        "title": "1 Step",
+        "description": "List Your Property Details"
+      },
+      "step2": {
+        "title": "2 Step",
+        "description": "One Of Our Agents Will Call You"
+      },
+      "step3": {
+        "title": "3 Step",
+        "description": "Meet With Serious Buyers"
+      }
+    },
+    "form": {
+      "title": "Complete The Form",
+      "description": "Your privacy is important to us. We won't publish or share your information with anyone.",
+      "inputs": {
+        "name": "Name",
+        "phoneNumber": "Phone Number",
+        "location": "Choose Location",
+        "compound": "Choose Compound",
+        "propertyType": "Choose Property Type",
+        "description": "Description",
+        "submit": "Submit"
+      }
+    }
+  },
+ 
+  
+  "areaDetails": {
+    "propertiesAvailable": "Properties Available",
+    "compoundsIn": "Compounds In "
+  },
+  "search": {
     "propertyTypes": "Property Types",
-    
+
     "categories": "Categories",
     "city": "Area",
     "beds": "Bedrooms",
@@ -39,9 +84,9 @@
     "Cookie": "Cookie Policy"
   },
   "titles": {
-    "compounds":"Compounds",
-    "propertiesAvailable":"Properties Available",
-    "exploreUnits":"Explore Properties In",
+    "compounds": "Compounds",
+    "propertiesAvailable": "Properties Available",
+    "exploreUnits": "Explore Properties In",
     "newLaunches": "New Launches",
     "topCompounds": "Top Compounds",
     "topAreas": "Top Area",
@@ -50,20 +95,25 @@
     "resultsAvailable": "Results Available"
   },
   "contactForm": {
-    "inputEmail":"Your Email",
+    "inputEmail": "Your Email",
     "formTitle": "Need expert advice?",
     "formText": "Fill out the form and one of our property consultants will contact you.",
     "inputName": "Your Name",
     "inputLocation": "Preferred Location",
     "inputPhone": "Phone Number",
     "yourMessage": "Your message",
-    "send":"Send"
+    "inputNameRequired": "Name is required",
+    "inputEmailRequired": "Email is required",
+    "inputPhoneRequired": "Phone number is required",
+    "yourMessageRequired": "Message is required",
+    
+    "send": "Send"
   },
-  "compoundDetails":{
-"topCompound":"Top Compounds"
+  "compoundDetails": {
+    "topCompound": "Top Compounds"
   },
   "aboutUs": {
-    "topSalers":"top salers",
+    "topSalers": "top salers",
     "services": "Our Services",
     "founder": "Founder",
     "findHomeTitle": "Find a Home",
@@ -81,7 +131,7 @@
     "auctionServicesText": "We can assist you in enhancing your property value prior to sale and providing national exposure, ultimately helping you to achieve the highest possible price for your property/land in the shortest amount of time. "
   },
   "launches": {
-    "launchingSoon":"Launching Soon",
+    "launchingSoon": "Launching Soon",
     "details": "Launch Details",
     "viewMap": "Location",
     "launchDescription": "Launch Description",
@@ -139,6 +189,7 @@
   "finishing": "Finishing",
   "print": "Print",
   "whatsApp": "WhatsApp",
+  "featured":"featured",
   "sale": "Sale",
   "rent": "Rent",
   "listsByType": "Lists By Type",
@@ -184,21 +235,20 @@
     "faqs": "FQAs"
   },
   "Header": {
-
-      "perfectHome": " Find A Perfect Home To Live With Your Family",
+    "perfectHome": " Find A Perfect Home To Live With Your Family",
     "SubHeading": "Explore our extensive listings, expert guidance, and personalized service to make your home buying or selling journey a success",
     "Button": "Get Started"
   },
   "Search": {
-    "compound":"Compound",
-    "beds":"Bedrooms",
-    "price":"Price",
+    "compound": "Compound",
+    "beds": "Bedrooms",
+    "price": "Price",
 
-    "price1":"1M To 4M",
-    "price2":"4M To 10M",
-    "price3":"10M To 15M",
-    "price4":"15M To 30M",
-    "price5":"30M To 50M",
+    "price1": "1M To 4M",
+    "price2": "4M To 10M",
+    "price3": "10M To 15M",
+    "price4": "15M To 30M",
+    "price5": "30M To 50M",
     "Search Keyword": "Search Keyword",
     "Property Type": "Property Type",
     "Option 1": "Option 1",

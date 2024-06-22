@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Common/Spinner";
+import SellProperty from "../pages/SellProperty";
+
 
 const Home = React.lazy(() => import("../pages/Home"));
 const Developers = React.lazy(() => import("../pages/Developers"));
@@ -15,6 +17,7 @@ const AboutUs = React.lazy(() => import("../pages/AboutUs"));
 const OurPartners= React.lazy(() => import("../pages/OurPartners"));
 const AreaDetails= React.lazy(() => import("../pages/AreaDetails"));
 const SearchResults= React.lazy(() => import("../pages/SearchResults"));
+const Academy= React.lazy(() => import("../pages/Academy"));
 
 const ProjectRoutes = () => {
   const element = useRoutes([
@@ -34,6 +37,8 @@ const ProjectRoutes = () => {
         { path: "/our-partners", element: <OurPartners /> },
         { path: "/about-us", element: <AboutUs /> },
         { path: "/search-results", element: <SearchResults /> },
+        { path: "/academy", element: <Academy /> },
+        { path: "/sell-property", element: <SellProperty /> },
       ],
     },
   ]);

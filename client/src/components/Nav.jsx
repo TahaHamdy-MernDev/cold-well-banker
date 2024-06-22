@@ -26,19 +26,28 @@ export default function Nav() {
   }, [i18n])
 
   return (
-
-      <nav className="navbar nav-bar sticky-top navbar-expand-lg bg-white shadow navbar-light py-0 px-4 rounded-bottom-1">
-       <div className="container">
-
-  
+    <nav className="navbar nav-bar sticky-top navbar-expand-lg bg-white shadow navbar-light py-0 px-4 rounded-bottom-1">
+      <div className="container">
         <Link
           to="/"
           className="navbar-brand d-flex align-items-center text-center"
         >
-          <img loading='lazy' className="img-fluid nav-bar-logo" src="/logo.png" alt="Logo" />
+          <img
+            loading="lazy"
+            className="img-fluid nav-bar-logo"
+            src="/logo.png"
+            alt="Logo"
+            width="350"
+            height="50"
+          />
+
+          {/* <img loading='lazy' className="img-fluid nav-bar-logo" src="/logo.png" alt="Logo" /> */}
         </Link>
         <div className="d-flex">
-          <button onClick={toggleLanguage} className="btn d-lg-none lang-switcher ">
+          <button
+            onClick={toggleLanguage}
+            className="btn d-lg-none lang-switcher "
+          >
             <span>{i18n.language.toUpperCase()}</span> <Globe size={20} />
           </button>
           <button
@@ -62,21 +71,22 @@ export default function Nav() {
             <Link to="/about-us" className="nav-item nav-link">
               {t('Nav.about')}
             </Link>
-            
+
             <Link
               to="/contact-us"
               className="nav-item nav-link d-flex flex-nowrap"
             >
               {t('Nav.contact')}
             </Link>
-              <Link to="/our-partners " className="nav-item nav-link">
+            <Link to="/our-partners" className="nav-item nav-link">
               {t('Nav.ourPartners')}
+            </Link>
+            <Link to="/academy" className="nav-item nav-link">
+              {t('Nav.academy')}
             </Link>
           </div>
           <div className="d-flex flex-column flex-md-row justify-content-center align-items-start gap-1">
-            <Link
-              to="/create-property"
-            >
+            <Link to="/sell-property">
               <button className=" btn button-primary mb-0">
                 {t('Nav.addProperty')}
               </button>
@@ -85,11 +95,12 @@ export default function Nav() {
               onClick={toggleLanguage}
               className="btn lang-switcher d-none d-lg-block"
             >
-              <h6 className=' d-inline-block'>{i18n.language.toUpperCase()}</h6> <Globe size={20} />
+              <h6 className=" d-inline-block">{i18n.language.toUpperCase()}</h6>{' '}
+              <Globe size={20} />
             </button>
           </div>
         </div>
-        </div>
-      </nav>
+      </div>
+    </nav>
   )
 }

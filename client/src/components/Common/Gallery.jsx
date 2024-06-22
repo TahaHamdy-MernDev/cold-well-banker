@@ -52,22 +52,31 @@ const Gallery = React.memo(({ property }) => {
           {property?.images.map((image, index) => (
             <ImageContainer
               className={index === activeIndex ? 'active' : ''}
-              key={index}
+              key={index + 1}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
               tabIndex={0}
-              onClick={()=> openLightbox(index)}
+              onClick={() => openLightbox(index)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                   openLightbox(index);
                 }
               }}
             >
-              <GalleryImage
-                loading="lazy"
-                src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
-                alt={`${index + 1}`}
-              />
+              <LazyLoad
+                height={500}
+                offset={100}
+                placeholder={<Placeholder />}
+                once
+              >
+                <GalleryImage
+                  loading="lazy"
+                  src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
+                  alt={`${index + 1}`}
+                  srcSet={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url} 1x, ${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url.replace(/.jpg$/, '-2x.jpg')} 2x`}
+                  sizes="(max-width: 600px) 480px, 800px"
+                />
+              </LazyLoad>
             </ImageContainer>
           ))}
         </ImageGallery>
@@ -101,12 +110,6 @@ Gallery.propTypes = {
     name: PropTypes.objectOf(PropTypes.string).isRequired,
   }),
 };
-
-const Placeholder = styled.div`
-  width: 100%;
-  height: 100%;
-  background: #f0f0f0;
-`;
 
 const ImageGallery = styled.div`
   height: 500px;
@@ -144,6 +147,12 @@ const GalleryImage = styled.img`
   height: 100%;
   object-fit: cover;
   transition: transform 0.3s ease-in-out;
+`;
+
+const Placeholder = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #f0f0f0;
 `;
 
 export default Gallery;

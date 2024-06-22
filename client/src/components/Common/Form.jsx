@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { ContactRequest } from '../../Api/ApiCalls';
 
 const Form = () => {
   const {t,i18n} = useTranslation()
@@ -10,10 +11,11 @@ const Form = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async(data) => {
+    const response = await ContactRequest(data)
+    console.log("response",response);
   };
-
+ 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contact-developer-form w-100 p-2">
       <h2 className="text-center mb-2 fs-4">{t("meetingWithTeam")}</h2>
@@ -61,7 +63,7 @@ const Form = () => {
         rows="8"
         placeholder={t('contactForm.yourMessage')}
         aria-required="true"
-        {...register('comment', { required: t('contactForm.yourMessageRequired') })}
+        {...register('message', { required: t('contactForm.yourMessageRequired') })}
       ></textarea>
       {errors.comment && <div className="invalid-feedback">{errors.comment.message}</div>}
 

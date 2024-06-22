@@ -27,7 +27,7 @@ const AboutUs = () => {
 
   // Service item component
   const ServiceItem = ({ icon, title, text }) => (
-    <div className="row mb-3 px-2 py-3 rounded-2" style={{ background: '#f2f2f0' }}>
+    <div className="row mb-3 px-2 py-3 rounded-2 mx-auto" style={{ background: '#f2f2f0' }}>
       <div className="col-md-3 p-3">
         <img src={icon} alt={title} width="" />
         <h3 className="font-weight-normal my-0 service-title">{title}</h3>
@@ -78,7 +78,7 @@ const AboutUs = () => {
       {/* Services section */}
       <section className="container-xxl section-padding">
         <div className="container">
-          <div className="row card-style">
+          <div className="row card-style mx-auto">
             <Title title={t('aboutUs.services')} />
             <ServiceItem
               icon="/findHome.png"
@@ -108,6 +108,9 @@ const AboutUs = () => {
       {/* Top Sales section */}
       <section className="container-xxl section-padding">
         <div className="container top-sales">
+          <h2 className='sup-title'>
+
+          </h2>
           <div className="row card-style">
             <Title title={t('aboutUs.topSalers')} />
             <Carousel items={topSalesImages} Component={TopSalesItem} settings={carouselSettings} />

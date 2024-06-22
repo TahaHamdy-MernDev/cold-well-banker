@@ -49,58 +49,63 @@ const Hero = React.memo(() => {
           {t('Header.SubHeading')}
         </p>
         <Form onSubmit={handleSubmit(onSubmit)} style={{ padding: '32px' }} className="search row rounded-2 d-flex justify-content-center align-items-center px-0">
-          <Row className="d-flex justify-content-center align-items-center gap-2">
-            <Col md={3} className="p-0">
-              <Form.Group className="mb-3 mb-md-0">
-                <Form.Control as="select" required {...register('compound')} defaultValue="">
-                  <option disabled value="">{t('Search.compound')}</option>
-                  {compounds?.map((compound) => (
-                    <option key={compound._id} value={compound._id}>{compound.name[i18n.language]}</option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={2} className="p-0">
-              <Form.Group className="mb-3 mb-md-0">
-                <Form.Control as="select" required {...register('type')} defaultValue="">
-                  <option disabled value="">{t('search.propertyTypes')}</option>
-                  {types?.map((type) => (
-                    <option key={type._id} value={type._id}>{type.name[i18n.language]}</option>
-                  ))}
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={2} className="p-0">
-              <Form.Group className="mb-3 mb-md-0">
-                <Form.Control as="select" required {...register('beds')} defaultValue="">
-                  <option disabled value="">{t('Search.beds')}</option>
-                  <option value="1">1 {t('Search.beds')}</option>
-                  <option value="2">2 {t('Search.beds')}</option>
-                  <option value="3">3 {t('Search.beds')}</option>
-                  <option value="4">4 {t('Search.beds')}</option>
-                  <option value="5+">5+ {t('Search.beds')}</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={2} className="p-0">
-              <Form.Group className="mb-3 mb-md-0">
-                <Form.Control as="select" required {...register('price')} defaultValue="">
-                  <option disabled value="">{t('Search.price')}</option>
-                  <option value="1">{t('Search.price1')}</option>
-                  <option value="2">{t('Search.price2')}</option>
-                  <option value="3">{t('Search.price3')}</option>
-                  <option value="4">{t('Search.price4')}</option>
-                  <option value="5">{t('Search.price5')}</option>
-                </Form.Control>
-              </Form.Group>
-            </Col>
-            <Col md={2} className="p-0">
-              <Button variant="primary" className="button-primary w-100 mb-0 rounded-2" type="submit">
-                {t('Search.Search')}
-              </Button>
-            </Col>
-          </Row>
-        </Form>
+  <Row className="d-flex justify-content-center align-items-center gap-2">
+    <Col md={3} className="p-0">
+      <Form.Group className="mb-3 mb-md-0">
+        {/* <Form.Label className="" htmlFor="compoundSelect" >{t('Search.compound')}</Form.Label> */}
+        <Form.Control as="select" id="compoundSelect" required {...register('compound')} defaultValue="">
+          <option disabled value="">{t('Search.compound')}</option>
+          {compounds?.map((compound) => (
+            <option key={compound._id} value={compound._id}>{compound.name[i18n.language]}</option>
+          ))}
+        </Form.Control>
+      </Form.Group>
+    </Col>
+    <Col md={2} className="p-0">
+      <Form.Group className="mb-3 mb-md-0">
+        {/* <Form.Label className=" d-hidden" htmlFor="typeSelect">{t('search.propertyTypes')}</Form.Label> */}
+        <Form.Control as="select" id="typeSelect" required {...register('type')} defaultValue="">
+          <option disabled value="">{t('search.propertyTypes')}</option>
+          {types?.map((type) => (
+            <option key={type._id} value={type._id}>{type.name[i18n.language]}</option>
+          ))}
+        </Form.Control>
+      </Form.Group>
+    </Col>
+    <Col md={2} className="p-0">
+      <Form.Group className="mb-3 mb-md-0">
+        {/* <Form.Label className=" d-hidden" htmlFor="bedsSelect">{t('Search.beds')}</Form.Label> */}
+        <Form.Control as="select" id="bedsSelect" required {...register('beds')} defaultValue="">
+          <option disabled value="">{t('Search.beds')}</option>
+          <option value="1">1 {t('Search.beds')}</option>
+          <option value="2">2 {t('Search.beds')}</option>
+          <option value="3">3 {t('Search.beds')}</option>
+          <option value="4">4 {t('Search.beds')}</option>
+          <option value="5+">5+ {t('Search.beds')}</option>
+        </Form.Control>
+      </Form.Group>
+    </Col>
+    <Col md={2} className="p-0">
+      <Form.Group className="mb-3 mb-md-0">
+        {/* <Form.Label className=" d-hidden" htmlFor="priceSelect">{t('Search.price')}</Form.Label> */}
+        <Form.Control as="select" id="priceSelect" required {...register('price')} defaultValue="">
+          <option disabled value="">{t('Search.price')}</option>
+          <option value="1">{t('Search.price1')}</option>
+          <option value="2">{t('Search.price2')}</option>
+          <option value="3">{t('Search.price3')}</option>
+          <option value="4">{t('Search.price4')}</option>
+          <option value="5">{t('Search.price5')}</option>
+        </Form.Control>
+      </Form.Group>
+    </Col>
+    <Col md={2} className="p-0">
+      <Button variant="primary" className="button-primary w-100 mb-0 rounded-2" type="submit">
+        {t('Search.Search')}
+      </Button>
+    </Col>
+  </Row>
+</Form>
+
       </div>
     </section>
   );

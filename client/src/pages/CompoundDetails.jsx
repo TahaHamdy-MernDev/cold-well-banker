@@ -67,7 +67,6 @@ export default function CompoundDetails() {
                     <MapPin size={16} />
                     <p className="">
                       {compound?.area[0].title[i18n.language]},{' '}
-                      {/* {property?.addressLocality[i18n.language]} */}
                     </p>
                   </div>
                   <div className="d-flex justify-content-between flex-column flex-md-row">

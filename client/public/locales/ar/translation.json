@@ -13,8 +13,52 @@
     "lunch": "الغداء",
     "error404": "خطأ 404",
     "ourPartners": "شركائنا",
-    "addProperty": "إضافة عقار"
+    "addProperty": "إضافة عقار",
+    "academy": "الاكاديميه"
   },
+  "Academy": {
+    "academy": "أكاديمية كولدويل بانكر نيو أليكس",
+    "registerNow": "سجل الآن",
+    "description": "احصل على التعليم والدعم الرائدين في الصناعة لتصبح محترفًا في العقارات",
+    "name": "الاسم",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "submit": "إرسال",
+    "emailRequired": "الرجاء إدخال عنوان بريدك الإلكتروني.",
+    "phoneRequired": "الرجاء إدخال رقم هاتفك.",
+    "nameRequired": "الرجاء إدخال اسمك."
+  },
+  "sellProperty": {
+    "title": "بيع عقارك معنا",
+    "steps": {
+      "step1": {
+        "title": "الخطوة 1",
+        "description": "أضف جميع المعلومات المتعلقة بعقارك"
+      },
+      "step2": {
+        "title": "الخطوة 2",
+        "description": "سيقوم أحد وكلائنا بالاتصال بك"
+      },
+      "step3": {
+        "title": "الخطوة 3",
+        "description": "الخطوة الأخيرة لبيع عقارك"
+      }
+    },
+    "form": {
+      "title": "أكمل النموذج",
+      "description": "خصوصيتك مهمة بالنسبة لنا. لن ننشر أو نشارك معلوماتك مع أي شخص.",
+      "inputs": {
+        "name": "الاسم",
+        "phoneNumber": "رقم الهاتف",
+        "location": "اختر الموقع",
+        "compound": "اختر المجمع",
+        "propertyType": "اختر نوع العقار",
+        "description": "الوصف",
+        "submit": "إرسال"
+      }
+    }
+  },
+  
   "areaDetails": {
     "propertiesAvailable": " وحدات متاحة",
     "compoundsIn": "كمبوندات في"
@@ -61,6 +105,11 @@
     "formTitle": "تحتاج إلى مساعدة عقارية؟",
     "formText": "املأ بياناتك و سوف يقوم خبير عقارى بالاتصال بك فى اقرب وقت",
     "inputName": "الاسم",
+   
+    "inputNameRequired": "الاسم مطلوب",
+    "inputEmailRequired": "البريد الإلكتروني مطلوب",
+    "inputPhoneRequired": "رقم الهاتف مطلوب",
+    "yourMessageRequired": "الرسالة مطلوبة",
     "inputEmail": "بريدك الالكتروني",
     "inputLocation": "الموقع المفضل",
     "inputPhone": "رقم الهاتف",
@@ -139,6 +188,7 @@
   "finishing": "نوع التشطيب",
   "print": "طباعه",
   "whatsApp": "واتساب",
+  "featured":"مميزه",
   "sale": "للبيع",
   "rent": " للإيجار",
   "listsByType": "أنواع الوحدات",

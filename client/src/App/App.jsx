@@ -11,6 +11,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import Toaster from '../components/Common/Toaster';
 const ProjectRoutes = React.lazy(() => import("./Routes"));
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <Router basename='/'>
       <I18nextProvider i18n={i18n}>
         <ProjectRoutes />
+        <Toaster />
       </I18nextProvider>
     </Router>
   );

@@ -2,6 +2,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Footer, Nav } from '../components';
 import { useTranslation } from 'react-i18next';
+import { FaArrowUp } from 'react-icons/fa';
 
 const CopyRight = () => {
   const currentYear = new Date().getFullYear();
@@ -22,8 +23,8 @@ const BackToTop = () => {
   };
 
   return (
-    <button className="back-to-top" onClick={handleScrollTop}>
-      <i className="bi bi-arrow-up-short"></i>
+    <button title='back to top' className="back-to-top" type='button' onClick={handleScrollTop}>
+     <FaArrowUp/>
     </button>
   );
 };
@@ -32,7 +33,7 @@ export default function MainLayout() {
   return (
     <React.Fragment>
       <Nav />
-      <main className="overflow-hidden">
+      <main>
         <Outlet />
       </main>
       <Footer />

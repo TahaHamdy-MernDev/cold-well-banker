@@ -22,7 +22,7 @@ const LatestProperties = React.memo(() => {
   }, [fetchData]);
 
   return (
-    <section className="container-xxl section-padding mb-4">
+    <section className="container-xxl section-padding">
       <div className="container p-2">
         <h2 className='sup-title'>
           {t('latestProperties')}

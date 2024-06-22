@@ -12,6 +12,7 @@ import { ContactUs, Whatsapp } from '../components/Common/Buttons'
 import Form from '../components/Common/Form'
 import MapComponent from '../components/Map/MapContainer'
 import Spinner from '../components/Common/Spinner'
+import PropertyHeaderDetails from '../components/Property/HeaderInfo'
 
 export default function PropertyDetails() {
   const { t, i18n } = useTranslation()
@@ -46,7 +47,7 @@ export default function PropertyDetails() {
 
 
   let developerImage = ''
-  if (property.developer && property.developer[0]) {
+  if (property?.developer[0]) {
     developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${property.developer[0].images[0]?.url}`
   }
 
@@ -63,78 +64,8 @@ export default function PropertyDetails() {
     <>
       <Gallery property={property} />
       <section className=" position-relative container-xxl section-padding">
-        <div className="row">
-          <div className="col-md-12 d-flex flex-column justify-content-center flex-md-row mx-auto">
-            {property?.developer && property?.developer[0] && (
-              <div className="col-md-2 d-flex justify-content-md-center align-items-center">
-                <Link to={`/developer-details/${property?.developer[0]._id}`}>
-                  <img
-                    loading="lazy"
-                    src={developerImage}
-                    className=" object-fit-cover rounded-4 border shadow"
-                    draggable="false"
-                    width="140"
-                    height="140"
-                    alt="developer logo"
-                  />
-                </Link>
-              </div>
-            )}
-       
-            <div
-              className="col-md-10 d-flex flex-column mt-2 "
-              style={{ marginRight: '15px' }}
-            >
-              <div className=" col-md-12 d-flex flex-column ">
-                <div className=" d-flex flex-column flex-md-row">
-                  <h1 className="property-title fs-3 mt-2 col-md-10 justify-content-center align-items-center">
-                    {property?.name[i18n.language]}
-                  </h1>
-                </div>
+        <PropertyHeaderDetails t={t} i18n={i18n} property={property} developerImage={developerImage} />
 
-                <div className="d-flex gap-1 justify-content-start">
-                  <MapPin size={16} />
-                  <p>
-                    {property?.area[0]?.title[i18n.language]},{' '}
-                    {property?.addressLocality[i18n.language]}
-                  </p>
-                </div>
-                <div className="d-flex justify-content-between flex-column flex-md-row">
-                  <div>
-                    <p style={{ fontSize: '12px' }} className="mb-0">
-                      {' '}
-                      {t('propertyDetails.pricesStartFrom')}
-                    </p>
-                    <span className=" d-flex justify-content-start gap-0 gap-md-2 flex-column flex-md-row">
-                      <h3>
-                        {formatNumber(property?.min_price)} {t('egp')}
-                      </h3>
-                      <span className=" d-flex justify-content-start align-items-start flex-column flex-md-row align-items-md-center ">
-                        <p style={{ fontSize: '12px' }} className=" mb-0">
-                          {t('propertyDetails.maxPrice')}:
-                        </p>{' '}
-                        <h3>
-                          {formatNumber(property?.max_price)} {t('egp')}
-                        </h3>
-                      </span>
-                    </span>
-                  </div>
-                  <div className=" mt-2 d-flex justify-content-start flex-wrap align-items-center justify-content-md-end gap-2">
-                    <ContactUs number={property?.contactUs} />
-                    {property?.developer && property?.developer[0] && (
-                       <Whatsapp
-                      number={property?.contactUs}
-                      itemName={property?.name[i18n.language]}
-                      developerName={property?.developer[0].name[i18n.language]}
-                    /> 
-                    )}
-                  
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </section>
       <section className="container-xxl section-padding">
         <div className="container">

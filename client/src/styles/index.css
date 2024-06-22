@@ -192,8 +192,8 @@ i {
 
 svg {
   color: var(--secondary-blue);
-  width: 20px;
-  height: 20px;
+  /* width: 20px;
+  height: 20px; */
 }
 
 /* Section Padding */
