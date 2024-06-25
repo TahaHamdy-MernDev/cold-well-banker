@@ -1,48 +1,60 @@
-import React, { useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types' // Import PropTypes
-import { useTranslation } from 'react-i18next'
-
-const Compound = ({ item, index }) => {
-  const { i18n } = useTranslation()
+import { useMemo } from "react";
+import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
+import Img from "../Img";
+import PropTypes from 'prop-types';
+const Compound = ({ item }) => {
+  const { i18n } = useTranslation();
   const itemImage = useMemo(
-    () => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.thumbnail[0]?.url}`
-  )
+    () => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.thumbnail[0]?.url}`,
+    [item]
+  );
   const developerImage = useMemo(
-    () =>
-      `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.developer[0]?.images[0]?.url}`
-  )
+    () => `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.developer[0]?.images[0]?.url}`,
+    [item]
+  );
 
   const firstTwoWords = useMemo(() =>
-    item.name[i18n.language].split(' ').slice(0, 3).join(' ')
-  )
+    item.name[i18n.language].split(' ').slice(0, 3).join(' '),
+    [item, i18n.language]
+  );
+
+  const itemImageProps = {
+    key: item._id,
+    src: itemImage,
+    alt: item.name[i18n.language],
+    height: '230px',
+    width: '100%',
+   };
+
+  const developerImageProps = {
+    key: item.developer[0]._id,
+    src: developerImage,
+    alt: item.developer[0].name[i18n.language],
+    height: '100%',
+    width: '100%',
+  };
 
   return (
-    <div className="col-md-4 ">
-      <div className="p-0 overflow-hidden rounded-2 compound ">
+    <div className="col-md-4">
+      <div className="p-0 overflow-hidden rounded-2 compound">
         <div className="custom-compound-image position-relative">
           <Link
             className="custom-compound-unit_name"
             to={`/compound-details/${item._id}`}
           >
-            <img
-              loading="lazy"
-              className=" object-fit-cover"
-              width="100%"
-               height="230"
-              src={itemImage}
-              alt={item.name[i18n.language]}
+            <Img
+              className="object-fit-cover"
+              image={itemImageProps}
             />
           </Link>
 
           {item.developer && (
             <span className="position-absolute custom-developer-logo">
               <Link to={`/developer-details/${item.developer[0]._id}`}>
-                <img
+                <Img
                   className="w-100 h-100 rounded-circle"
-                  src={developerImage}
-                  alt={item.developer[0].name[i18n.language]}
-                  loading="lazy"
+                  image={developerImageProps}
                 />
               </Link>
             </span>
@@ -61,8 +73,8 @@ const Compound = ({ item, index }) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 Compound.propTypes = {
   item: PropTypes.shape({
@@ -109,7 +121,6 @@ Compound.propTypes = {
       })
     ).isRequired,
   }).isRequired,
-  index: PropTypes.number,
-}
+};
 
-export default React.memo(Compound)
+export default React.memo(Compound);

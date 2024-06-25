@@ -1,8 +1,16 @@
 import React from 'react';
 import Form from './Common/Form';
-import LazyLoad from 'react-lazyload';
+
+import Img from './Img';
 
 const ContactForm = () => {
+  const contactImageProps = {
+    src: "/contact.jpg",
+    alt: "contact-us",
+    width: "100%",
+    height: "600",
+  };
+
   return (
     <section className='container-xxl section-padding'>
       <div className="row">
@@ -10,14 +18,11 @@ const ContactForm = () => {
           <Form />
         </div>
         <div className="col-md-6 hidden-sm">
-          <img
+          <Img
             loading="lazy"
-            width="100%"
-            className="contact-img object-fit-cover"
-            height="600"
-            alt="contact-us"
-            src="/contact-us.jpg"
-            />
+            className="contact-img object-fit-cover rounded-2"
+            image={contactImageProps}
+          />
         </div>
       </div>
     </section>

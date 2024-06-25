@@ -129,17 +129,69 @@
     opacity: 1;
   }
 }
-
-.hero-section {
-  background-image: 
-    linear-gradient(
-      rgba(0, 0, 0, 0.5), 
-      rgba(0, 0, 0, 0.5)
-    ),
-    url(/home.jpg);
-  background-position: center center;
+.hero-overlay {
+position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; 
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)) ;
+ background-position: center center;
   background-size: cover;
+  z-index: 1;
+}
+
+.section-background {
+  height: 650px;
+  position: relative;
+}
+
+.background-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #222;
+  overflow: hidden;
+}
+
+.background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 26, 51, 0.7);
+}
+
+
+
+.content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+}
+
+.subtitle {
+  color: var(--primary-white);
+  text-shadow: 1px 1px 3px rgba(68, 68, 68, 0.25);
+  font-size: 18px;
+  font-weight: 400;
+  margin: 0 auto;
 }
 
 .academy-bg{
@@ -153,17 +205,6 @@
 background-position: center center;
 background-size: cover;
 background-attachment: fixed;
-}
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: transparent;
-  background-image: linear-gradient(180deg, #053a63 0%, #01111b 100%);
-  opacity: 0.23;
-  transition: background 0.3s, border-radius 0.3s, opacity 0.3s;
 }
 
 .search-select {

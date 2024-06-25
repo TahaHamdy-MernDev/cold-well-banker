@@ -18,10 +18,28 @@
 /* Body Styles */
 body {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  -ms-overflow-style: none;
   font-size: 16px;
   background-color: #f8f8f8 !important;
   color: var(--primary-black) !important;
 }
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--secondary-blue);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary-white) ;
+}
+
 
 /* RTL Specific Styles */
 [dir='rtl'] body {
@@ -315,3 +333,4 @@ svg {
     transform: rotate(360deg);
   }
 }
+

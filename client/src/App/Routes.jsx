@@ -2,22 +2,23 @@ import React, { Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Common/Spinner";
-import SellProperty from "../pages/SellProperty";
 
 
-const Home = React.lazy(() => import("../pages/Home"));
-const Developers = React.lazy(() => import("../pages/Developers"));
-const Developer = React.lazy(() => import("../pages/Developer"));
-const PropertyDetails = React.lazy(() => import("../pages/Property"));
-const LunchDetails = React.lazy(() => import("../pages/LunchDetails"));
-const CompoundDetails = React.lazy(() => import("../pages/CompoundDetails"));
-const AllLaunches = React.lazy(() => import("../pages/AllLaunches"));
-const ContactUs = React.lazy(() => import("../pages/ContactUs"));
-const AboutUs = React.lazy(() => import("../pages/AboutUs"));
-const OurPartners= React.lazy(() => import("../pages/OurPartners"));
-const AreaDetails= React.lazy(() => import("../pages/AreaDetails"));
-const SearchResults= React.lazy(() => import("../pages/SearchResults"));
-const Academy= React.lazy(() => import("../pages/Academy"));
+
+const Home = React.lazy(() =>delay(  import("../pages/Home")));
+const Developers = React.lazy(() =>delay(  import("../pages/Developers")));
+const Developer = React.lazy(() =>delay(  import("../pages/Developer")));
+const PropertyDetails = React.lazy(() =>delay(  import("../pages/Property")));
+const LunchDetails = React.lazy(() =>delay(  import("../pages/LunchDetails")));
+const CompoundDetails = React.lazy(() =>delay(  import("../pages/CompoundDetails")));
+const AllLaunches = React.lazy(() => delay( import("../pages/AllLaunches")));
+const ContactUs = React.lazy(() => delay( import("../pages/ContactUs")));
+const AboutUs = React.lazy(() =>delay(  import("../pages/AboutUs")));
+const OurPartners= React.lazy(() => delay( import("../pages/OurPartners")));
+const AreaDetails= React.lazy(() =>delay(  import("../pages/AreaDetails")));
+const SearchResults= React.lazy(() => delay( import("../pages/SearchResults")));
+const Academy= React.lazy(() => delay( import("../pages/Academy")));
+const SellProperty= React.lazy(() => delay( import("../pages/SellProperty")));
 
 const ProjectRoutes = () => {
   const element = useRoutes([
@@ -50,5 +51,10 @@ const ProjectRoutes = () => {
     </Suspense>
   );
 };
+async function delay(promise) {
+  return new Promise(resolve => {
+    setTimeout(resolve, 1000);
+  }).then(() => promise);
+}
 
 export default ProjectRoutes;

@@ -1,12 +1,15 @@
-import { Search } from 'lucide-react';
-import React, { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
-import { FetchAllDevelopers } from '../Api/ApiCalls';
+import { Search } from 'lucide-react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import { FetchAllDevelopers } from '../Api/ApiCalls'
+import Img from '../components/Img'
 
 export default function Developers() {
   const [developers, setDevelopers] = useState([]);
   const [filteredDevelopers, setFilteredDevelopers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  
   const { t, i18n } = useTranslation();
 
   useEffect(() => {
@@ -22,35 +25,43 @@ export default function Developers() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      const searchValue = searchTerm.toLowerCase();
+      const language = i18n.language;
+      const filtered = developers.filter((developer) =>
+        developer.name[language].toLowerCase().includes(searchValue)
+      );
+      setFilteredDevelopers(filtered);
+    }, 300); // Debounce search input
+
+    return () => clearTimeout(timeoutId);
+  }, [searchTerm, developers, i18n.language]);
+
   const handleSearch = (event) => {
-    const searchValue = event.target.value.toLowerCase();
-    const language = i18n.language;
-    const filtered = developers.filter((developer) =>
-      developer.name[language].toLowerCase().includes(searchValue)
-    );
-    setFilteredDevelopers(filtered);
+    setSearchTerm(event.target.value);
   };
+
+  const imageProps = useMemo(() => (item) => ({
+    width: '150',
+    height: '150',
+    alt: item.name[i18n.language],
+    src: `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.images[0].url}`,
+  }), [i18n.language]);
 
   return (
     <React.Fragment>
-      <section
-        className="position-relative w-100"
-        style={{
-          backgroundImage: "url('/developers.svg')",
-          height: '450px',
-          backgroundColor: '#222',
-          backgroundAttachment: 'fixed',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-        }}
-      >
-        <div
-          className="position-absolute start-0 top-0 w-100 h-100 z-1"
-          style={{ backgroundColor: '#001a33', opacity: '0.7' }}
-        ></div>
+     <section className="position-relative w-100 section-background">
+        <div className="background-image-wrapper">
+          <Img 
+
+            image={{ src: '/developers.svg', alt: 'Developers Background',width:'100%' , height:'100%' }} 
+            className="background-image" 
+          />
+        </div>
+        <div className="overlay"></div>
         <div className="w-100 position-absolute start-50 top-50 z-3 translate-middle ">
-          <h1 className="text-primary-white text-center w-100 fs-1">
+          <h1 className="text-primary-white text-center w-100">
             {t('developers.title')}
           </h1>
           <div
@@ -67,7 +78,7 @@ export default function Developers() {
           </div>
         </div>
       </section>
-      <section className="container-xxl section-padding">
+      <section className="container-xxl section-padding min-vh-100">
         <div className="d-flex justify-content-center align-items-center">
           <span className="search-container position-relative border-0">
             <input
@@ -82,28 +93,21 @@ export default function Developers() {
           </span>
         </div>
         <div className="row mt-4">
-          {filteredDevelopers?.map((item, index) => {
-            let itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.images[0].url}`;
-            return (
-              <div key={index} className="col-xl-2 col-sm-3 col-6">
-                <Link
-                  to={`/developer-details/${item._id}`}
-                  className="hoveredLogo d-flex align-items-center flex-column p-4 inner"
-                >
-                  <img
-                  loading='lazy'
-                    className="developers-developer-logo"
-                    width="150"
-                    height="150"
-                    src={itemImage}
-                    alt={item.name[i18n.language]}
-                  />
-                </Link>
-              </div>
-            );
-          })}
+        {filteredDevelopers.map((item, index) => (
+            <div key={index +1} className="col-xl-2 col-sm-3 col-6">
+              <Link
+                to={`/developer-details/${item._id}`}
+                className="hoveredLogo d-flex align-items-center flex-column p-4 inner"
+              >
+                <Img
+                  image={imageProps(item)}
+                  className="developers-developer-logo"
+                />
+              </Link>
+            </div>
+          ))}
         </div>
       </section>
     </React.Fragment>
-  );
+  )
 }

@@ -1,25 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Img from '../Img';
+
 
 const LaunchCard = ({ item }) => {
   const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`;
 
+  const imageProps = {
+    key: item._id,
+    src: itemImage,
+    alt: 'Launch',
+    height: '221px',
+    width: '393px',
+  };
+ 
   return (
     <Link className="launch-card" to={`/launch-details/${item._id}`}>
-      <img
-        loading="lazy"
-        className="img-fluid rounded-2"
-        src={itemImage}
-        alt="Launch"
-        width="393"
-        height="221"
-      />
+      <Img image={imageProps} className=" rounded-2"/>
     </Link>
   );
 };
 
-// PropTypes definition for LaunchCard component
 LaunchCard.propTypes = {
   item: PropTypes.shape({
     _id: PropTypes.string.isRequired,

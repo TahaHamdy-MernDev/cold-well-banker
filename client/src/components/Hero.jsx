@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { FetchAllTypesNames, FetchAllCompoundsNames } from '../Api/ApiCalls';
 import { useNavigate } from 'react-router-dom';
-
+import Img from './Img'
 const Hero = React.memo(() => {
   const { t, i18n } = useTranslation();
   const { register, handleSubmit } = useForm();
@@ -37,14 +37,28 @@ const Hero = React.memo(() => {
   };
 
   if (error) return <div>{t('error.loadingData')}</div>;
-
+  const imageProps = {
+    src: '/home.jpg',
+    alt: 'hero-section',
+    width: '100%',
+    height: '750',
+    effect: 'opacity',
+    style: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      zIndex: -1,
+      filter: 'blur(20px)', 
+    },
+  };
   return (
-    <section className="hero-section w-100 overflow-hidden position-relative" style={{ height: '750px' }}>
+    <section className="w-100 overflow-hidden position-relative" style={{ height: '750px' }}>
+     <Img image={imageProps} className="lazy-background" />
       <div className="hero-overlay"></div>
-      <div className="hero-content position-absolute top-50 start-50 translate-middle w-75">
-        <h1 className="display-5 mb-4 text-primary-white text-center">
+      <div className="hero-content position-absolute top-50 start-50 translate-middle w-75 z-3 ">
+        <h2 className="display-5 mb-4 text-primary-white text-center">
           {t('Header.perfectHome')}
-        </h1>
+        </h2>
         <p className="mb-4 pb-2 text-secondary-blue text-center">
           {t('Header.SubHeading')}
         </p>

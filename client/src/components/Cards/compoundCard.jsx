@@ -1,23 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types'; // Import PropTypes
-import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next'
+import { Link } from 'react-router-dom'
+import Img from '../Img'
+import PropTypes from 'prop-types'
 
-const CompoundCard = ({ item }) => {
-  const { t, i18n } = useTranslation();
+const CompoundCard = ({ item}) => {
+  const { t, i18n } = useTranslation()
 
-  const compoundImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`;
+  const compoundImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`
+
+  const imageProps = {
+    key: item._id,
+    src: compoundImage,
+    alt: 'compound',
+    height: '220px',
+    width: '100%',
+  }
 
   return (
     <div className="compound-card d-inline-block position-relative">
       <Link to={`/compound-details/${item._id}`}>
-        <img
-          loading="lazy"
-          alt="compound"
-          width="100%"
-          height="220"
+        <Img
           className="object-fit-cover rounded-2"
-          src={compoundImage}
+          image={imageProps}
         />
         <div className="compound-image-layer">
           <div className="compound-image-text">
@@ -29,9 +33,8 @@ const CompoundCard = ({ item }) => {
         </div>
       </Link>
     </div>
-  );
-};
-
+  )
+}
 
 CompoundCard.propTypes = {
   item: PropTypes.shape({
@@ -47,6 +50,7 @@ CompoundCard.propTypes = {
     }).isRequired,
     numberOfProperties: PropTypes.number.isRequired,
   }).isRequired,
-};
+  
+}
 
-export default CompoundCard;
+export default CompoundCard
