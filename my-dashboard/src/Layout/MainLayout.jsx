@@ -1,47 +1,74 @@
 import React, { useState } from 'react';
-import { Container, Navbar, Button, Row, Col, Offcanvas, Nav } from 'react-bootstrap';
+import { Container, Navbar, Button, Row, Col, Offcanvas, Nav, Accordion } from 'react-bootstrap';
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import Toaster from '../components/Toaster';
 
 function Sidebar({ onLinkClick }) {
   const location = useLocation();
 
-  const links = [
-    { to: "", label: "Home" },
-    { to: "create-area", label: "Create Area" },
-    // { to: "update-area", label: "Update Area" },
-    // { to: "show-all-areas", label: "Show All Areas" },
-   
-    { to: "create-developer", label: "Create Developer" },
-    // { to: "update-developer", label: "Update Developer" },
-    // { to: "show-all-developers", label: "Show All Developers" },
-    { to: "create-compound", label: "Create Compound" },
-    // { to: "update-compound", label: "Update Compound" },
-    // { to: "show-all-compounds", label: "Show All Compounds" },
-    { to: "create-type", label: "Create Type" },
-    // { to: "update-type", label: "Update Type" },
-    // { to: "show-all-types", label: "Show All Types" },
-    { to: "create-property", label: "Create Property" },
-    // { to: "update-property", label: "Update Property" },
-    // { to: "show-all-properties", label: "Show All Properties" },
-    { to: "create-launch", label: "Create Launch" },
-    // { to: "update-property", label: "Update Property" },
-    // { to: "show-all-properties", label: "Show All Properties" },
-  ];
+  const links = {
+    "Area Management": [
+      { to: "create-area", label: "Create Area" },
+      { to: "show-all-areas", label: "Show All Areas" },
+    ],
+    "Developer Management": [
+      { to: "create-developer", label: "Create Developer" },
+      { to: "show-all-developers", label: "Show All Developers" },
+    ],
+    "Compound Management": [
+      { to: "create-compound", label: "Create Compound" },
+      { to: "show-all-compounds", label: "Show All Compounds" },
+    ],
+    "Type Management": [
+      { to: "create-type", label: "Create Type" },
+      { to: "show-all-types", label: "Show All Types" },
+    ],
+    "Property Management": [
+      { to: "create-property", label: "Create Property" },
+    ],
+    "Launch Management": [
+      { to: "create-launch", label: "Create Launch" },
+      { to: "show-all-launches", label: "Show All Launches" },
+    ],
+    "Requests Management": [
+      { to: "academy-requests", label: "Academy Requests" },
+      { to: "contact-requests", label: "Contact Requests" },
+      { to: "sell-requests", label: "Sell Property Requests" },
+      { to: "property-requests", label: "Property Contact Requests" },
+    ],
+  };
 
-  return (
-    <Nav className="flex-column p-2 h-100 position-fixed">
-    {links.map(link => (
+  const renderLinks = (links) => (
+    links.map(link => (
       <Link
         key={link.to}
         to={link.to}
-        className={`nav-link ${location.pathname === `/${link.to}` ? 'active' : ''}`}
+        className={`nav-link p-0 py-2 ${location.pathname === `/${link.to}` ? 'active' : ''}`}
         onClick={onLinkClick}
       >
         {link.label}
       </Link>
-    ))}
-  </Nav>
+    ))
+  );
+
+  const getActiveKey = () => {
+    const activePath = location.pathname.replace('/', '');
+    return Object.entries(links).find(([key, value]) => value.some(link => link.to === activePath))?.[0] || '';
+  };
+
+  return (
+    <Nav className="flex-column pt-2 h-100">
+      <Accordion defaultActiveKey={getActiveKey()}>
+        {Object.entries(links).map(([header, linkArray]) => (
+          <Accordion.Item eventKey={header} key={header}>
+            <Accordion.Header>{header}</Accordion.Header>
+            <Accordion.Body>
+              {renderLinks(linkArray)}
+            </Accordion.Body>
+          </Accordion.Item>
+        ))}
+      </Accordion>
+    </Nav>
   );
 }
 
@@ -52,7 +79,7 @@ export default function MainLayout() {
   return (
     <React.Fragment>
       <Navbar bg="dark" variant="dark" expand="lg" className="w-100 position-fixed top-0 shadow">
-        <Container>
+        <Container fluid>
           <Navbar.Brand href="/">Dashboard</Navbar.Brand>
           <Button variant="outline-light" className="d-lg-none" onClick={handleSidebarToggle}>
             <i className="bi bi-list"></i>
@@ -60,16 +87,17 @@ export default function MainLayout() {
         </Container>
       </Navbar>
 
-      <Row className="pt-5 position-relative" >
-        <Col md={2} className="d-none d-lg-block">
+      <Row className="g-0 min-vh-100 position-relative" style={{marginTop:"3rem"}}>
+        <Col lg={2} className="d-none d-lg-block bg-light sidebar position-fixed h-100">
           <Sidebar />
         </Col>
-        <Col md={10} className='main-content my-4'>
-          <div className='p-2'>
+        <Col lg={{ span: 10, offset: 2 }} className="main-content">
+          <Container fluid>
             <Outlet />
-          </div>
+          </Container>
         </Col>
       </Row>
+
       <Offcanvas show={showSidebar} onHide={handleSidebarToggle} className="d-lg-none">
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Menu</Offcanvas.Title>
@@ -78,6 +106,7 @@ export default function MainLayout() {
           <Sidebar onLinkClick={handleSidebarToggle} />
         </Offcanvas.Body>
       </Offcanvas>
+
       <Toaster />
     </React.Fragment>
   );

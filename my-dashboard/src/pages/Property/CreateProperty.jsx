@@ -88,7 +88,7 @@ export default function CreateProperty() {
         const areas = await Api.get("/area/get-names");
         const developer = await Api.get("/developer/get-names");
         const compound = await Api.get("/compound/get-names");
-        const types = await Api.get("/type/get");
+        const types = await Api.get("/type/get-all");
         setAreas(areas.data.data);
         setDevelopers(developer.data.data);
         setCompound(compound.data.data);

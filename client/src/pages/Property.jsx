@@ -8,11 +8,12 @@ import { useTranslation } from 'react-i18next'
 import { FaPrint } from 'react-icons/fa'
 import { formatNumber } from '../assets/common'
 import Gallery from '../components/Common/Gallery'
-import { ContactUs, Whatsapp } from '../components/Common/Buttons'
+
 import Form from '../components/Common/Form'
 import MapComponent from '../components/Map/MapContainer'
 import Spinner from '../components/Common/Spinner'
 import PropertyHeaderDetails from '../components/Property/HeaderInfo'
+import {  Table } from 'react-bootstrap'
 
 export default function PropertyDetails() {
   const { t, i18n } = useTranslation()
@@ -26,7 +27,6 @@ export default function PropertyDetails() {
       try {
         const data = await FetchProperty(id)
         setProperty(data)
-        console.log(data.location)
         setLocation([
           {
             lng: data?.location?.lng,
@@ -58,157 +58,105 @@ export default function PropertyDetails() {
     Furnished: t('propertyDetails.furnished'),
   }
   const translatedFinishing = finishingTranslations[property?.finishing]
-
+  function getFirstTwoWords(text) {
+    const words = text.split(' ')
+    return words.slice(0, 2).join(' ')
+  }
+  // const
   return (
     <>
       <Gallery property={property} />
-      <section className=" position-relative container-xxl section-padding">
-        <PropertyHeaderDetails
+      <section className="container-xxl section-padding">
+<div className="container">
+    <PropertyHeaderDetails
           t={t}
           i18n={i18n}
           property={property}
           developerImage={developerImage}
         />
+</div>
+      
       </section>
       <section className="container-xxl section-padding">
         <div className="container">
           <div className="row gy-4 gx-5">
             <div className="col-md-9">
-              <div className="row card-style mb-4">
-                <div className="d-flex flex-column flex-md-row justify-content-start">
-                  <div className="col-md-6">
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.propertyType')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.type[0].name[i18n.language]}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.referenceNo')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.reference_No}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.bedrooms')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.number_of_bedrooms}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.bathrooms')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.number_of_bathrooms}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.unitArea')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.max_unit_area}
-                        {t('propertyDetails.sizeUnit')}{' '}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="col-md-6">
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.deliveryIn')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.delivery_in}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.compound')}:{' '}
-                      </strong>{' '}
+              <Table striped bordered hover responsive>
+                <tbody>
+                  <DetailRow
+                    label={t('propertyDetails.propertyType')}
+                    value={property?.type[0].name[i18n.language]}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.referenceNo')}
+                    value={property?.reference_No}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.bedrooms')}
+                    value={property?.number_of_bedrooms}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.bathrooms')}
+                    value={property?.number_of_bathrooms}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.unitArea')}
+                    value={`${property?.max_unit_area} ${t('propertyDetails.sizeUnit')}`}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.deliveryIn')}
+                    value={property?.delivery_in}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.compound')}
+                    value={
                       <Link
                         to={`/compound-details/${property?.compound[0]._id}`}
                       >
-                        <p
-                          className=" text-decoration-underline mb-0"
-                          style={{ fontSize: '18px' }}
-                        >
-                          {property?.compound[0].name[i18n.language]}
-                        </p>
+                        <span className="text-decoration-underline">
+                          {getFirstTwoWords(
+                            property?.compound[0].name[i18n.language]
+                          )}
+                        </span>
                       </Link>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.saleType')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {property?.sale_type}
-                      </p>
-                    </div>
-                    <div className=" mb-2 d-flex align-items-center justify-content-start gap-1">
-                      <strong className=" mb-0">
-                        {' '}
-                        {t('propertyDetails.finishing')}:{' '}
-                      </strong>{' '}
-                      <p className=" mb-0" style={{ fontSize: '18px' }}>
-                        {translatedFinishing}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {/* payment Plans */}
-              {/* <div className="row card-style mb-4">
-              <h2 className="title">
-                {t('propertyDetails.paymentPlans')}
-              </h2>
-              <div className=' d-flex flex-column'>
-              {property?.payment_plans.length > 0 ? (
-        property?.payment_plans.map((plan, index) => (  
-          <span key={plan._id} className="plan-details">
-          <div>
-              <span className="installment-value offer">
-                {plan.down_payment.value}
-              </span>
-              <span className="installment-periodicity">
-                Down Payment
-              </span>
-            </div>
-            <div>
-              <span className="downpayment-value">
-                {plan.equal_installments.value === "monthly" ? "Monthly" : "Quarterly"} 
-                - Equal Installments
-              </span>
-            </div>
-            <div>
-              <span className="installment-years">
-                {plan.years} Years
-              </span>
-            </div>
-        </span>
-        ))
-      ) : (
-        <p>{t('propertyDetails.noPaymentPlans')}</p>
-      )}
-              </div>
-              </div> */}
-              <div className=" row card-style mb-4">
-                <h2 className="title">
+                    }
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.saleType')}
+                    value={property?.sale_type}
+                  />
+                  <DetailRow
+                    label={t('propertyDetails.finishing')}
+                    value={translatedFinishing}
+                  />
+                </tbody>
+              </Table>
+
+              <h3 className="sup-title mt-3">
+                {t('propertyDetails.paymentPlans')}{' '}
+              </h3>
+              <Table striped bordered hover responsive>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Monthly Payment</th>
+                    <th>Down Payment</th>
+                    <th>Duration (years)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {property?.paymentPlans?.map((plan, index) => (
+                    <tr key={index + 1}>
+                      <td>{index+1}</td>
+                      <td>{plan.monthly}</td>
+                      <td>{plan.downPayment}</td>
+                      <td>{plan.duration}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <div className=" row my-3">
+                <h2 className="sup-title">
                   {t('propertyDetails.about')} {property?.name[i18n.language]}
                 </h2>
                 <div
@@ -216,8 +164,8 @@ export default function PropertyDetails() {
                   dangerouslySetInnerHTML={{ __html: propertyDescription }}
                 />
               </div>
-              <div className="row  card-style">
-                <h2 className="title">{t('launches.viewMap')}</h2>
+              <div className="row my-3">
+                <h2 className="sup-title">{t('launches.viewMap')}</h2>
                 <div className="map-container">
                   <MapComponent
                     locations={location}
@@ -241,3 +189,9 @@ export default function PropertyDetails() {
     </>
   )
 }
+const DetailRow = ({ label, value }) => (
+  <tr>
+    <td className=" fw-semibold fs-6">{label}</td>
+    <td>{value}</td>
+  </tr>
+)

@@ -14,7 +14,7 @@ console.log(locations);
   const createMarker = useMemo(() => (location) => {
     const el = document.createElement('div');
     el.className = 'custom-marker';
-    el.style.backgroundImage = 'url(/public/mark.png)';
+    el.style.backgroundImage = 'url(/mark.png)';
     el.style.width = '26px';
     el.style.height = '35px';
     el.style.backgroundSize = '100%';

@@ -4,7 +4,7 @@ const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
 const { uploadImages } = require("../utils/upload");
 
-exports.createLunch = asyncHandler(async (req, res) => {
+exports.createLaunch = asyncHandler(async (req, res) => {
   await uploadImages("video", req);
   await uploadImages("thumbnail", req);
   const developer = await dbService.findOne(developerModel, {
@@ -13,30 +13,36 @@ exports.createLunch = asyncHandler(async (req, res) => {
   if (!developer) {
     return res.recordNotFound({ message: "developer not found..." });
   }
-  const newLunch = await dbService.create(launchModel, req.body);
-  return res.success({ data: newLunch });
+  const newLaunch = await dbService.create(launchModel, req.body);
+  const updateDeveloper = { $push: { launches: newLaunch._id } };
+  await dbService.updateOne(
+    developerModel,
+    { _id: developer._id },
+    updateDeveloper
+  );
+  return res.success({ data: newLaunch });
 });
 
-exports.latestLunches = asyncHandler(async (req, res) => {
+exports.latestLaunches = asyncHandler(async (req, res) => {
   const filter = {};
   const options = {};
   const limit = 6;
-  const latestLunches = await dbService.findMany(
+  const latestLaunches = await dbService.findMany(
     launchModel,
     filter,
     options,
     limit
   );
-  return res.success({ data: latestLunches });
+  return res.success({ data: latestLaunches });
 });
-exports.getLunch = asyncHandler(async (req, res) => {
-  const lunch = await dbService.findOne(launchModel, {
-    _id: req.params.lunchId,
+exports.getLaunch = asyncHandler(async (req, res) => {
+  const launch = await dbService.findOne(launchModel, {
+    _id: req.params.launchId,
   });
-  if (!lunch) {
-    return res.recordNotFound({ message: "lunch not found.." });
+  if (!launch) {
+    return res.recordNotFound({ message: "launch not found.." });
   }
-  return res.success({ data: lunch });
+  return res.success({ data: launch });
 });
 
 exports.getDeveloperLaunches = asyncHandler(async (req, res) => {

@@ -1,4 +1,44 @@
 {
+  "SEO": {
+    "siteName": "Coldwell Banker | New Alex",
+    "title": "Coldwell Banker | New Alex  Prime Real Estate in Egypt",
+    "description": "Coldwell Banker | New Alex offers unparalleled real estate services in Egypt. Buy, sell or invest in properties with ease, guided by experts."
+  },
+  "PagesName": {
+    "aboutUs": "About Us",
+    "academy": "Academy",
+    "allLaunches": "All Launches",
+    "areaDetails": "Area",
+    "compoundDetails": "Compound",
+    "contactUs": "Contact Us",
+    "developer": "Developer",
+    "developers": "Developers",
+    "home": "Home",
+    "lunchDetails": "Launch",
+    "ourPartners": "Our Partners",
+    "property": "Property",
+    "searchResult": "Search"
+  },
+
+  "compare":{
+"title":"Compare Properties",
+"feature":"Feature",
+"type":"Type",
+"bedrooms":"Bedrooms",
+"bathrooms":"Bathrooms",
+"area":"Area",
+"startFrom":"Start From",
+"downPayment":"Down Payment" , 
+"monthly":"Monthly",
+"years":"Years",
+"deliveryIn":"DeliveryIn",
+"address":"Address",
+"compound":"Compound",
+"developer":"Developer",
+"finishing":"Finishing",
+"size":"Size",
+"moreDetails":"More Details"
+},
   "Nav": {
     "home": "Home",
     "about": "About",
@@ -14,9 +54,10 @@
     "error404": "404 Error",
     "ourPartners": "Our Partners",
     "addProperty": "Add Property",
-    "academy":"academy"
+    "academy": "academy"
   },
-  "Academy":{
+  "nodataToShow": "No data to show",
+  "Academy": {
     "academy": "Coldwell Banker New Alex ACADEMY",
     "registerNow": "REGISTER NOW",
     "description": "Get the industry-leading education and support you need to become A REAL ESTATE PROFESSIONAL",
@@ -58,8 +99,7 @@
       }
     }
   },
- 
-  
+
   "areaDetails": {
     "propertiesAvailable": "Properties Available",
     "compoundsIn": "Compounds In "
@@ -106,7 +146,7 @@
     "inputEmailRequired": "Email is required",
     "inputPhoneRequired": "Phone number is required",
     "yourMessageRequired": "Message is required",
-    
+
     "send": "Send"
   },
   "compoundDetails": {
@@ -149,7 +189,9 @@
     "propertiesAvailable": "Properties Available",
     "priceStartFrom": "Prices Start From"
   },
+  "propertiesLocations":"properties locations",
   "propertyDetails": {
+    "price":"Price",
     "paymentPlans": "Payment Plans",
     "sizeUnit": "m²",
     "unitArea": "Size",
@@ -189,7 +231,7 @@
   "finishing": "Finishing",
   "print": "Print",
   "whatsApp": "WhatsApp",
-  "featured":"featured",
+  "featured": "featured",
   "sale": "Sale",
   "rent": "Rent",
   "listsByType": "Lists By Type",
@@ -294,6 +336,6 @@
     "emailContact": "Email: info@example.com",
     "phone": "Phone",
     "phonePlaceholder": "Enter You Phone",
-    "phoneError":"Phone is required"
+    "phoneError": "Phone is required"
   }
 }

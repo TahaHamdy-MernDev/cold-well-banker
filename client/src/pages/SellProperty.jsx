@@ -1,32 +1,75 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { FaHome, FaPhone, FaHandshake } from 'react-icons/fa'
 import { useForm } from 'react-hook-form'
+import Api, {
+  FetchAllAreaNames,
+  FetchTopCompounds,
+  FetchTopTypes,
+} from '../Api/ApiCalls'
+import { toast } from 'react-toastify'
+import Seo from '../Seo'
 
 export default function SellProperty() {
   const { t, i18n } = useTranslation()
-  const [location, setLocation] = useState('')
+  const [areas, setAreas] = useState([])
   const [compounds, setCompounds] = useState([])
+  const [types, setTypes] = useState([])
   const { register, handleSubmit, watch } = useForm()
-
-  const handleLocationChange = (e) => {
-    setLocation(e.target.value)
-    // Fetch compounds based on location
-    // This is a placeholder logic
-    if (e.target.value === 'Location1') {
-      setCompounds(['Compound1', 'Compound2'])
-    } else {
-      setCompounds([])
+  const fetchData = async () => {
+    try {
+      const areas = await FetchAllAreaNames()
+      const compounds = await FetchTopCompounds()
+      const types = await FetchTopTypes()
+      setAreas(areas)
+      setCompounds(compounds)
+      setTypes(types)
+    } catch (error) {
+      console.error('Error fetching areas:', error)
     }
   }
+  useEffect(() => {
+    fetchData()
+  }, [])
 
-  const onSubmit = (data) => {
-    console.log(data)
-  }
-
+  const onSubmit = async (data) => {
+    
+    const { area, compound, propertyType, ...rest } = data;
+    
+    const formattedData = {
+      ...rest,
+      propertyDetails: [
+        { area, compound, type: propertyType },
+      ],
+    };
+  
+    try {
+    const loadingToastId = toast.loading("Submitting your data...");
+      const response = await Api.post('/requests/sell-property', formattedData);
+      console.log(response);
+      
+      toast.update(loadingToastId, {
+        render: "Successfully submitted!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("Error submitting data:", error);
+      toast.update(loadingToastId, {
+        render: error.response?.data?.message || "Failed to submit. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 5000,
+      });
+    }
+  };
+  
   return (
-    <div className=" container-xxl my-5">
+    <React.Fragment>
+      <Seo/>
+        <div className=" container-xxl my-5">
       <Container>
         <Row className="text-center mb-4">
           <Col>
@@ -35,7 +78,7 @@ export default function SellProperty() {
           </Col>
         </Row>
         <Row className="mb-5">
-          <Col md={8} className=' mx-auto'>
+          <Col md={8} className=" mx-auto">
             <Row>
               <Col md={4} className="mb-3">
                 <Card className="h-100">
@@ -92,9 +135,6 @@ export default function SellProperty() {
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formName">
-                    {/* <Form.Label>
-                      {t('sellProperty.form.inputs.name')}
-                    </Form.Label> */}
                     <Form.Control
                       type="text"
                       placeholder={t('sellProperty.form.inputs.name')}
@@ -104,13 +144,11 @@ export default function SellProperty() {
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formPhoneNumber">
-                    {/* <Form.Label>
-                      {t('sellProperty.form.inputs.phoneNumber')}
-                    </Form.Label> */}
                     <Form.Control
                       type="tel"
+                      dir={i18n.dir()}
                       placeholder={t('sellProperty.form.inputs.phoneNumber')}
-                      {...register('phoneNumber', { required: true })}
+                      {...register('phone', { required: true })}
                     />
                   </Form.Group>
                 </Col>
@@ -118,39 +156,34 @@ export default function SellProperty() {
               <Row>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formLocation">
-                    {/* <Form.Label>
-                      {t('sellProperty.form.inputs.location')}
-                    </Form.Label> */}
                     <Form.Control
                       as="select"
-                      value={location}
-                      onChange={handleLocationChange}
-                      {...register('location', { required: true })}
+                      {...register('area', { required: true })}
                     >
                       <option value="">
                         {t('sellProperty.form.inputs.location')}
                       </option>
-                      <option value="Location1">Location 1</option>
-                      <option value="Location2">Location 2</option>
+                      {areas?.map((area, index) => (
+                        <option key={index + 1} value={area._id}>
+                          {area.name[i18n.language]}
+                        </option>
+                      ))}
                     </Form.Control>
                   </Form.Group>
                 </Col>
                 <Col md={6}>
                   <Form.Group className="mb-3" controlId="formCompound">
-                    {/* <Form.Label>
-                      {t('sellProperty.form.inputs.compound')}
-                    </Form.Label> */}
                     <Form.Control
                       as="select"
-                      disabled={!location}
+                      // disabled={!location}
                       {...register('compound')}
                     >
                       <option value="">
                         {t('sellProperty.form.inputs.compound')}
                       </option>
-                      {compounds.map((comp, index) => (
-                        <option key={index + 1} value={comp}>
-                          {comp}
+                      {compounds?.map((comp, index) => (
+                        <option key={index + 1} value={comp._id}>
+                          {comp.name[i18n.language]}
                         </option>
                       ))}
                     </Form.Control>
@@ -158,9 +191,6 @@ export default function SellProperty() {
                 </Col>
               </Row>
               <Form.Group className="mb-3" controlId="formPropertyType">
-                {/* <Form.Label>
-                  {t('sellProperty.form.inputs.propertyType')}
-                </Form.Label> */}
                 <Form.Control
                   as="select"
                   {...register('propertyType', { required: true })}
@@ -168,23 +198,21 @@ export default function SellProperty() {
                   <option value="">
                     {t('sellProperty.form.inputs.propertyType')}
                   </option>
-                  <option value="Apartment">Apartment</option>
-                  <option value="Villa">Villa</option>
-                  <option value="Commercial">Commercial</option>
+                  {types?.map((type) => (
+                    <option key={type._id} value={type._id}>
+                      {type.name[i18n.language]}
+                    </option>
+                  ))}
                 </Form.Control>
               </Form.Group>
               <Form.Group className="mb-3" controlId="formDescription">
-                {/* <Form.Label>
-                  {t('sellProperty.form.inputs.description')}
-                </Form.Label> */}
                 <Form.Control
                   as="textarea"
                   rows={4}
                   placeholder={t('sellProperty.form.inputs.description')}
-                  {...register('description', { required: true })}
+                  {...register('message', { required: true })}
                 />
               </Form.Group>
-              
               <Button variant="primary" type="submit" className="w-100">
                 {t('sellProperty.form.inputs.submit')}
               </Button>
@@ -193,5 +221,7 @@ export default function SellProperty() {
         </Row>
       </Container>
     </div>
+    </React.Fragment>
+  
   )
 }

@@ -54,7 +54,36 @@ exports.getDeveloper = asyncHandler(async (req, res) => {
   const properties= await dbService.findMany(propertyModel,{developer:developer._id})
   const compounds= await dbService.findMany(compoundModel,{developer:developer._id})
   // const properties= await dbService.findMany(lunch,{developer:developer._id})
-  return res.success({ data: {developer,properties,compounds} });
+  const pricesStartFrom = await developerModel.aggregate([
+    {
+      $match: { _id: developer._id },
+    },
+    {
+      $lookup: {
+        from: "properties",
+        localField: "_id",
+        foreignField: "developer",
+        as: "properties",
+      },
+    },
+    {
+      $unwind: "$properties",
+    },
+    {
+      $group: {
+        _id: "$_id",
+        min_price: { $min: "$properties.min_price" },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        min_price: 1,
+      },
+    },
+  ]);
+  console.log(pricesStartFrom);
+  return res.success({ data: {developer,properties,compounds , pricesStartFrom} });
 });
 exports.getAllDevelopers = asyncHandler(async (req, res) => {
   const developers = await dbService.findMany(developerModel);

@@ -5,6 +5,10 @@ import {
 import 'react-lazy-load-image-component/src/effects/blur.css'
 
 const Img = ({ image, ...props }) => {
+
+  const handleImageError = (event) => {
+    event.target.src = 'broken.webp';
+  };
   return (
     <div>
       <LazyLoadImage
@@ -14,6 +18,8 @@ const Img = ({ image, ...props }) => {
         src={image.src}
         width={image.width}
         effect="blur"
+        draggable="false"
+        onError={handleImageError}
         {...props}
       />
     </div>

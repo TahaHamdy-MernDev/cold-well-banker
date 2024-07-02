@@ -17,10 +17,6 @@ const areaSchema = new mongoose.Schema(
         url: { type: String, required: true },
       },
     ],
-    location: {
-      lat: { type: Number, required: true },
-      long: { type: Number, required: true },
-    },
     launches: [{ type: mongoose.Schema.Types.ObjectId, ref: "Launch" }],
     developers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Developer" }],
     compounds: [{ type: mongoose.Schema.Types.ObjectId, ref: "Compound" }],

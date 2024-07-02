@@ -15,7 +15,11 @@ const CompoundCard = ({ item}) => {
     height: '220px',
     width: '100%',
   }
-
+  function getFirstTwoWords(text) {
+    const words = text.split(' ');
+    return words.slice(0, 2).join(' ');
+  }
+  
   return (
     <div className="compound-card d-inline-block position-relative">
       <Link to={`/compound-details/${item._id}`}>
@@ -25,7 +29,7 @@ const CompoundCard = ({ item}) => {
         />
         <div className="compound-image-layer">
           <div className="compound-image-text">
-            <h5>{item.name[i18n.language]}</h5>
+            <h5>{getFirstTwoWords(item.name[i18n.language])}</h5>
             <p>
               {item.numberOfProperties} {t('property')}
             </p>

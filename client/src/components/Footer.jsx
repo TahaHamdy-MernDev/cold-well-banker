@@ -48,7 +48,7 @@ const ContactUs = React.memo(({ t }) => (
       <ContactDetail icon={Mail} text="coldwellbanker@newalex.com" href="mailto:coldwellbanker@newalex.com" />
       <ContactDetail icon={Phone} text="+2 03-4242098 - 012 22 24 24 88" />
       <div className="footer-social d-flex flex-wrap gap-1">
-        {socialLinks.map(({ href, icon, label }) => (
+        {socialLinks?.map(({ href, icon, label }) => (
           <SocialLink key={label} href={href} icon={icon} label={label} />
         ))}
       </div>
@@ -81,7 +81,7 @@ const ListsByType = React.memo(({ t, i18n, topTypes }) => (
   <div className="col-md-4">
     <h4>{t('listsByType')}</h4>
     <div className="d-flex flex-column gap-2">
-      {topTypes.map(({ name, propertiesCount }, index) => (
+      {topTypes?.map(({ name, propertiesCount }, index) => (
         <p key={index} className="mb-1">
           {name[i18n.language]} ({propertiesCount || 0})
         </p>
@@ -94,7 +94,7 @@ const LatestProperties = React.memo(({ t, latestProperties }) => (
   <div className="col-md-4">
     <h4>{t('latestProperties')}</h4>
     <div className="d-flex gap-2 flex-wrap">
-      {latestProperties.slice(0, 4).map((item, index) => {
+      {latestProperties?.slice(0, 4)?.map((item, index) => {
         const itemImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${item?.thumbnail[0].url}`;
         return (
           <Link to={`/property-details/${item._id}`} className="rounded-2" key={item._id}>

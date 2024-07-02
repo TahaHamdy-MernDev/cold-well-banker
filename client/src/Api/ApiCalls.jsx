@@ -30,7 +30,8 @@ export const FetchLaunchDetails = (id) => fetchData(`/launch/get/${id}`)
 export const FetchTopCompounds = () => fetchData('/compound/get-top')
 export const FetchAllLaunches = () => fetchData('/launch/get-all')
 export const FetchAllCompoundsNames = () => fetchData('/compound/get-names')
-export const FetchAllTypesNames = () => fetchData('/type/get')
+export const FetchAllTypesNames = () => fetchData('/type/get-all')
+export const FetchPropertyToCompare = (storedPropertyIds) => fetchData(`/property/compare?ids=${storedPropertyIds.join(',')}`)
 export const FetchAreaDetails = (areaId, page = 1, pageSize = 10) => {
   return fetchData(`/area/get/${areaId}?page=${page}&pageSize=${pageSize}`)
 }
@@ -59,3 +60,4 @@ const sendData = async (endpoint, data) => {
 export const AcademyRequest = (data) => sendData('/requests/academy', data)
 export const ContactRequest = (data) => sendData('/requests/contact', data)
 export const propertyRequest = (data) => sendData('/requests/property', data)
+export default Api

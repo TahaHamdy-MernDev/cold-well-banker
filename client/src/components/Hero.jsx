@@ -5,6 +5,7 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { FetchAllTypesNames, FetchAllCompoundsNames } from '../Api/ApiCalls';
 import { useNavigate } from 'react-router-dom';
 import Img from './Img'
+import { getFirstTwoWords } from '../assets/common';
 const Hero = React.memo(() => {
   const { t, i18n } = useTranslation();
   const { register, handleSubmit } = useForm();
@@ -53,9 +54,9 @@ const Hero = React.memo(() => {
   };
   return (
     <section className="w-100 overflow-hidden position-relative" style={{ height: '750px' }}>
-     <Img image={imageProps} className="lazy-background" />
+     <Img image={imageProps} className="lazy-background-hero" />
       <div className="hero-overlay"></div>
-      <div className="hero-content position-absolute top-50 start-50 translate-middle w-75 z-3 ">
+      <div className="hero-content position-absolute top-50 start-50 translate-middle w-75 z-3">
         <h2 className="display-5 mb-4 text-primary-white text-center">
           {t('Header.perfectHome')}
         </h2>
@@ -70,7 +71,7 @@ const Hero = React.memo(() => {
         <Form.Control as="select" id="compoundSelect" required {...register('compound')} defaultValue="">
           <option disabled value="">{t('Search.compound')}</option>
           {compounds?.map((compound) => (
-            <option key={compound._id} value={compound._id}>{compound.name[i18n.language]}</option>
+            <option key={compound._id} value={compound._id}>{getFirstTwoWords(compound.name[i18n.language])}</option>
           ))}
         </Form.Control>
       </Form.Group>
@@ -113,7 +114,7 @@ const Hero = React.memo(() => {
       </Form.Group>
     </Col>
     <Col md={2} className="p-0">
-      <Button variant="primary" className="button-primary w-100 mb-0 rounded-2" type="submit">
+      <Button  className="btn button-primary w-100 mb-0 rounded-2" type="submit">
         {t('Search.Search')}
       </Button>
     </Col>

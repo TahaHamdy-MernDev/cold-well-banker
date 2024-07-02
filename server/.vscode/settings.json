@@ -1,4 +1,5 @@
 {
     "editor.fontFamily": "ComicShannsMono Nerd Font",
-    "files.autoSave": "onWindowChange"
+    "files.autoSave": "onWindowChange",
+    "editor.fontSize": 16
 }

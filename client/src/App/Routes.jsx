@@ -19,6 +19,7 @@ const AreaDetails= React.lazy(() =>delay(  import("../pages/AreaDetails")));
 const SearchResults= React.lazy(() => delay( import("../pages/SearchResults")));
 const Academy= React.lazy(() => delay( import("../pages/Academy")));
 const SellProperty= React.lazy(() => delay( import("../pages/SellProperty")));
+const PropertyComparison= React.lazy(() => delay( import("../pages/PropertyComparison")));
 
 const ProjectRoutes = () => {
   const element = useRoutes([
@@ -40,6 +41,7 @@ const ProjectRoutes = () => {
         { path: "/search-results", element: <SearchResults /> },
         { path: "/academy", element: <Academy /> },
         { path: "/sell-property", element: <SellProperty /> },
+        { path: "/compare", element: <PropertyComparison /> },
       ],
     },
   ]);

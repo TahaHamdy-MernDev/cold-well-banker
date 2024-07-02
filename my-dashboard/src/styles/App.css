@@ -1,26 +1,8 @@
 .navbar {
   z-index: 99999999999999;
 }
-/* .sidebar {
-  height: 100vh;
-  padding-top: 20px !important;
-} */
-.sidebar {
-  top: 56px; /* Adjust based on the height of your Navbar */
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: fixed;
-  background-color: #f8f9fa; /* Optional: Set your desired sidebar background color */
-  padding-top: 20px; /* Optional: Adjust padding as needed */
-}
-
-.side-bar {
-  position: fixed;
-}
 .main-content {
-  margin-top: 56px !important;
-  min-height: 90vh;
+  padding-top:50px !important;
 }
 @media (max-width: 992px) {
   .sidebar {
@@ -30,16 +12,17 @@
     margin-left: 0;
   }
 }
-.nav-link.active {
-  background-color: #01216a;
-  color: white;
-  border-radius: 4px;
+.accordion-item:first-of-type>.accordion-header .accordion-button,
+.accordion-item:first-of-type{
+  border-radius: 0% !important;
+}
+.accordion-button{
+  padding: 18px !important;
+}
+.accordion-body{
+  padding-top: 0 !important;
 }
 
-.nav-link.active:hover {
-  background-color: #418fde;
-  color: white;
-}
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -47,14 +30,16 @@ input[type="number"]::-webkit-inner-spin-button {
 }
 
 input[type="number"] {
-  -moz-appearance: textfield; /* Firefox */
+  -moz-appearance: textfield; 
 }
 .form-control:focus,
 .form-check-input:focus {
   box-shadow: none !important;
 }
-
-/* label.required::after {
-  content: " *";
-  color: red;
-} */
+.accordion-header button:active:focus {
+  border: none;
+  box-shadow: none;
+}
+.accordion-button:focus{
+  box-shadow: none !important;
+}

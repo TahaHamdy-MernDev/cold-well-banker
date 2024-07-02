@@ -129,3 +129,13 @@ exports.getProperty = asyncHandler(async (req, res) => {
   }
   return res.success({ data: property });
 });
+
+
+exports.compare = asyncHandler(async(req,res)=>{
+  const { ids } = req.query;
+  const propertyIds = ids.split(',');
+  console.log(ids);
+  const properties =await dbService.findMany(propertyModel,{_id: { $in: propertyIds }})
+  return res.success({ data: properties });
+
+})

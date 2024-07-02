@@ -12,7 +12,7 @@ const validateRequestParameters = (validationSchema) => {
             });
           });
         }
-        if(req.files && req.files.video?.length>0){
+        if(req.files && req.files.video?.length>0){ 
           req.files.video.forEach(file => {
             fs.promises.unlink(path.join(__basedir, `uploads/${file.filename}`), err => {
               if (err) {

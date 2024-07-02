@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
@@ -11,7 +11,6 @@ import {
   ToggleButtonGroup,
   ToggleButton,
 } from "react-bootstrap";
-import MapPicker from "../../components/MapPicker";
 import ReactQuill from "react-quill";
 import ImageUploader from "../../components/ImageUploader";
 import Api from "../../Api";
@@ -37,16 +36,6 @@ const schema = Joi.object({
   callUsNumber: Joi.string().required().messages({
     "string.empty": "Call Us Number is required",
   }),
-  location: Joi.object({
-    lat: Joi.number().required().messages({
-      "number.base": "Latitude must be a number",
-      "any.required": "Latitude is required",
-    }),
-    long: Joi.number().required().messages({
-      "number.base": "Longitude must be a number",
-      "any.required": "Longitude is required",
-    }),
-  }).required(),
 });
 
 export default function CreateArea() {
@@ -60,18 +49,7 @@ export default function CreateArea() {
     resolver: joiResolver(schema),
   });
 
-  const [useMap, setUseMap] = useState(true);
-  const [mapLocation, setMapLocation] = useState({
-    longitude: 31.23586166241668,
-    latitude: 30.04426189357251,
-    zoom: 5,
-  });
-
-  const handleLocationSelect = ({ latitude, longitude }) => {
-    setValue("location.lat", latitude);
-    setValue("location.long", longitude);
-    setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
-  };
+ 
 
   const [useRichTextEditor, setUseRichTextEditor] = useState(true);
   const [areaImages, setAreaImages] = useState(null);
@@ -215,68 +193,7 @@ export default function CreateArea() {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Form.Group className="my-3">
-          <Form.Label>Location</Form.Label>
-          <ToggleButtonGroup
-            type="radio"
-            name="locationOptions"
-            defaultValue={useMap ? 1 : 2}
-            className="mb-3"
-          >
-            <ToggleButton
-              id="tbg-radio-1"
-              value={1}
-              onClick={() => setUseMap(true)}
-            >
-              Choose from Map
-            </ToggleButton>
-            <ToggleButton
-              id="tbg-radio-2"
-              value={2}
-              onClick={() => setUseMap(false)}
-            >
-              Enter Coordinates
-            </ToggleButton>
-          </ToggleButtonGroup>
-
-          {useMap ? (
-            <MapPicker
-              initialViewport={mapLocation}
-              onLocationSelect={handleLocationSelect}
-            />
-          ) : (
-            <Row>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Latitude</Form.Label>
-                  <Form.Control
-                    type="number"
-                    step="any"
-                    {...register("location.lat")}
-                    isInvalid={!!errors.location?.lat}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.location?.lat?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-              <Col md={6}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Longitude</Form.Label>
-                  <Form.Control
-                    type="number"
-                    step="any"
-                    {...register("location.long")}
-                    isInvalid={!!errors.location?.long}
-                  />
-                  <Form.Control.Feedback type="invalid">
-                    {errors.location?.long?.message}
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </Col>
-            </Row>
-          )}
-        </Form.Group>
+    
 
         <Button variant="primary" type="submit">
           Create Area

@@ -15,7 +15,7 @@ router.put(
   "/update/:typeId",
   updateType
 );
-router.get("/get", getAllTypes);
+router.get("/get-all", getAllTypes);
 router.get("/get-top", topTypes);
 router.get("/get/:typeId", getType);
 router.delete("/delete/:typeId", deleteType);

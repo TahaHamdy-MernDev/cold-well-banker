@@ -4,18 +4,20 @@ import { useTranslation } from 'react-i18next'
 import React from 'react'
 import Img from './Img'
 
-export default function Nav({ scrollPosition }) {
+export default function Nav() {
   const { t, i18n } = useTranslation()
 
   const toggleLanguage = () => {
-    const newLang = i18n.language === 'en' ? 'ar' : 'en'
-    i18n.changeLanguage(newLang)
-
-    const direction = newLang === 'ar' ? 'rtl' : 'ltr'
-    document.documentElement.setAttribute('dir', direction)
-
-    localStorage.setItem('selectedLanguage', newLang)
+    const newLang = i18n.language === 'en' ? 'ar' : 'en';
+    i18n.changeLanguage(newLang);
+  
+    const direction = newLang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.setAttribute('dir', direction);
+    document.documentElement.setAttribute('lang', newLang);
+  
+    localStorage.setItem('selectedLanguage', newLang);
   }
+  
 
   React.useEffect(() => {
     const selectedLanguage = localStorage.getItem('selectedLanguage')
@@ -47,7 +49,7 @@ export default function Nav({ scrollPosition }) {
           onClick={toggleLanguage}
           className="btn d-lg-none lang-switcher "
         >
-          <span>{i18n.language.toUpperCase()}</span> <Globe size={20} />
+          <span className=' mb-0'>{i18n.language.toUpperCase()}</span> <Globe size={20} />
         </button>
         <button
           type="button"
@@ -84,7 +86,7 @@ export default function Nav({ scrollPosition }) {
             {t('Nav.academy')}
           </Link>
         </div>
-        <div className="d-flex flex-column flex-md-row justify-content-center align-items-start gap-1">
+        <div className="d-flex flex-column flex-md-row justify-content-center align-items-center gap-1">
           <Link to="/sell-property">
             <button className=" btn button-primary mb-0">
               {t('Nav.addProperty')}
@@ -92,9 +94,9 @@ export default function Nav({ scrollPosition }) {
           </Link>
           <button
             onClick={toggleLanguage}
-            className="btn lang-switcher d-none d-lg-block"
+            className="btn lang-switcher d-none d-lg-block gap-1"
           >
-            <h6 className=" d-inline-block">{i18n.language.toUpperCase()}</h6>{' '}
+            <h6 className=" d-inline-block mb-0">{i18n.language.toUpperCase()}</h6>{' '}
             <Globe size={20} />
           </button>
         </div>

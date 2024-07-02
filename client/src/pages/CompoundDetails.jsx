@@ -5,12 +5,14 @@ import { FetchCompound } from '../Api/ApiCalls'
 import Gallery from '../components/Common/Gallery'
 
 import { Whatsapp, ContactUs } from '../components/Common/Buttons'
-import { formatNumber } from '../assets/common'
+import { formatNumber, getFirstTwoWords } from '../assets/common'
 import { MapPin } from 'lucide-react'
 import Form from '../components/Common/Form'
 import MapComponent from '../components/Map/MapContainer'
 import Carousel from '../components/Common/Carousel'
 import Property from '../components/Cards/Property'
+import Img from '../components/Img'
+import Description from '../components/Common/Description'
 
 export default function CompoundDetails() {
   const { id } = useParams()
@@ -21,7 +23,6 @@ export default function CompoundDetails() {
   useEffect(() => {
     async function FetchData() {
       const data = await FetchCompound(id)
-      console.log(data)
       setCompound(data.compound)
       setDetails(data.compoundPropertiesInfo)
       setRecommendations(data.recommendations)
@@ -31,34 +32,33 @@ export default function CompoundDetails() {
   const developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${compound?.developer[0].images[0].url}`
   const compoundDescription = compound?.description[i18n.language]
   const locations = details[0]?.allPropertyLocations
- 
+
   return (
     <React.Fragment>
       <Gallery property={compound} />
       <section className=" container-xxl section-padding">
         <div className="container">
-          <div className="row  card-style">
-            <div className="col-md-12 d-flex flex-column flex-md-row mx-auto">
-              <div className="col-md-2 d-flex justify-content-md-center align-items-center ">
+          <div className="row">
+            <div className="col-md-12 d-flex flex-column justify-content-center flex-md-row mx-auto">
+              <div className="col-md-1 d-flex justify-content-md-center align-items-center ">
                 <Link to={`/developer-details/${compound?.developer[0]._id}`}>
-                  <img
-                    loading="lazy"
-                    src={developerImage}
-                    className=" object-fit-cover rounded-4 border shadow"
-                    draggable="false"
-                    width="140"
-                    height="140"
-                    alt="developer logo"
+                  <Img
+                    image={{
+                      src: developerImage,
+                      width: 90,
+                      height: 90,
+                      alt: 'developer logo',
+                    }}
+                    className=" object-fit-cover rounded-circle border shadow"
                   />
                 </Link>
               </div>
               <div
-                className="col-md-10 d-flex flex-column mt-2 "
-                style={{ marginRight: '15px' }}
+                className="col-md-10 d-flex flex-column "
               >
                 <div className=" col-md-12 d-flex flex-column ">
                   <div className=" d-flex flex-column flex-md-row">
-                    <h1 className="property-title fs-3 mt-2 col-md-10 justify-content-center align-items-center">
+                    <h1 className="sup-title mb-0 col-md-10">
                       {compound?.name[i18n.language]}
                     </h1>
                   </div>
@@ -76,17 +76,17 @@ export default function CompoundDetails() {
                         {t('propertyDetails.pricesStartFrom')}
                       </p>
                       <span className=" d-flex justify-content-start gap-0 gap-md-2 flex-column flex-md-row">
-                        <h3>
+                        <h3 className=' sup-title mb-0'>
                           {formatNumber(
                             details[0]?.minPriceProperty?.min_price
                           )}{' '}
                           {t('egp')}
                         </h3>
-                        <span className=" d-flex justify-content-start align-items-start flex-column flex-md-row align-items-md-center ">
+                        <span className="d-flex justify-content-start align-items-start gap-1 flex-column flex-md-row align-items-md-center">
                           <p style={{ fontSize: '12px' }} className=" mb-0">
                             {t('propertyDetails.maxPrice')}:
                           </p>{' '}
-                          <h3>
+                          <h3 className=' sup-title mb-0'>
                             {formatNumber(
                               details[0]?.maxPriceProperty?.max_price
                             )}{' '}
@@ -117,17 +117,15 @@ export default function CompoundDetails() {
         <div className="container">
           <div className="row gy-4 gx-5">
             <div className="col-md-9">
-              <div className="row card-style mb-4">
-                <h2 className="title">
-                  {t('propertyDetails.about')} {compound?.name[i18n.language]}
-                </h2>
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: compoundDescription }}
+              <div className="row mb-4">
+                <Description
+                title={compound?.name[i18n.language]}
+                description={compoundDescription}
                 />
+              
               </div>
-              <div className="row card-style">
-                <h2 className="title">{t('launches.viewMap')}</h2>
+              <div className="row">
+                <h2 className="sup-title">{t('propertiesLocations')}</h2>
                 <div className="map-container">
                   {locations?.length > 0 && (
                     <MapComponent
@@ -154,16 +152,15 @@ export default function CompoundDetails() {
       </section>
       {recommendations?.length > 0 && (
         <section className="container-xxl section-padding">
-          <div className="container card-style">
-            <h2 className=" title">
-              {t('titles.exploreUnits')} {compound?.name[i18n.language]}
+          <div className="container">
+            <h2 className=" sup-title">
+              {t('titles.exploreUnits')}  {getFirstTwoWords(compound?.name[i18n.language])}
             </h2>
             <Carousel
-sm={1.1}
-md={2.2}
-lg={3.2}
+              sm={1.1}
+              md={2.2}
+              lg={3.2}
               items={recommendations?.map((item) => item)}
-            
               Component={Property}
             />
           </div>

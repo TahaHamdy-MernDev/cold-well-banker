@@ -5,6 +5,7 @@ import LazyLoad from 'react-lazyload';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Spinner } from 'react-bootstrap';
+import Img from '../Img';
 
 const Lightbox = React.lazy(() => import('./Lightbox'));
 
@@ -34,7 +35,7 @@ const Gallery = React.memo(({ property }) => {
   }, []);
 
   const settings = {
-    dots: true,
+    dots:false,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -44,12 +45,12 @@ const Gallery = React.memo(({ property }) => {
   const onSubmit = useCallback((data) => {
     console.log(data);
   }, []);
-
+  const imagesToShow = property?.images || [];
   return (
     <section className="container-xxl section-padding mb-2">
       <div className="container">
-        <ImageGallery>
-          {property?.images.map((image, index) => (
+        <ImageGallery numImages={property?.images?.length}>
+          {imagesToShow.map((image, index) => (
             <ImageContainer
               className={index === activeIndex ? 'active' : ''}
               key={index + 1}
@@ -63,20 +64,19 @@ const Gallery = React.memo(({ property }) => {
                 }
               }}
             >
-              <LazyLoad
-                height={500}
-                offset={100}
-                placeholder={<Placeholder />}
-                once
-              >
-                <GalleryImage
-                  loading="lazy"
-                  src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`}
-                  alt={`${index + 1}`}
-                  srcSet={`${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url} 1x, ${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url.replace(/.jpg$/, '-2x.jpg')} 2x`}
-                  sizes="(max-width: 600px) 480px, 800px"
-                />
-              </LazyLoad>
+             <Img
+                image={{
+                  key: index,
+                  alt: `Image ${index + 1}`,
+                  height: '100%',
+                  src: `${import.meta.env.VITE_IMAGE_ORIGIN}/${image.url}`,
+                  width: '100%',
+                  
+                }}
+                className="object-fit-cover"
+              />
+
+            
             </ImageContainer>
           ))}
         </ImageGallery>
@@ -112,17 +112,18 @@ Gallery.propTypes = {
 };
 
 const ImageGallery = styled.div`
-  height: 500px;
+  height: 650px;
   max-width: 100%;
   display: flex;
   gap: 8px;
   justify-content: flex-start;
   border-radius: 8px;
   overflow: hidden;
+  flex-wrap: wrap; /* Handle different numbers of images */
 `;
 
 const ImageContainer = styled.div`
-  flex: 1;
+  flex: 1 1 calc(20% - 8px); /* Adjusted for different numbers of images */
   height: 100%;
   overflow: hidden;
   display: flex;
@@ -134,11 +135,23 @@ const ImageContainer = styled.div`
   cursor: pointer;
 
   &.active {
-    flex: 5;
+    flex: 1 1 calc(40% - 8px); /* Adjusted for active image enlargement */
   }
 
   &:not(.active) {
-    flex: 1;
+    flex: 1 1 calc(8% - 8px); /* Default size for non-active images */
+  }
+
+  @media (max-width: 992px) {
+    flex: 1 1 calc(33.33% - 8px); /* Adjust for smaller screens */
+  }
+
+  @media (max-width: 768px) {
+    flex: 1 1 calc(50% - 8px); /* Adjust for smaller screens */
+  }
+
+  @media (max-width: 576px) {
+    flex: 1 1 calc(100% - 8px); /* Full width on very small screens */
   }
 `;
 

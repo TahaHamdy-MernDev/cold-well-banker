@@ -1,7 +1,8 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { ContactRequest } from '../../Api/ApiCalls';
+import { toast } from 'react-toastify';
+import { propertyRequest } from '../../Api/ApiCalls';
 
 const Form = () => {
   const {t,i18n} = useTranslation()
@@ -12,8 +13,25 @@ const Form = () => {
   } = useForm();
 
   const onSubmit = async(data) => {
-    const response = await ContactRequest(data)
-    console.log("response",response);
+    const loadingToastId = toast.loading("Submitting your data...");
+    try {
+      const response = await propertyRequest(data)
+        console.log(response);
+        toast.update(loadingToastId, {
+          render: "Successfully submitted!",
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
+      } catch (error) {
+        console.error("Error submitting data:", error);
+        toast.update(loadingToastId, {
+          render: error.response?.data?.message || "Failed to submit. Please try again.",
+          type: "error",
+          isLoading: false,
+          autoClose: 5000,
+        });
+      }
   };
  
   return (
@@ -67,7 +85,7 @@ const Form = () => {
       ></textarea>
       {errors.comment && <div className="invalid-feedback">{errors.comment.message}</div>}
 
-      <button type="submit" className="btn button-primary">
+      <button type="submit" className="btn button-primary mb-0 mx-2">
         {t('contactForm.send')}
       </button>
     </form>

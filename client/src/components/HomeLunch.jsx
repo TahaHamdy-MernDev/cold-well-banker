@@ -40,6 +40,7 @@ export default function HomeLunch() {
           <Carousel
             md={2.2}
             lg={3.2}
+            sm={1.1}
             items={lunch?.map((item) => item)}
             Component={LaunchCard}
           />

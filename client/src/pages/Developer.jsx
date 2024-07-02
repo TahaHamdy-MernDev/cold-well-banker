@@ -10,6 +10,7 @@ import Property from '../components/Cards/Property'
 import Form from '../components/Common/Form'
 import DetailsLayout from '../layouts/DetailsLayout'
 import Description from '../components/Common/Description'
+import Img from '../components/Img'
 
 export default function Developer() {
   const { t, i18n } = useTranslation()
@@ -17,13 +18,15 @@ export default function Developer() {
   const [developer, setDeveloper] = useState()
   const [compounds, setCompounds] = useState()
   const [properties, setProperties] = useState()
-
+const [pricesStartFrom, setPricesStartFrom] = useState()
   useEffect(() => {
     async function fetchData() {
       const data = await FetchDeveloper(id)
       setDeveloper(data.developer)
       setCompounds(data.compounds)
       setProperties(data.properties)
+      console.log(data.pricesStartFrom);
+      setPricesStartFrom(data.pricesStartFrom[0].min_price)
     }
     fetchData()
   }, [id])
@@ -36,31 +39,30 @@ export default function Developer() {
     <div className=" container-xxl mt-5">
       <section className="container">
         <div className="row " style={{ top: '100px' }}>
-          <div className="col-md-1 mb-2 d-flex justify-content-md-center align-items-center">
+          <div className="col-md-2 mb-2 d-flex justify-content-md-end align-items-center">
             <Link to={`/developer-details/${developer?._id}`}>
-              <img
-                loading="lazy"
-                src={developerImage}
+              <Img
+                image={{
+                  src: developerImage,
+                  width: 100,
+                  height: 100,
+                  alt: 'developer logo',
+                }}
                 className="object-fit-cover rounded-circle border shadow"
-                draggable="false"
-                width="90"
-                height="90"
-                alt="developer logo"
               />
             </Link>
           </div>
           <div className="col-md-10">
-            <h1 className=" mb-2 fs-3 text-capitalize ">{developerName}</h1>
+            <h1 className="sup-title mb-0">{developerName}</h1>
             <p style={{ fontWeight: '600' }} className=" mb-1">
               {availableProperties} {t('developers.propertiesAvailable')}{' '}
             </p>
             <p className=" mb-0">{t('developers.priceStartFrom')} </p>
-            <h2 className=" sup-title" style={{ fontWeight: '600' }}>
-              {formatNumber(10000000)} {t('egp')}
+            <h2 className="sup-title">
+              {formatNumber(pricesStartFrom)} {t('egp')}
             </h2>
           </div>
         </div>
- 
       </section>
       <section className=" container">
         <DetailsLayout>
@@ -71,19 +73,18 @@ export default function Developer() {
         </DetailsLayout>
       </section>
       <section className="container mt-2">
-          <h3 className="sup-title">
-            {t('titles.exploreUnits')} {developerName}
-          </h3>
-          <div className="row gx-4 gy-5">
-            {properties?.map((property, index) => {
-              return (
-                <div key={index + 1} className=" col-md-4 px-1 px-lg-2">
-                  <Property item={property} index={index} />
-                </div>
-              )
-            })}
-          </div>
-  
+        <h3 className="sup-title">
+          {t('titles.exploreUnits')} {developerName}
+        </h3>
+        <div className="row gx-4 gy-5">
+          {properties?.map((property, index) => {
+            return (
+              <div key={index + 1} className=" col-md-4 px-1 px-lg-2">
+                <Property item={property} index={index} />
+              </div>
+            )
+          })}
+        </div>
       </section>
     </div>
   )

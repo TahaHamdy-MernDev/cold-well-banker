@@ -8,3 +8,7 @@ export const formatNumber = (num) => {
   });
   return formatter.format(num);
 };
+export const getFirstTwoWords = (text, num = 2) =>{
+  const words = text.split(' ')
+  return words.slice(0, num).join(' ')
+}

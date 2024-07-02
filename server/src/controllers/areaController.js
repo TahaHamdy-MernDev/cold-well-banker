@@ -109,7 +109,7 @@ exports.topAreas = asyncHandler(async (req, res) => {
       $sort: { numberOfCompounds: -1, numberOfProperties: -1 },
     },
     {
-      $limit: 4,
+      $limit: 8,
     },
   ]);
 
@@ -122,6 +122,8 @@ exports.deleteArea = asyncHandler(async (req, res) => {
     return res.recordNotFound({ message: "this area not found..." });
   }
 
+
+  
   await deleteImages(area);
   const deletedArea = await dbService.deleteOne(areaModel, {
     _id: req.params.areaId,

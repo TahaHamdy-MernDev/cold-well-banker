@@ -12,6 +12,7 @@ const { validateRequestBody } = require("../utils/validate");
 const { createAreaSchema, updateAreaSchema } = require("../utils/validation/areaValidation");
 
 const router = require("express").Router();
+router.get("/get-names", getAreaNames);
 router.post(
   "/create",
   multerConfig.fields([{ name: "images" }]),
@@ -25,7 +26,6 @@ validateRequestBody(updateAreaSchema),
   updateArea
 );
 router.get("/get-all", getAllArea);
-router.get("/get-names", getAreaNames);
 router.get("/top-areas", topAreas);
 router.delete("/delete/:areaId", deleteArea);
 router.get("/get/:areaId", getArea);

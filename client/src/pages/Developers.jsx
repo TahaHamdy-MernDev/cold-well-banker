@@ -29,7 +29,7 @@ export default function Developers() {
     const timeoutId = setTimeout(() => {
       const searchValue = searchTerm.toLowerCase();
       const language = i18n.language;
-      const filtered = developers.filter((developer) =>
+      const filtered = developers?.filter((developer) =>
         developer.name[language].toLowerCase().includes(searchValue)
       );
       setFilteredDevelopers(filtered);
@@ -93,7 +93,7 @@ export default function Developers() {
           </span>
         </div>
         <div className="row mt-4">
-        {filteredDevelopers.map((item, index) => (
+        {filteredDevelopers?.map((item, index) => (
             <div key={index +1} className="col-xl-2 col-sm-3 col-6">
               <Link
                 to={`/developer-details/${item._id}`}

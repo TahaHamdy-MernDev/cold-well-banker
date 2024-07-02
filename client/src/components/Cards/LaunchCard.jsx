@@ -12,7 +12,7 @@ const LaunchCard = ({ item }) => {
     src: itemImage,
     alt: 'Launch',
     height: '221px',
-    width: '393px',
+    width: '100%',
   };
  
   return (

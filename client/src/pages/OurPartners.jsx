@@ -1,4 +1,5 @@
 import React from 'react'
+import Img from '../components/Img'
 
 export default function OurPartners() {
   const images = [
@@ -24,15 +25,13 @@ export default function OurPartners() {
   ]
   return (
     <div className=" container-xxl section-padding">
-      <section className="container">
+      <section className="container partner-bg border-2">
         <div className=" d-flex justify-content-center align-items-center ">
-          <img
-            src="/partners/logo (2).png"
+          <Img
+          image={{src:'/CBStarClub.png', width:227 ,height:227}} 
             className="blue-filter object-fit-contain"
-            width="227"
-            height="227"
-            alt=""
-          />
+           />
+
         </div>
         <div className="row g-4">
           {images?.map((image, index) => {
@@ -45,12 +44,14 @@ export default function OurPartners() {
                   style={{ width: '200px', height: '150px' }}
                   className="bg-white shadow rounded-4 d-flex justify-content-center align-items-center"
                 >
-                  <img
-                    src={image}
-                    alt={`partner-${index - 1}`}
+                  <Img
+                    image={{
+                      src: image,
+                      alt:`partner-${index - 1}`,
+                      width:130,
+                      height:130
+                    }}
                     className=" object-fit-cover"
-                    width="130"
-                    height="100"
                   />
                 </div>
               </div>

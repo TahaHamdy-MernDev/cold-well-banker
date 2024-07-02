@@ -11,7 +11,7 @@ const ContactForm = lazy(() => import('../components/ContactForm'))
 export default function Home() {
   return (
     <React.Fragment>
-      <Seo title='Coldwell Banker | New Alex  Prime Real Estate in Egypt | Home ' />
+      <Seo page='Home' />
       <Hero />
       <HomeLunch />
       <TopCompounds />

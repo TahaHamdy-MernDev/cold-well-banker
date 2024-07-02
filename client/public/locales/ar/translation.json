@@ -1,4 +1,45 @@
 {
+  "SEO": {
+    "siteName":"كولدويل بانكر | نيو اليكس",
+    "title": "كولدويل بانكر | نيو اليكس  العقارات المتميزة في مصر "  ,
+    "description":"كولدويل بانكر | نيو اليكس تقدم خدمات عقارية لا مثيل لها في مصر. اشترِ، ببِع أو استثمر في العقارات بسهولة، بمساعدة من النصائح الخبيرة ومستشاري المبيعات المتخصصين."
+  },
+  "PagesName": {
+  "aboutUs": "معلومات عنا",
+  "academy": "أكاديمية",
+  "allLaunches": "جميع الإطلاقات",
+  "areaDetails": "المنطقة",
+  "compoundDetails": "كومباوند",
+  "contactUs": "اتصل بنا",
+  "developer": "المطور",
+  "developers": "المطورون",
+  "home": "الرئيسية",
+  "lunchDetails": "الإطلاق",
+  "ourPartners": "شركاؤنا",
+  "property": "العقار",
+  "searchResult": "نتائج البحث"
+},
+"compare": {
+    "title": "مقارنة العقارات",
+    "feature": "الميزة",
+    "type": "النوع",
+    "bedrooms": "غرف النوم",
+    "bathrooms": "الحمامات",
+    "area": "المنطقة",
+    "startFrom": "يبدأ من",
+    "downPayment": "الدفع المقدم",
+    "monthly": "شهري",
+    "years": "سنوات",
+    "deliveryIn": "التسليم في",
+    "address": "العنوان",
+    "compound": "كمبوند",
+    "developer": "المطور",
+    "finishing": "التشطيب",
+    "size": "الحجم",
+    "moreDetails": "المزيد من التفاصيل"
+}
+,
+
   "Nav": {
     "home": "الرئيسية",
     "about": "معلومات عنا",
@@ -16,6 +57,7 @@
     "addProperty": "إضافة عقار",
     "academy": "الاكاديميه"
   },
+  "nodataToShow": "لا يوجد شئ لعرضه",
   "Academy": {
     "academy": "أكاديمية كولدويل بانكر نيو أليكس",
     "registerNow": "سجل الآن",
@@ -58,7 +100,7 @@
       }
     }
   },
-  
+
   "areaDetails": {
     "propertiesAvailable": " وحدات متاحة",
     "compoundsIn": "كمبوندات في"
@@ -105,7 +147,7 @@
     "formTitle": "تحتاج إلى مساعدة عقارية؟",
     "formText": "املأ بياناتك و سوف يقوم خبير عقارى بالاتصال بك فى اقرب وقت",
     "inputName": "الاسم",
-   
+
     "inputNameRequired": "الاسم مطلوب",
     "inputEmailRequired": "البريد الإلكتروني مطلوب",
     "inputPhoneRequired": "رقم الهاتف مطلوب",
@@ -149,7 +191,9 @@
     "launchDescription": "تفاصيل المشروع",
     "developerProjects": "مشاريع المطور"
   },
+  "propertiesLocations":" مواقع الوحدات"
   "propertyDetails": {
+    "price":"السعر",
     "paymentPlans": "خطط الدفع",
     "paymentPlan": "خطة الدفع",
     "years": "سنوات",
@@ -188,7 +232,7 @@
   "finishing": "نوع التشطيب",
   "print": "طباعه",
   "whatsApp": "واتساب",
-  "featured":"مميزه",
+  "featured": "مميزه",
   "sale": "للبيع",
   "rent": " للإيجار",
   "listsByType": "أنواع الوحدات",
@@ -286,6 +330,6 @@
     "emailContact": "البريد الإلكتروني: info@example.com",
     "phone": "الهاتف",
     "phonePlaceholder": "ادخل رقم الهاتف",
-    "phoneError" : "رقم الهاتف مطلوب"
+    "phoneError": "رقم الهاتف مطلوب"
   }
 }
