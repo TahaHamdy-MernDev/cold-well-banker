@@ -191,7 +191,7 @@
     "launchDescription": "تفاصيل المشروع",
     "developerProjects": "مشاريع المطور"
   },
-  "propertiesLocations":" مواقع الوحدات"
+  "propertiesLocations":" مواقع الوحدات",
   "propertyDetails": {
     "price":"السعر",
     "paymentPlans": "خطط الدفع",

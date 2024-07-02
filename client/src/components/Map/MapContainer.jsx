@@ -9,7 +9,6 @@ export default function MapComponent({ width, height, locations = [] }) {
   const map = useRef(null);
   const { i18n } = useTranslation();
   const [zoom, setZoom] = useState(5);
-console.log(locations);
   // Memoize marker creation and popup setup functions
   const createMarker = useMemo(() => (location) => {
     const el = document.createElement('div');

@@ -60,9 +60,9 @@ export default function ContactUs() {
       <section className="container-xxl section-padding">
         <Container>
           <Row>
-            <Col md={5}>
+            <Col md={5} className=' d-flex justify-content-center align-items-center'>
               <div
-                className=" contact__form bg-white z-3 p-4 rounded"
+                className="bg-white z-3 p-4 rounded w-100"
                 style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}
               >
                 <h3 className="text-center mb-4">{t('contactUsPage.title')}</h3>
@@ -81,8 +81,10 @@ export default function ContactUs() {
                     <Form.Label>{t('contactUsPage.phone')}</Form.Label>
                     <Form.Control
                       type="tel"
+                    
                       placeholder={t('contactUsPage.phonePlaceholder')}
                       {...register('phone', { required: true })}
+                      dir={i18n.dir()}
                     />
                     {errors.phone && (
                       <span>{t('contactUsPage.phoneError')}</span>
