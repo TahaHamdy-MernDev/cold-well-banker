@@ -16,7 +16,7 @@ const Academy = () => {
 
   const onSubmit = async(data) => {
     const loadingToastId = toast.loading("Submitting your data...");
-
+try {
     await AcademyRequest(data)
     toast.update(loadingToastId, {
       render: "Successfully!",
@@ -24,6 +24,17 @@ const Academy = () => {
       isLoading: false,
       autoClose: 1000,
     });
+} catch (error) {
+  toast.update(loadingToastId, {
+    render:
+      error.response?.data?.message ||
+      'Failed to submit. Please try again.',
+    type: 'error',
+    isLoading: false,
+    autoClose: 5000,
+  })
+}
+  
   }
 
   return (

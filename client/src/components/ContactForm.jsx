@@ -15,7 +15,7 @@ const ContactForm = () => {
     <section className='container-xxl section-padding'>
       <div className="row">
         <div className="col-md-6 section-padding d-flex justify-content-center align-items-center container">
-          <Form />
+          <Form type={"contact"} />
         </div>
         <div className="col-md-6 hidden-sm">
           <Img

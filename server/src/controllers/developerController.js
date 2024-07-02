@@ -80,7 +80,7 @@ exports.getDeveloper = asyncHandler(async (req, res) => {
         _id: 0,
         min_price: 1,
       },
-    },
+    }, 
   ]);
   console.log(pricesStartFrom);
   return res.success({ data: {developer,properties,compounds , pricesStartFrom} });

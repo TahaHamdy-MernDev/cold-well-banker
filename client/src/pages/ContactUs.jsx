@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import MapComponent from '../components/Map/MapContainer'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { ContactRequest } from '../Api/ApiCalls'
+import { toast } from 'react-toastify'
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation()
@@ -14,9 +15,27 @@ export default function ContactUs() {
   } = useForm()
 
   const onSubmit = async (data) => {
-    const response = await ContactRequest(data)
+    const loadingToastId = toast.loading('Submitting your data...')
+    try {
+       await ContactRequest(data)
+       toast.update(loadingToastId, {
+        render: 'Successfully submitted!',
+        type: 'success',
+        isLoading: false,
+        autoClose: 3000,
+      })
+    } catch (error) {
+      console.error('Error submitting data:', error)
+      toast.update(loadingToastId, {
+        render:
+          error.response?.data?.message ||
+          'Failed to submit. Please try again.',
+        type: 'error',
+        isLoading: false,
+        autoClose: 5000,
+      })
+    }
 
-    console.log(response)
   }
 
   return (
