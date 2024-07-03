@@ -1,7 +1,6 @@
 import React, { useState, useCallback, Suspense } from 'react';
 import { useForm } from 'react-hook-form';
 import PropTypes from 'prop-types';
-import LazyLoad from 'react-lazyload';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import { Spinner } from 'react-bootstrap';

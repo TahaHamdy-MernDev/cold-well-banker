@@ -1512,7 +1512,7 @@ font-size: 1rem;
 }
 .partner-bg{
 border-radius: 8px;
-  background-image: url(/public/club-bg.jpg);
+  background-image: url(/club-bg.jpg);
 background-attachment: fixed;
 background-position: center;
 

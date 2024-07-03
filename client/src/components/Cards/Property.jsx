@@ -177,7 +177,7 @@ const handleCompare = () => {
                 height: '45px',
               }}
             >
-              <img width={26} height={20} src="/compare.png" alt="compare" />
+              <img width={24} height={20} src="/compare.png" alt="compare" />
             </Button>
           </div>
         </div>

@@ -12,9 +12,7 @@ export default function WhyChooseUs() {
         <div className="row gx-4 gy-5">
           <div
             className="col-md-4"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            data-aos-delay="200"
+           
           >
             <div className="d-flex flex-column gap-1 rounded-2 hover mx-2 px-3 py-4 ">
               <div>
@@ -28,9 +26,7 @@ export default function WhyChooseUs() {
 
           <div
             className="col-md-4"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            data-aos-delay="300"
+          
           >
             <div className="d-flex flex-column gap-1 rounded-2 hover mx-2 px-3 py-4 ">
               <div>
@@ -48,9 +44,7 @@ export default function WhyChooseUs() {
           </div>
           <div
             className="col-md-4"
-            data-aos="fade-up"
-            data-aos-duration="1000"
-            data-aos-delay="400"
+       
           >
             <div className="d-flex flex-column gap-1 rounded-2 hover mx-2 px-3 py-4 ">
               <div>

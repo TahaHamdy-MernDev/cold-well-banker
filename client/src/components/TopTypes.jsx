@@ -57,9 +57,7 @@ export default function TopTypes() {
             return (
           
               <div
-              data-aos="fade-up"
-      data-aos-duration="1000"
-      data-aos-delay={200 * index}
+ 
               dir={i18n.dir()} key={index} className={col[index].colSize +""+ " position-relative"} >
                   <p className=" mx-4 my-2 position-absolute top-0 z-2 start-0  text-primary-white">
                     {type.name[i18n.language]}
