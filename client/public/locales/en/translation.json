@@ -1,8 +1,8 @@
 {
   "SEO": {
-    "siteName": "Coldwell Banker | New Alex",
-    "title": "Coldwell Banker | New Alex  Prime Real Estate in Egypt",
-    "description": "Coldwell Banker | New Alex offers unparalleled real estate services in Egypt. Buy, sell or invest in properties with ease, guided by experts."
+    "siteName": "Coldwell Banker New Alex",
+    "title": "Coldwell Banker New Alex  Prime Real Estate in Egypt",
+    "description": "Coldwell Banker New Alex offers unparalleled real estate services in Egypt. Buy, sell or invest in properties with ease, guided by experts."
   },
   "PagesName": {
     "aboutUs": "About Us",
@@ -14,12 +14,25 @@
     "developer": "Developer",
     "developers": "Developers",
     "home": "Home",
-    "lunchDetails": "Launch",
+    "launchDetails": "Launch",
     "ourPartners": "Our Partners",
     "property": "Property",
     "searchResult": "Search"
   },
+"PagesDescriptions":{
+"aboutUs": "Learn more about our company, our values, and our mission. Meet our founder and discover the services we offer."
+, "academy":"Join the ColdWell Banker New Alex Academy to learn everything about real estate. Our comprehensive courses cover buying, selling, investing, and more, helping you to excel in the real estate market."
+, "allLaunches":"Explore the latest real estate launches with ColdWell Banker New Alex. Stay updated on new properties, exclusive listings, and investment opportunities. Discover your next dream home or profitable investment today."
+, "area":"Explore detailed information about the area with ColdWell Banker New Alex. Learn about demographics, amenities, real estate trends, and more. Find your ideal location for living or investment."
+,"compound":"Explore detailed information about the compound with ColdWell Banker New Alex. Learn about amenities, unit types, developer details, and more. Find your ideal home in this compound."
+, "contactUs":"Contact ColdWell Banker New Alex for inquiries, appointments, or any assistance regarding real estate services. Get in touch with our team today."
+,"developer" :"Explore developer details at ColdWell Banker New Alex. Learn about their projects, history, and services. Contact us for more information."
+,"developers" :"Explore developer details at ColdWell Banker New Alex. Learn about their projects, history, and services. Contact us for more information."
+,"home": "Welcome to ColdWell Banker New Alex, your trusted partner in real estate. Explore our latest properties, services, and insights. Contact us today for expert advice."
+, "partners":"Discover ColdWell Banker New Alex's esteemed partners in the real estate industry. Learn about our collaborations and strong relationships. Contact us to become a part of our network."
+, "launch":"Discover comprehensive details about this launch by ColdWell Banker New Alex. Find out about the property's features, availability, and pricing. Contact us for more information and to arrange a visit."
 
+},
   "compare":{
 "title":"Compare Properties",
 "feature":"Feature",

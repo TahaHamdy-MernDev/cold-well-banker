@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import Carousel from '../components/Common/Carousel';
 import Title from '../components/Common/Title';
 import { Container, Row, Col, Card, Image } from 'react-bootstrap';
+import Seo from '../Seo';
 
 const TopSalesItem = ({ item }) => (
   <Image src={item} alt="Top Sales" loading='lazy' rounded fluid />
@@ -25,7 +26,6 @@ const AboutUs = () => {
     loop: false,
   };
 
-  // Service item component
   const ServiceItem = ({ icon, title, text }) => (
     <Row className="mb-3 px-2 py-3 rounded-2 mx-auto" style={{ background: '#f2f2f0' }}>
       <Col md={3} className="p-3">
@@ -40,6 +40,11 @@ const AboutUs = () => {
 
   return (
     <>
+     <Seo
+        description={t('PagesDescriptions.aboutUs')}
+        page={t('PagesName.aboutUs')}
+      />
+
       {/* Video section */}
       <section className="w-100 about-us-video" style={{ height: '780px' }}>
         <video width="100%" height="100%" autoPlay muted loop>

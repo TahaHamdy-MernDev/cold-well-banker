@@ -6,9 +6,9 @@ import { useTranslation } from 'react-i18next'
 import { ContactUs, Whatsapp } from '../components/Common/Buttons'
 
 import MapComponent from '../components/Map/MapContainer'
-import Form from '../components/Common/Form'
 import DetailsLayout from '../layouts/DetailsLayout'
 import Img from '../components/Img'
+import Seo from '../Seo'
 
 export default function LunchDetails() {
   const { t, i18n } = useTranslation()
@@ -51,6 +51,7 @@ export default function LunchDetails() {
       loop
     >
       <source src={url} type="video/mp4" />
+      <track kind="captions" srcLang="en" label="English captions" />
     </video>
     } else if (isImage(url)) {
       const imageProps={
@@ -79,6 +80,9 @@ export default function LunchDetails() {
 
   return (
     <React.Fragment>
+      <Seo page={t('PagesName.launchDetails')}
+      description={t('PagesDescriptions.launch')}
+      />
       <section className=" container-xxl section-padding" >
         <div className="container">
           <div className="video-container w-100" style={{height:"650px"}}>

@@ -39,10 +39,11 @@ try {
 
   return (
     <React.Fragment>
-      <Seo
-        title="Coldwell Banker | New Alex  Prime Real Estate in Egypt | Academy"
-        description="Welcome to the Coldwell Banker New Alex Academy, your gateway to becoming a professional in the real estate industry. Our academy offers industry-leading education and comprehensive support to help you succeed in your real estate career. Register now to join our community and gain the skills and knowledge necessary to excel in the competitive real estate market. With expert instructors and a robust curriculum, Coldwell Banker New Alex Academy is dedicated to empowering future real estate professionals. Sign up today to start your journey towards a successful real estate career."
+       <Seo
+        description={t('PagesDescriptions.academy')}
+        page={t('PagesName.academy')}
       />
+ 
 
       <Container
         fluid

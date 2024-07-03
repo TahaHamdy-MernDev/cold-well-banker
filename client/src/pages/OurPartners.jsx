@@ -1,7 +1,10 @@
 import React from 'react'
 import Img from '../components/Img'
+import Seo from '../Seo'
+import { useTranslation } from 'react-i18next'
 
 export default function OurPartners() {
+  const {t} =useTranslation()
   const images = [
     '/partners/image1.png',
     '/partners/image2.png',
@@ -23,12 +26,16 @@ export default function OurPartners() {
     '/partners/image18.jpg',
     '/partners/image19.jpg',
   ]
+
   return (
-    <div className=" container-xxl section-padding">
+    <React.Fragment>
+      <Seo page={t('PagesName.ourPartners')} description={t('PagesDescriptions.partners')
+}/>
+        <div className=" container-xxl section-padding">
       <section className="container partner-bg border-2">
         <div className=" d-flex justify-content-center align-items-center ">
           <Img
-          image={{src:'/CBStarClub.png', width:227 ,height:227}} 
+          image={{src:'/CBStarClub.png', width:227 ,height:227, alt:'CB Star'}} 
             className="blue-filter object-fit-contain"
            />
 
@@ -38,7 +45,7 @@ export default function OurPartners() {
             return (
               <div
                 className="col-6 col-md-2 p-3 d-flex justify-content-center align-items-center"
-                key={`${'image-' + index + 1}`}
+                key={`${'partner-' + index + 1}`}
               >
                 <div
                   style={{ width: '200px', height: '150px' }}
@@ -60,5 +67,7 @@ export default function OurPartners() {
         </div>
       </section>
     </div>
+    </React.Fragment>
+  
   )
 }

@@ -5,6 +5,7 @@ import MapComponent from '../components/Map/MapContainer'
 import { Container, Row, Col, Form, Button } from 'react-bootstrap'
 import { ContactRequest } from '../Api/ApiCalls'
 import { toast } from 'react-toastify'
+import Seo from '../Seo'
 
 export default function ContactUs() {
   const { t, i18n } = useTranslation()
@@ -17,8 +18,8 @@ export default function ContactUs() {
   const onSubmit = async (data) => {
     const loadingToastId = toast.loading('Submitting your data...')
     try {
-       await ContactRequest(data)
-       toast.update(loadingToastId, {
+      await ContactRequest(data)
+      toast.update(loadingToastId, {
         render: 'Successfully submitted!',
         type: 'success',
         isLoading: false,
@@ -35,11 +36,14 @@ export default function ContactUs() {
         autoClose: 5000,
       })
     }
-
   }
 
   return (
     <React.Fragment>
+      <Seo
+        description={t('PagesDescriptions.contactUs')}
+        page={t('PagesName.contactUs')}
+      />
       <section
         className="position-relative container"
         style={{ marginTop: '2rem', height: '467px' }}
@@ -60,7 +64,10 @@ export default function ContactUs() {
       <section className="container-xxl section-padding">
         <Container>
           <Row>
-            <Col md={5} className=' d-flex justify-content-center align-items-center'>
+            <Col
+              md={5}
+              className=" d-flex justify-content-center align-items-center"
+            >
               <div
                 className="bg-white z-3 p-4 rounded w-100"
                 style={{ boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)' }}
@@ -81,7 +88,6 @@ export default function ContactUs() {
                     <Form.Label>{t('contactUsPage.phone')}</Form.Label>
                     <Form.Control
                       type="tel"
-                    
                       placeholder={t('contactUsPage.phonePlaceholder')}
                       {...register('phone', { required: true })}
                       dir={i18n.dir()}

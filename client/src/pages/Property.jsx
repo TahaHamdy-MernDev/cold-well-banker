@@ -1,20 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import { MapPin } from 'lucide-react'
-
 import { Link, useParams } from 'react-router-dom'
 import { FetchProperty } from '../Api/ApiCalls'
-import ShareDropdown from '../components/Common/Share'
 import { useTranslation } from 'react-i18next'
-import { FaPrint } from 'react-icons/fa'
-import { formatNumber } from '../assets/common'
 import Gallery from '../components/Common/Gallery'
-
 import Form from '../components/Common/Form'
 import MapComponent from '../components/Map/MapContainer'
 import Spinner from '../components/Common/Spinner'
 import PropertyHeaderDetails from '../components/Property/HeaderInfo'
-import {  Table } from 'react-bootstrap'
-
+import { Table } from 'react-bootstrap'
+import Seo from '../Seo'
 export default function PropertyDetails() {
   const { t, i18n } = useTranslation()
   const { id } = useParams()
@@ -65,17 +59,17 @@ export default function PropertyDetails() {
   // const
   return (
     <>
+    <Seo page={t('PagesName.property')} description={propertyDescription} />
       <Gallery property={property} />
       <section className="container-xxl section-padding">
-<div className="container">
-    <PropertyHeaderDetails
-          t={t}
-          i18n={i18n}
-          property={property}
-          developerImage={developerImage}
-        />
-</div>
-      
+        <div className="container">
+          <PropertyHeaderDetails
+            t={t}
+            i18n={i18n}
+            property={property}
+            developerImage={developerImage}
+          />
+        </div>
       </section>
       <section className="container-xxl section-padding">
         <div className="container">
@@ -147,7 +141,7 @@ export default function PropertyDetails() {
                 <tbody>
                   {property?.paymentPlans?.map((plan, index) => (
                     <tr key={index + 1}>
-                      <td>{index+1}</td>
+                      <td>{index + 1}</td>
                       <td>{plan.monthly}</td>
                       <td>{plan.downPayment}</td>
                       <td>{plan.duration}</td>

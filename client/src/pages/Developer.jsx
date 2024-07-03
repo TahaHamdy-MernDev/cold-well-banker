@@ -11,6 +11,7 @@ import Form from '../components/Common/Form'
 import DetailsLayout from '../layouts/DetailsLayout'
 import Description from '../components/Common/Description'
 import Img from '../components/Img'
+import Seo from '../Seo'
 
 export default function Developer() {
   const { t, i18n } = useTranslation()
@@ -36,7 +37,12 @@ const [pricesStartFrom, setPricesStartFrom] = useState()
   const availableProperties = developer?.properties.length
   const developerDescription = developer?.description[i18n.language]
   return (
-    <div className=" container-xxl mt-5">
+    <React.Fragment>
+      <Seo
+      page={t('PagesName.developer')}
+      description={t('PagesDescriptions.developer')}
+      />
+       <div className=" container-xxl mt-5">
       <section className="container">
         <div className="row " style={{ top: '100px' }}>
           <div className="col-md-2 mb-2 d-flex justify-content-md-end align-items-center">
@@ -87,5 +93,7 @@ const [pricesStartFrom, setPricesStartFrom] = useState()
         </div>
       </section>
     </div>
+    </React.Fragment>
+   
   )
 }

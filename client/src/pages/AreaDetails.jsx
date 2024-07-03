@@ -6,6 +6,7 @@ import { ContactUs } from '../components/Common/Buttons'
 import Description from '../components/Common/Description'
 import PaginatedItems from '../components/Common/PaginatedItems'
 import Compound from '../components/Cards/Compound'
+import Seo from '../Seo'
 
 export default function AreaDetails() {
   const { id } = useParams()
@@ -41,7 +42,13 @@ export default function AreaDetails() {
     ? `${import.meta.env.VITE_IMAGE_ORIGIN}/${areaDetails.images[0].url}`
     : ''
   const areaTitle = areaDetails?.title[i18n.language]
+  const areaDescription= areaDetails?.description[i18n.language]
   return (
+    <React.Fragment>
+         <Seo
+  description={t('PagesDescriptions.area')}
+page={t('PagesName.areaDetails')}
+    />
     <div className="container-xxl my-5">
       <div className="container">
         <div className="row border-bottom d-flex justify-content-start align-items-center py-4">
@@ -72,7 +79,7 @@ export default function AreaDetails() {
         <div className="container">
           <Description
             title={areaTitle}
-            description={areaDetails?.description[i18n.language]}
+            description={areaDescription}
           />
         </div>
       )}
@@ -93,5 +100,7 @@ export default function AreaDetails() {
         </div>
       )}
     </div>
+    </React.Fragment>
+ 
   )
 }

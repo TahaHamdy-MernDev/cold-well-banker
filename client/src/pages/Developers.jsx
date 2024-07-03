@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { FetchAllDevelopers } from '../Api/ApiCalls'
 import Img from '../components/Img'
+import Seo from '../Seo'
 
 export default function Developers() {
   const [developers, setDevelopers] = useState([]);
@@ -51,6 +52,10 @@ export default function Developers() {
 
   return (
     <React.Fragment>
+        <Seo
+      page={t('PagesName.developers')}
+      description={t('PagesDescriptions.developers')}
+      />
      <section className="position-relative w-100 section-background">
         <div className="background-image-wrapper">
           <Img 

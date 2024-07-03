@@ -13,6 +13,7 @@ import Carousel from '../components/Common/Carousel'
 import Property from '../components/Cards/Property'
 import Img from '../components/Img'
 import Description from '../components/Common/Description'
+import Seo from '../Seo'
 
 export default function CompoundDetails() {
   const { id } = useParams()
@@ -35,6 +36,10 @@ export default function CompoundDetails() {
 
   return (
     <React.Fragment>
+      <Seo
+      page={t('PagesName.compoundDetails')}
+      description={t('PagesDescriptions.compound')}
+      />
       <Gallery property={compound} />
       <section className=" container-xxl section-padding">
         <div className="container">

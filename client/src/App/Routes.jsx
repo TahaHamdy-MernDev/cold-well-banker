@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { useRoutes } from "react-router-dom";
+import { Navigate, isRouteErrorResponse, useRouteError, useRoutes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import Spinner from "../components/Common/Spinner";
 
@@ -9,7 +9,7 @@ const Home = React.lazy(() =>delay(  import("../pages/Home")));
 const Developers = React.lazy(() =>delay(  import("../pages/Developers")));
 const Developer = React.lazy(() =>delay(  import("../pages/Developer")));
 const PropertyDetails = React.lazy(() =>delay(  import("../pages/Property")));
-const LunchDetails = React.lazy(() =>delay(  import("../pages/LunchDetails")));
+const LaunchDetails = React.lazy(() =>delay(  import("../pages/LunchDetails")));
 const CompoundDetails = React.lazy(() =>delay(  import("../pages/CompoundDetails")));
 const AllLaunches = React.lazy(() => delay( import("../pages/AllLaunches")));
 const ContactUs = React.lazy(() => delay( import("../pages/ContactUs")));
@@ -21,17 +21,18 @@ const Academy= React.lazy(() => delay( import("../pages/Academy")));
 const SellProperty= React.lazy(() => delay( import("../pages/SellProperty")));
 const PropertyComparison= React.lazy(() => delay( import("../pages/PropertyComparison")));
 
+
 const ProjectRoutes = () => {
   const element = useRoutes([
     {
       path: "/",
       element: <MainLayout />,
-      children: [
+       children: [
         { index: true, element: <Home /> },
         { path: "/developers", element: <Developers /> },
         { path: "/developer-details/:id", element: <Developer /> },
         { path: "/property-details/:id", element: <PropertyDetails /> },
-        { path: "/launch-details/:id", element: <LunchDetails /> },
+        { path: "/launch-details/:id", element: <LaunchDetails /> },
         { path: "/compound-details/:id", element: <CompoundDetails /> },
         { path: "/area-details/:id", element: <AreaDetails /> },
         { path: "/all-launches", element: <AllLaunches /> },
@@ -44,11 +45,11 @@ const ProjectRoutes = () => {
         { path: "/compare", element: <PropertyComparison /> },
       ],
     },
+    { path: '*', element: <Navigate to="/" /> },
   ]);
 
   return (
-
-    <Suspense fallback={<Spinner/>}>
+    <Suspense fallback={<Spinner />}>
       {element}
     </Suspense>
   );
@@ -60,3 +61,6 @@ async function delay(promise) {
 }
 
 export default ProjectRoutes;
+// { path:"/cd-dashboard",
+//     element:""
+//    }
