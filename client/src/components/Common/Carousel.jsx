@@ -37,11 +37,13 @@ export default function Carousel({ infinite = false, items = [], Component, sett
     }
     return mergedSettings;
   }, [defaultSettings, settings]);
-
+/**
+ * !key={i18n.language} this fix the dir issue 
+ */
   return (
-    <div className={`carousel-container`}>
+    <div className={`carousel-container ${direction}`}>
       {items?.length > 0 ? (
-        <Swiper  dir={direction} {...swiperSettings} infinite={infinite ? 'true' : undefined} dots={undefined}>
+        <Swiper  dir={i18n.dir()} key={i18n.language} {...swiperSettings} infinite={infinite ? 'false' : undefined} dots={undefined}>
           {items?.map((item) => (
             <SwiperSlide key={item._id}>
               <Component item={item}/>

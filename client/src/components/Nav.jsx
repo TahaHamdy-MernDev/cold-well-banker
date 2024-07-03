@@ -10,11 +10,9 @@ export default function Nav() {
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
-  
     const direction = newLang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.setAttribute('dir', direction);
     document.documentElement.setAttribute('lang', newLang);
-  
     localStorage.setItem('selectedLanguage', newLang);
   }
   
@@ -25,6 +23,7 @@ export default function Nav() {
       i18n.changeLanguage(selectedLanguage)
       const direction = selectedLanguage === 'ar' ? 'rtl' : 'ltr'
       document.documentElement.setAttribute('dir', direction)
+    
     }
   }, [i18n])
   const imageProps = {
