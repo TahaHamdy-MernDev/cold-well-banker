@@ -29,7 +29,7 @@ const CompoundCard = ({ item}) => {
         />
         <div className="compound-image-layer">
           <div className="compound-image-text">
-            <h5>{getFirstTwoWords(item.name[i18n.language])}</h5>
+            <h4 className=' fs-4 text-primary-white'>{getFirstTwoWords(item.name[i18n.language])}</h4>
             <p>
               {item.numberOfProperties} {t('property')}
             </p>

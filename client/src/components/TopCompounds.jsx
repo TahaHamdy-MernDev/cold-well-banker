@@ -25,7 +25,7 @@ const TopCompounds = React.memo(() => {
     () => ({
       lg: 5.2,
       md: 4.2,
-      sm: 1.2,
+      sm: 1.8,
     }),
     []
   )

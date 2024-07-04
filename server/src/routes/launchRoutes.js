@@ -17,7 +17,7 @@ router.post(
   multerConfig.fields([{ name: "video",maxCount:1 }, { name: "thumbnail",maxCount:1 }]),
   validateRequestBody(launchValidationSchema),
   createLaunch
-);
+);  
 router.get("/get/:launchId", getLaunch);
 router.get("/developer-launch/:developerId", getDeveloperLaunches);
 router.get("/get-all", getAllLaunches);

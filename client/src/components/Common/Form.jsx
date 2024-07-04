@@ -109,7 +109,7 @@ const Form = ({ type }) => {
         <div className="invalid-feedback">{errors.comment.message}</div>
       )}
 
-      <button type="submit" className="btn button-primary mb-0 mx-2">
+      <button type="submit" className="btn button-primary mb-0">
         {t('contactForm.send')}
       </button>
     </form>

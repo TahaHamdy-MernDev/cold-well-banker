@@ -2,14 +2,15 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 
 const Seo = ({ title, description, url, page }) => {
   const { t, i18n } = useTranslation();
-
+  const location = useLocation();
   const defaultTitle = t('SEO.title');
   const defaultDescription = t('SEO.description');
   const siteName = t('SEO.siteName');
-  const pageUrl = url || import.meta.env.VITE_WEBSITE_URI;
+  const pageUrl = `${import.meta.env.VITE_WEBSITE_URI}${location.pathname}`;
   const pageImage = '/favicon.png';
   const pageType = 'website';
 
