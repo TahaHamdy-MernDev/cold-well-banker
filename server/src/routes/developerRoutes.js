@@ -18,7 +18,7 @@ router.post(
 );
 router.put(
   "/update/:developerId",
-  multerConfig.fields([{ name: "images" }]),
+  multerConfig.fields([{ name: "images" }]), 
   updateDeveloper
 );
 

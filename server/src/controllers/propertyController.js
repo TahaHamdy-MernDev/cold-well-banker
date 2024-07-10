@@ -38,7 +38,7 @@ exports.Search = asyncHandler(async (req, res) => {
   }
 
   const properties = await dbService.findMany(propertyModel, query);
-  return res.success({data: properties}) 
+  return res.success({ data: properties });
 });
 exports.createProperty = asyncHandler(async (req, res) => {
   await uploadImages("thumbnail", req);
@@ -90,7 +90,7 @@ exports.updateProperty = asyncHandler(async (req, res) => {
   }
   const updatedProperty = await dbService.updateOne(
     propertyModel,
-    { _id: id },
+    { _id: query },
     req.body
   );
   return res.success({ data: updatedProperty });
@@ -130,12 +130,29 @@ exports.getProperty = asyncHandler(async (req, res) => {
   return res.success({ data: property });
 });
 
-
-exports.compare = asyncHandler(async(req,res)=>{
+exports.compare = asyncHandler(async (req, res) => {
   const { ids } = req.query;
-  const propertyIds = ids.split(',');
+  const propertyIds = ids.split(",");
   console.log(ids);
-  const properties =await dbService.findMany(propertyModel,{_id: { $in: propertyIds }})
+  const properties = await dbService.findMany(propertyModel, {
+    _id: { $in: propertyIds },
+  });
   return res.success({ data: properties });
+});
 
-})
+exports.getAllProperties = asyncHandler(async (req, res) => {
+  const properties = await dbService.findMany(propertyModel, {});
+  return res.success({ data: properties });
+});
+exports.deleteProperty = asyncHandler(async (req, res) => {
+  const deletedProperty = await dbService.deleteOne(propertyModel, {
+    _id: req.params.propertyId,
+  });
+  if (!deletedProperty) {
+    return res.recordNotFound({ message: "Property not found..." });
+  }
+  return res.success({
+    data: deletedProperty._id,
+    message: "Property deleted successfully",
+  });
+});

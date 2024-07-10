@@ -1,7 +1,8 @@
 import React, { lazy } from 'react'
 import Seo from '../Seo'
 import { useTranslation } from 'react-i18next'
-
+import SahelMap from '../components/Sahel-Map'
+const SpecialOffers = lazy(()=> import('../components/Offers'))
 const Hero = lazy(() => import('../components/Hero'))
 const HomeLunch = lazy(() => import('../components/HomeLunch'))
 const TopCompounds = lazy(() => import('../components/TopCompounds'))
@@ -15,8 +16,10 @@ export default function Home() {
     <React.Fragment>
       <Seo page={t('PagesName.home')} description={t('PagesDescriptions.home')} />
       <Hero />
+      <SahelMap/>
       <HomeLunch />
       <TopCompounds />
+      <SpecialOffers/>
       <TopAreas />
       <LatestProperties />
       <ContactForm />

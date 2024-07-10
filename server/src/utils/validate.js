@@ -13,7 +13,7 @@ const validateRequestBody = (validationSchema) => {
         (errorDetail) => errorDetail.message
       );
       console.error(`Validation error: ${errorMessages.join(", ")}`);
-      return res.validationError({ message: errorMessages });
+      return res.validationError({ errors: errorMessages });
     }
 
     next();

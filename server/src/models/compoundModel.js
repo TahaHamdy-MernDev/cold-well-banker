@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const generateUniqueSlug = require("../utils/slugify");
 
 const amenitySchema = new mongoose.Schema({
   name: {
@@ -38,6 +39,10 @@ const compoundSchema = new mongoose.Schema(
         },
       },
     ],
+    slug: {
+      en: { type: String, unique: true, required: true },
+      ar: { type: String, unique: true, required: true },
+    },
     amenities: [amenitySchema],
     images: [
       {
@@ -73,6 +78,21 @@ compoundSchema.pre(/^find/, function(next){
   // .populate('properties')
   next()
 })
+compoundSchema.pre('validate', async function (next) {
+  try {
+    if (this.isModified('name.en')) {
+      this.slug.en = await generateUniqueSlug(this, 'name', 'en');
+    }
+
+    if (this.isModified('name.ar')) {
+      this.slug.ar = await generateUniqueSlug(this, 'name', 'ar');
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 const compoundModel = mongoose.model("Compound", compoundSchema);
 
 module.exports = compoundModel;

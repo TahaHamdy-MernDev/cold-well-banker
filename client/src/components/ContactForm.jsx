@@ -5,7 +5,7 @@ import Img from './Img';
 
 const ContactForm = () => {
   const contactImageProps = {
-    src: "/contact.jpg",
+    src: "/contact.png",
     alt: "contact-us",
     width: "100%",
     height: "600",

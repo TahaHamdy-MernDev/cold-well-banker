@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const generateUniqueSlug = require("../utils/slugify");
 const paymentPlanSchema = new mongoose.Schema({
   monthly: {
     type: Number,
@@ -135,7 +136,10 @@ const propertySchema = new mongoose.Schema(
         ref: "Developer",
       },
     ],
-  },
+ slug: {
+  en: { type: String, unique: true, required: true },
+  ar: { type: String, unique: true, required: true },
+}, },
   { timestamps: true }
 );
 
@@ -152,6 +156,24 @@ propertySchema.pre(/^find/, function (next) {
     .populate("type");
   next();
 });
+
+
+propertySchema.pre('validate', async function (next) {
+  try {
+    if (this.isModified('name.en')) {
+      this.slug.en = await generateUniqueSlug(this, 'name', 'en');
+    }
+
+    if (this.isModified('name.ar')) {
+      this.slug.ar = await generateUniqueSlug(this, 'name', 'ar');
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+
 
 const propertyModel = mongoose.model("Property", propertySchema);
 

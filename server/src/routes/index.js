@@ -7,4 +7,5 @@ router.use('/type' , require('./typeRoutes'))
 router.use('/property' , require('./propertyRoutes'))
 router.use('/launch' , require('./launchRoutes'))
 router.use('/requests' , require('./requestsRoutes'))
+router.use('/offers' , require('./offerRoutes'))
 module.exports = router;

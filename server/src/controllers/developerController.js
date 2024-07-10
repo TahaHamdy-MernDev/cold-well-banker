@@ -35,7 +35,10 @@ exports.updateDeveloper = asyncHandler(async (req, res) => {
   if (!developer) {
     return res.recordNotFound({ message: " this developer not founded..." });
   }
-  await updateAndSet(developer, "images", req);
+  if (req.files.images?.length > 0) {
+    await updateAndSet(developer, "images", req);
+  }
+  
   const updatedDeveloper = await dbService.updateOne(
     developerModel,
     { _id: req.params.developerId },

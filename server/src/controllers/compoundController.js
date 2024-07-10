@@ -3,7 +3,7 @@ const compoundModel = require("../models/compoundModel");
 const developerModel = require("../models/developerModel");
 const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
-const { deleteImages, uploadImages } = require("../utils/upload");
+const { deleteImages, uploadImages, updateAndSet } = require("../utils/upload");
 exports.getCompoundsNames = asyncHandler(async (req, res) => {
   const compounds = await dbService.findMany(compoundModel,{});
   
@@ -47,8 +47,12 @@ exports.updateCompound = asyncHandler(async (req, res) => {
   if (!compound) {
     return res.recordNotFound({ message: "compound not founded..." });
   }
-  await updateAndSet(compound, "images", req);
-  await updateAndSet(compound, "thumbnail", req);
+  if (req.files.images?.length > 0) {
+    await updateAndSet(developer, "images", req);
+  }
+  if (req.files.thumbnail?.length > 0) {
+    await updateAndSet(developer, "thumbnail", req);
+  }
   const updatedCompound = await dbService.updateOne(
     compoundModel,
     query,

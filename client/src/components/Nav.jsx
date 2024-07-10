@@ -1,30 +1,27 @@
-import { Link } from 'react-router-dom'
+import { Link , useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Globe } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Img from './Img'
 
 export default function Nav() {
-  const { t, i18n } = useTranslation()
 
+
+  const { t, i18n } = useTranslation()
+  const navigate=useNavigate()
+  const currentLang = location.pathname.split('/')[1];
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'ar' : 'en';
     i18n.changeLanguage(newLang);
     const direction = newLang === 'ar' ? 'rtl' : 'ltr';
     document.documentElement.setAttribute('dir', direction);
     document.documentElement.setAttribute('lang', newLang);
-    localStorage.setItem('selectedLanguage', newLang);
-  }
   
-
-  React.useEffect(() => {
-    const selectedLanguage = localStorage.getItem('selectedLanguage')
-    if (selectedLanguage) {
-      i18n.changeLanguage(selectedLanguage)
-      const direction = selectedLanguage === 'ar' ? 'rtl' : 'ltr'
-      document.documentElement.setAttribute('dir', direction)
-    
-    }
+    const newPathname = `/${newLang}${location.pathname.slice(3)}`;
+    navigate(newPathname);
+  };
+  useEffect(()=>{
+    i18n.changeLanguage(currentLang);
   }, [i18n])
   const imageProps = {
     src: '/logo.png',

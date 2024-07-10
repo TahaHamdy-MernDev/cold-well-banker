@@ -29,7 +29,7 @@ app.use("/cold-well/v1", routes);
 app.use('/uploads', express.static(path.join(__basedir, 'uploads')));
 
 app.use("*", (req, res) => {
-  return res.recordNotFound("Route");
+  return res.recordNotFound({message:`Cant't find route method:${req.method} url:${req.originalUrl}`});
 });
 
 module.exports = app;

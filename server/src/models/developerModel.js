@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const generateUniqueSlug = require("../utils/slugify");
 const multiLanguage = {
   en: {
     type: String,
@@ -9,6 +10,10 @@ const multiLanguage = {
 };
 const developerSchema = new mongoose.Schema(
   {
+    slug: {
+  en: { type: String, unique: true, required: true },
+  ar: { type: String, unique: true, required: true },
+},
     name: multiLanguage,
     description: multiLanguage,
     images: [
@@ -19,7 +24,7 @@ const developerSchema = new mongoose.Schema(
         },
       },
     ],
-    callUsNumber: Number,
+    callUsNumber: String,
     compounds: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -36,7 +41,7 @@ const developerSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    areas: [
+    area: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Area",
@@ -52,6 +57,21 @@ const developerSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+developerSchema.pre('validate', async function (next) {
+  try {
+    if (this.isModified('name.en')) {
+      this.slug.en = await generateUniqueSlug(this, 'name', 'en');
+    }
+
+    if (this.isModified('name.ar')) {
+      this.slug.ar = await generateUniqueSlug(this, 'name', 'ar');
+    }
+
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 const developerModel = mongoose.model("Developer", developerSchema);
 
 module.exports = developerModel;

@@ -26,8 +26,10 @@ exports.updateArea = asyncHandler(async (req, res) => {
   if (!area) {
     return res.recordNotFound({ message: "this area not found..." });
   }
-  await updateAndSet(area, "images", req);
-
+  if (req.files.images?.length > 0) {
+    await updateAndSet(area, "images", req);
+  }
+  console.log(req.body);
   const updatedArea = await dbService.updateOne(
     areaModel,
     { _id: req.params.areaId },
@@ -61,7 +63,13 @@ exports.getArea = asyncHandler(async (req, res) => {
 
   const totalPages = Math.ceil(totalCompounds / pageSize);
 
-  return res.success({ data: { area ,totalCompounds, pagination: { totalPages, compounds, currentPage: pageNumber, pageSize } } });
+  return res.success({
+    data: {
+      area,
+      totalCompounds,
+      pagination: { totalPages, compounds, currentPage: pageNumber, pageSize },
+    },
+  });
 });
 exports.topAreas = asyncHandler(async (req, res) => {
   const top4Areas = await areaModel.aggregate([
@@ -121,8 +129,6 @@ exports.deleteArea = asyncHandler(async (req, res) => {
     return res.recordNotFound({ message: "this area not found..." });
   }
 
-
-  
   await deleteImages(area);
   const deletedArea = await dbService.deleteOne(areaModel, {
     _id: req.params.areaId,

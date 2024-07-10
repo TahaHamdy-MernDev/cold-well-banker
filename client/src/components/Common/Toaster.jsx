@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Toaster = () => {
   return (
     <ToastContainer
-      autoClose={1000}
+      autoClose={4000}
       limit={1}
       className="toaster-container"
       position="top-right"
@@ -13,7 +13,13 @@ const Toaster = () => {
     />
   );
 };
-export const notify = () => {
-    toast.success("Successfully Created!");
-  };
+
+export const notifySuccess = (message) => {
+  toast.success(message || "Successfully Created!");
+};
+
+export const notifyError = (message) => {
+  toast.error(message || "An error occurred!");
+};
+
 export default Toaster;

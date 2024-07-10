@@ -5,6 +5,7 @@ const {
   getCompound,
   topCompounds,
   getCompoundsNames,
+  deleteCompound,
 } = require("../controllers/compoundController");
 const multerConfig = require("../utils/multer");
 
@@ -23,4 +24,5 @@ router.get("/get-all", getAllCompounds);
 router.get("/get/:compoundId", getCompound);
 router.get("/get-top", topCompounds);
 router.get("/get-names", getCompoundsNames);
+router.delete("/delete/:compoundId", deleteCompound);
 module.exports = router;
