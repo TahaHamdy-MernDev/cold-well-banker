@@ -5,6 +5,8 @@ import Joi from "joi";
 import { Container, Form, Button, Row, Col } from "react-bootstrap";
 import Api from "../../../Api/ApiCalls";;
 import { toast } from "react-toastify";
+import LoadingButton from "../../../components/Admin/LoadingButton";
+import { notifyError, notifySuccess } from "../../../components/Admin/Toaster";
 
 const schema = Joi.object({
   offerNumber: Joi.number().integer().optional(),
@@ -49,11 +51,14 @@ export default function CreateOffer() {
   });
 
   const [developers, setDevelopers] = useState([]);
+  const [buttonLoading, setButtonLoading] = useState(false)
+ 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const developer = await Api.get("/developer/get-names");
         setDevelopers(developer.data.data);
+        
       } catch (error) {
         console.error("Error fetching areas:", error);
       }
@@ -61,25 +66,18 @@ export default function CreateOffer() {
 
     fetchData();
   }, []);
+
   const onSubmit = async (data) => {
-    const loadingToastId = toast.loading("Submitting your data...")
-    console.log(data);
+    setButtonLoading(true)
     try {
       await Api.post("/offers/create-new", data);
-      toast.update(loadingToastId, {
-        render: "Successfully Created!",
-        type: "success",
-        isLoading: false,
-        autoClose: 1000,
-      });
+      
+      notifySuccess("Successfully Created!")
     } catch (error) {
-      toast.update(loadingToastId, {
-        render: "Failed to submit. Please try again.",
-        type: "error",
-        isLoading: false,
-        autoClose: 2000,
-      });
+      notifyError("Failed to Create")
       console.error("Form submission error:", error.response.data);
+    } finally{
+      setButtonLoading(false)
     }
   };
 
@@ -232,9 +230,7 @@ export default function CreateOffer() {
             </Form.Control.Feedback>
           </Form.Group>
         </Row>
-        <Button variant="primary" type="submit">
-          Create Offer
-        </Button>
+        <LoadingButton loading={buttonLoading} text={'Create Offer'}/>
       </Form>
     </Container>
   );

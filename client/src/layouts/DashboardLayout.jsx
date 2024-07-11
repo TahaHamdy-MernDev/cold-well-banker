@@ -11,14 +11,27 @@ import {
   Offcanvas,
   Accordion,
 } from 'react-bootstrap'
-import { Outlet, Link, useLocation, Navigate } from 'react-router-dom'
+import {
+  Outlet,
+  Link,
+  useLocation,
+  Navigate,
+  useNavigate,
+} from 'react-router-dom'
+import CookiesProvider from '../Services/CookiesProvider'
 
 const DashboardLayout = ({ isAuthenticated }) => {
+  const navigate = useNavigate()
   const [showSidebar, setShowSidebar] = useState(true)
   if (!isAuthenticated) {
     return <Navigate to="/admin/login" replace />
   }
-
+  const logOut = () => {
+    CookiesProvider.remove('jwt')
+    setTimeout(() => {
+      navigate('/admin/login')
+    }, 500)
+  }
   const toggleSidebar = () => setShowSidebar(!showSidebar)
   return (
     <div className="dashboard-container">
@@ -41,7 +54,14 @@ const DashboardLayout = ({ isAuthenticated }) => {
             className="justify-content-end"
           >
             <Nav>
-              <Nav.Link href="#logout">Logout</Nav.Link>
+              <Nav.Link
+                as={'span'}
+                className=" text-white"
+                style={{ cursor: 'pointer' }}
+                onClick={() => logOut()}
+              >
+                Logout
+              </Nav.Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -91,7 +111,7 @@ function Sidebar({ onLinkClick }) {
     ],
     Property: [
       { to: '/admin/create-property', label: 'Create Property' },
-      { to: '/admin/show-all-properties', label: 'Show All Properties' }
+      { to: '/admin/show-all-properties', label: 'Show All Properties' },
     ],
     Launch: [
       { to: '/admin/create-launch', label: 'Create Launch' },

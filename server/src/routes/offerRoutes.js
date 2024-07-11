@@ -12,7 +12,7 @@ router.post(
 router.get("/get-one/:offerId", offerCtr.getOffer);
 router.get("/get-all", offerCtr.getAllOffers);
 router.put(
-  "/update-one/offerId",
+  "/update-one/:offerId",
   validateRequestBody(offerValidationSchema),
   offerCtr.updateOffer
 );

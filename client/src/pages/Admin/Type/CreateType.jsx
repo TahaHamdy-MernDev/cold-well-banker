@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import Api from '../../../Api/ApiCalls'
@@ -10,6 +10,7 @@ import {
   notifySuccess,
 } from '../../../components/Admin/Toaster'
 import LoadingButton from '../../../components/Admin/LoadingButton'
+import { useNavigate } from 'react-router-dom'
 
 const schema = Joi.object({
   name: Joi.object({
@@ -31,12 +32,16 @@ export default function CreateType() {
   })
 
   const [buttonLoading, setButtonLoading] = useState(false)
-
+  const navigate = useNavigate() 
   const onSubmit = async (data) => {
     try {
       setButtonLoading(true)
       await Api.post('/type/create', data)
       notifySuccess()
+    
+      setTimeout(() => {
+              navigate(-1);
+            }, 500);
     } catch (error) {
       notifyError('Error creating type')
       console.error('Error creating type:', error)

@@ -2,7 +2,7 @@ const developerModel = require("../models/developerModel");
 const launchModel = require("../models/launchModel");
 const asyncHandler = require("../utils/asyncHandler");
 const dbService = require("../utils/dbService");
-const { uploadImages } = require("../utils/upload");
+const { uploadImages, updateAndSet, deleteImages } = require("../utils/upload");
 
 exports.createLaunch = asyncHandler(async (req, res) => {
   await uploadImages("video", req);
@@ -46,7 +46,6 @@ exports.getLaunch = asyncHandler(async (req, res) => {
 });
 
 exports.getDeveloperLaunches = asyncHandler(async (req, res) => {
-  console.log("dddddddddddddddddddddd");
   const developer = await dbService.findOne(developerModel, {
     _id: req.params.developerId,
   });
@@ -61,4 +60,44 @@ exports.getDeveloperLaunches = asyncHandler(async (req, res) => {
 exports.getAllLaunches = asyncHandler(async (req, res) => {
   const launches = await dbService.findMany(launchModel);
   return res.success({ data: launches });
+});
+
+exports.updateLaunch = asyncHandler(async (req, res) => {
+  const launch = await dbService.findOne(launchModel, {
+    _id: req.params.launchId,
+  });
+  if (!launch) {
+    return res.recordNotFound({ message: "launch not found..." });
+  }
+
+  if (req.files?.video?.length > 0) {
+    await updateAndSet(launch, "video", req);
+  }
+  if (req.files?.thumbnail?.length > 0) {
+    await updateAndSet(launch, "thumbnail", req);
+  }
+
+  const updatedLaunch = await dbService.updateOne(
+    launchModel,
+    { _id: req.params.launchId },
+    req.body
+  );
+  if (!updatedLaunch) {
+    return res.recordNotFound({ message: "Launch not found..." });
+  }
+  return res.success({ data: updatedLaunch });
+});
+exports.deleteLaunch = asyncHandler(async (req, res) => {
+  const deletedLaunch = await dbService.deleteOne(launchModel, {
+    _id: req.params.launchId,
+  });
+  if (!deletedLaunch) {
+    return res.recordNotFound({ message: "Launch not found..." });
+  }
+  await deleteImages(deletedLaunch);
+
+  return res.success({
+    data: deletedLaunch._id,
+    message: "Launch deleted successfully",
+  });
 });

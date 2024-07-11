@@ -113,6 +113,11 @@ exports.topAreas = asyncHandler(async (req, res) => {
       },
     },
     {
+      $match: {
+        numberOfProperties: { $gt: 0 }, numberOfCompounds:{$gt:0}
+      },
+    },
+    {
       $sort: { numberOfCompounds: -1, numberOfProperties: -1 },
     },
     {

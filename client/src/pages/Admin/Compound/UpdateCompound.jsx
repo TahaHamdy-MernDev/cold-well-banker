@@ -88,46 +88,40 @@ export default function UpdateCompound() {
   const [compound, setCompound] = useState(null)
   const [oldImages, setOldImages] = useState(true)
   const [oldThumbnail, setOldThumbnail] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const areasResponse = await Api.get('/area/get-names')
-        const developersResponse = await Api.get('/developer/get-names')
-        const compoundResponse = await Api.get(`/compound/get/${id}`)
-        const data = compoundResponse.data.data.compound
-        setAreas(areasResponse.data.data)
-        setDevelopers(developersResponse.data.data)
-        setCompound(data)
-        setValue('name.en', data.name.en)
-        setValue('name.ar', data.name.ar)
-        setValue('description.en', data.description.en)
-        setValue('description.ar', data.description.ar)
-        setValue('contactUsNumber', data.contactUsNumber)
-        setValue('location.lat', data.location.lat)
-        setValue('location.lng', data.location.lng)
-        console.log(data.developer);
-        setValue('area', data.area._id)
-        setValue('developer', data.developer._id)
-        setMapLocation({
-          latitude: data.location.lat,
-          longitude: data.location.lng,
-          zoom: 5,
-        })
-      } catch (error) {
-        console.error('Error fetching data:', error)
-      } finally {
-        setLoading(false)
-      }
+  const fetchData = async () => {
+    try {
+      const areasResponse = await Api.get('/area/get-names')
+      const developersResponse = await Api.get('/developer/get-names')
+      const compoundResponse = await Api.get(`/compound/get/${id}`)
+      const data = compoundResponse.data.data.compound
+      setAreas(areasResponse.data.data)
+      setDevelopers(developersResponse.data.data)
+      setCompound(data)
+      setValue('name.en', data.name.en)
+      setValue('name.ar', data.name.ar)
+      setValue('description.en', data.description.en)
+      setValue('description.ar', data.description.ar)
+      setValue('contactUsNumber', data.contactUsNumber)
+      setValue('location.lat', data.location.lat)
+      setValue('location.lng', data.location.lng)
+      setMapLocation({
+        latitude: data.location.lat,
+        longitude: data.location.lng,
+        zoom: 5,
+      })
+    } catch (error) {
+      console.error('Error fetching data:', error)
+    } finally {
+      setLoading(false)
     }
-
+  }
+  useEffect(() => {
     fetchData()
-  }, [id, setValue])
+  }, [])
 
   const handleFilesSelect = (files) => {
     setImages(files)
     setOldImages(false)
-    
   }
   const handleThumbnailSelect = (file) => {
     setThumbnail(file)
@@ -139,7 +133,12 @@ export default function UpdateCompound() {
     setValue('location.lng', longitude)
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }))
   }
-
+  useEffect(() => {
+if (compound) {
+  setValue('developer', compound.developer[0]._id)
+  setValue('area', compound.area[0]._id)
+    }
+  }, [compound])
   const onSubmit = async (data) => {
     try {
       setButtonLoading(true)
@@ -165,7 +164,7 @@ export default function UpdateCompound() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      notifySuccess("Compound updated successfully")
+      notifySuccess('Compound updated successfully')
       setTimeout(() => {
         navigate(-1)
       }, 500)
@@ -226,9 +225,10 @@ export default function UpdateCompound() {
                 as="select"
                 {...register('area')}
                 isInvalid={!!errors.area}
-                defaultValue={id}
               >
-                <option value="" disabled>Select Area</option>
+                <option value="" disabled>
+                  Select Area
+                </option>
                 {areas.map((area) => (
                   <option key={area._id} value={area._id}>
                     {area.name.en}
@@ -249,7 +249,9 @@ export default function UpdateCompound() {
                 isInvalid={!!errors.developer}
                 defaultValue={id}
               >
-                <option value="" disabled>Select Developer</option>
+                <option value="" disabled>
+                  Select Developer
+                </option>
                 {developers?.map((developer) => (
                   <option key={developer._id} value={developer._id}>
                     {developer.name.en}
@@ -423,7 +425,7 @@ export default function UpdateCompound() {
             defaultImages={compound.images}
           />
         </Form.Group>
-        <Row className=' p-3'>
+        <Row className=" p-3">
           {oldImages &&
             compound?.images?.map((item, index) => (
               <img
@@ -444,7 +446,7 @@ export default function UpdateCompound() {
             defaultImages={compound.thumbnail}
           />
         </Form.Group>
-        <Row className=' p-3'>
+        <Row className=" p-3">
           {oldThumbnail &&
             compound?.thumbnail?.map((item, index) => (
               <img

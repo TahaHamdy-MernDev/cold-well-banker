@@ -49,7 +49,7 @@ const OfferSchema = new Schema(
 OfferSchema.pre(/^find/, function (next) {
   this.populate({
     path: "developer",
-    select: "name images",
+    select: "name images _id",
   });
   next();
 });

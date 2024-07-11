@@ -88,9 +88,9 @@ const ProjectRoutes = () => {
       path: '/admin',
       element: <DashboardLayout isAuthenticated={isAuthenticated} />,
       children: [
-        { index: true, element: <AdminHome /> },
+        { index: true, element: <CreateArea /> },
         // Area
-        { path: "create-area", element: <CreateArea /> },
+        { index:true, path: "create-area", element: <CreateArea /> },
         { path: "update-area/:id", element: <UpdateArea /> },
         { path: "show-all-areas", element: <ShowAllAreas /> },
         // Compound

@@ -18,7 +18,7 @@ exports.createOffer = asyncHandler(async (req, res) => {
 exports.updateOffer = asyncHandler(async (req, res) => {
   const updatedOffer = await dbService.updateOne(
     offerModel,
-    { _id: req.params.OfferId },
+    { _id: req.params.offerId },
     req.body
   );
   if (!updatedOffer) {

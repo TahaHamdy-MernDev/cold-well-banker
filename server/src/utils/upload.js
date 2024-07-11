@@ -12,15 +12,34 @@ async function deleteOldImages(imagePaths) {
 }
 
 async function deleteImages(doc) {
-  const imagePaths = doc.images.map((image) => image.url);
-  for (const filePath of imagePaths) {
+  // Initialize an array to hold all file paths
+  let mediaPaths = [];
+
+  // Collect image paths
+  if (doc.images && doc.images.length > 0) {
+    mediaPaths = mediaPaths.concat(doc.images.map((image) => image.url));
+  }
+
+  // Collect video paths
+  if (doc.video && doc.video.length > 0) {
+    mediaPaths = mediaPaths.concat(doc.video.map((video) => video.url));
+  }
+
+  // Collect thumbnail paths
+  if (doc.thumbnails && doc.thumbnails.length > 0) {
+    mediaPaths = mediaPaths.concat(doc.thumbnails.map((thumbnail) => thumbnail.url));
+  }
+
+  // Iterate through all file paths and delete them
+  for (const filePath of mediaPaths) {
     try {
       await fs.promises.unlink(path.join(__basedir, `uploads/${filePath}`));
     } catch (err) {
-      console.error(`Failed to delete image at ${filePath}:`, err);
+      console.error(`Failed to delete file at ${filePath}:`, err);
     }
   }
 }
+
 
 async function uploadImages(type, req) {
   if (req.files && req.files[type]) {

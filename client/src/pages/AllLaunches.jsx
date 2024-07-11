@@ -35,7 +35,7 @@ export default function AllLaunches() {
                   to={`/launch-details/${item._id}`}
                 >
                   <Img 
-                  image={{ src:itemImage , alt:"Launch Image" , width:393, height:221}}
+                  image={{ src:itemImage , alt:"Launch Image" , width:"100%", height:221}}
                     className="img-fluid rounded-2"
                   />
                 </Link>
