@@ -59,7 +59,7 @@ const Hero = React.memo(() => {
   return (
     <section
       className="w-100 overflow-hidden position-relative bg-white"
-      style={{ height: '750px' }}
+      style={{ height: '750px' ,marginTop:"-70px" }}
     >
 
        <video

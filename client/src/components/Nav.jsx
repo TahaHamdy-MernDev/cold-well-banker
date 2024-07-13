@@ -5,23 +5,24 @@ import React, { useEffect, useState } from 'react'
 import Img from './Img'
 
 export default function Nav() {
-  const [scrolled, setScrolled] = useState(false)
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        setScrolled(true)
+        setScrolled(true);
       } else {
-        setScrolled(false)
+        setScrolled(false);
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll);
 
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [])
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const { t, i18n } = useTranslation()
   const navigate = useNavigate()
@@ -45,7 +46,11 @@ export default function Nav() {
     width: '350',
     height: '50',
   }
-   const isSpecialPage = /\/(ar|en)?\/?(about-us|sell-property|contact-us)/.test(location.pathname);
+
+  console.log(location.pathname);
+  const isHomePage = /^\/(ar|en)?\/?$/.test(location.pathname);
+
+console.log(isHomePage);
    const isActiveLink = (link) => {
     const pathWithoutLang = location.pathname.replace(/^\/(ar|en)/, '');
     if (link === '/') {
@@ -53,14 +58,15 @@ export default function Nav() {
     }
     return pathWithoutLang.startsWith(link);
   };
+  const transparent = scrolled ? 'white-bg' : 'transparent shadow-none'
   return (
     <nav
-      className={`navbar nav-bar position-fixed w-100 navbar-expand-lg shadow navbar-light py-0 px-4 rounded-bottom-1 navbar-custom ${
-        scrolled || isSpecialPage ? 'white-bg' : 'transparent   shadow-none'
-      }`}
-      style={{ zIndex: '999', height: '70px' , top:0 }}
-      role="navigation"
-      aria-label="Main Navigation"
+    className={`navbar nav-bar position-fixed w-100 navbar-expand-lg shadow navbar-light py-0 px-4 rounded-bottom-1 navbar-custom ${
+      isHomePage ? transparent: 'white-bg'
+    }`}
+    style={{ zIndex: '999', height: '70px', top: 0 }}
+    role="navigation"
+    aria-label="Main Navigation"
     >
       <Link
         to="/"

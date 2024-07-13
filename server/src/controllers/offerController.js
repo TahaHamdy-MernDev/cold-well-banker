@@ -25,7 +25,7 @@ exports.updateOffer = asyncHandler(async (req, res) => {
     return res.recordNotFound({ message: "Offer not found..." });
   }
   return res.success({ data: updatedOffer });
-});
+}); 
 
 exports.getOffer = asyncHandler(async (req, res) => {
   const offer = await dbService.findOne(offerModel, {

@@ -56,7 +56,7 @@ export default function MainLayout() {
   return (
     <React.Fragment>
       <Nav />
-      <main>
+      <main style={{ marginTop:"70px"}}>
         <Outlet />
       </main>
       <Footer />
