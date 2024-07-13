@@ -22,7 +22,7 @@ export default function SahelMap() {
       <div className="container sahel-map">
         <Link draggable="false">
           <Img
-            image={{ src: imagePath, width: '100%', height: '100%' }}
+            image={{ src: imagePath, width: '100%', height: '100%' , alt:"sahel-map" }}
             className="sahel-map position-absolute top-50 start-0 object-fit-cover rounded-2 sahel-map"
             style={{ overflow: 'hidden', cursor: "pointer" }}
             onClick={handleDownload}

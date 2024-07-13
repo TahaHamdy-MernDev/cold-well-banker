@@ -10,7 +10,7 @@ export default function SpecialOffers() {
     <section className="container-xxl section-padding">
       <Link draggable="false" to='/special-offers' className="rounded-2 offer-height " >
         <Img
-          image={{ src: '/offers.jpg', width: '100%', height: '100%' }}
+          image={{ src: '/offers.jpg', width: '100%', height: '100%' , alt:"offers"}}
           className="position-absolute top-50 start-0 object-fit-cover rounded-2 offer-height"
           style={{  overflow: 'hidden' }}
         />

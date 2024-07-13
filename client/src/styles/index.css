@@ -39,7 +39,7 @@ body {
   font-variation-settings: 'slnt' 0;
 }
 
-input:-internal-autofill-selected{
+input:-internal-autofill-selected {
   background-color: var(--body-bg) !important;
 }
 ::-webkit-scrollbar {
@@ -355,6 +355,48 @@ p {
   padding-top: 40px;
 }
 
+/* Custom Navbar */
+.navbar-custom {
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.navbar-custom.transparent {
+  background-color: transparent;
+  color: white;
+}
+
+.navbar-custom.transparent .nav-link,
+.navbar-custom.transparent .lang-switcher h6,
+.navbar-custom.transparent .lang-switcher span {
+  color: var(--primary-white) !important;
+}
+
+.navbar-custom.white-bg .nav-link.active,
+.navbar-custom.white-bg .nav-link:hover,
+.navbar-custom.transparent .nav-link.active,
+.navbar-custom.transparent .nav-link:hover {
+  color: var(--secondary-blue) !important;
+}
+
+.navbar-custom.transparent .navbar-toggler {
+  filter: brightness(0) invert(1);
+}
+
+.navbar-custom.transparent .white-filter {
+  filter: brightness(0) invert(1);
+}
+.navbar-custom.white-bg {
+  background-color: white;
+}
+
+.navbar-custom.white-bg .nav-link,
+.navbar-custom.white-bg .navbar-brand {
+  color: var(--primary-blue) !important;
+}
+
+/* Custom Navbar */
 /* Form Styles */
 input[type='text'],
 input[type='password'],
@@ -1600,24 +1642,22 @@ a:focus-visible {
 .offer-height {
   height: 220px;
 }
-.sahel-map{
-
+.sahel-map {
   object-position: left;
-  height: 250px
+  height: 250px;
 }
-[dir="rtl"]{
-  .sahel-map{
+[dir='rtl'] {
+  .sahel-map {
     object-position: right;
-
   }
 }
 @media (max-width: 769px) {
   .offer-height {
     height: 250px;
   }
-  .sahel-map{
-    height: 140px
-   }
+  .sahel-map {
+    height: 140px;
+  }
 }
 .offer {
   min-width: 120px;
@@ -1633,14 +1673,13 @@ a:focus-visible {
 }
 
 .offer-name {
-
   inset-inline-end: 0px;
   border-start-start-radius: 0px;
   border-end-start-radius: 8px;
   border-end-end-radius: 0px;
   border-start-end-radius: 8px;
 }
-.offer-card-body{
+.offer-card-body {
   --bs-border-style: dashed;
   border-bottom-style: dashed !important;
 }
@@ -1667,7 +1706,6 @@ a:focus-visible {
 .special-offer {
   min-width: 273px;
   height: 151px;
-
 }
 .special,
 .deals {
@@ -1683,8 +1721,8 @@ a:focus-visible {
   letter-spacing: 5px;
 }
 
-.eye-password{
-  border-right:none !important ;
+.eye-password {
+  border-right: none !important ;
 }
 .eye-password:focus {
   /* Adjust focus styles as needed */
@@ -1692,32 +1730,35 @@ a:focus-visible {
   box-shadow: none; /* Example focus style */
 }
 
-.eye-password.eye-visible + .eye-button{
-  
-  border-left:none !important 
+.eye-password.eye-visible + .eye-button {
+  border-left: none !important;
 }
-.eye-password:focus +.eye-button{
+.eye-password:focus + .eye-button {
   border: 1px solid #86b7fe !important;
 }
-.eye-button{
-  background:transparent !important;
+.eye-button {
+  background: transparent !important;
   border: 1px solid #e7e7e7 !important;
   border-left: none !important;
 }
-.navbar-toggler{
+.navbar-toggler {
   border: none !important;
 }
-.navbar-toggler:focus{
+.navbar-toggler:focus {
   box-shadow: none !important;
 }
-.navbar-collapse.collapse.show{
+.navbar-collapse.collapse.show {
   overflow: hidden;
-  position: absolute; 
+  position: absolute;
   top: 99%;
   left: 0;
   width: 100vw;
   background: white;
 }
-.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active{
+.btn-check:checked + .btn,
+.btn.active,
+.btn.show,
+.btn:first-child:active,
+:not(.btn-check) + .btn:active {
   border: none !important;
 }

@@ -46,7 +46,7 @@ const AboutUs = () => {
       />
 
       {/* Video section */}
-      <section className="w-100 about-us-video" style={{ height: '780px' }}>
+      <section className="w-100 about-us-video" style={{ marginTop:"70px", height: '750px' }}>
         <video width="100%" height="100%" autoPlay muted loop>
           <source src="/input.mp4" type="video/mp4" />
           Your browser does not support the video tag.

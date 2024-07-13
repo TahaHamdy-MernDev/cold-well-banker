@@ -70,10 +70,10 @@ export default function SellProperty() {
     <React.Fragment>
       <Seo/>
         <div className=" container-xxl my-5">
-      <Container>
+      <Container className=' pt-3' style={{marginTop:"70px",}}>
         <Row className="text-center mb-4">
           <Col>
-            <FaHome size={64} className="mb-3" />
+            <FaHome size={64} className="mb-3"  />
             <h1>{t('sellProperty.title')}</h1>
           </Col>
         </Row>

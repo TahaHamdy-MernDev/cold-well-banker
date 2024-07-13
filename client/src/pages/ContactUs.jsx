@@ -46,7 +46,7 @@ export default function ContactUs() {
       />
       <section
         className="position-relative container"
-        style={{ marginTop: '2rem', height: '467px' }}
+        style={{ marginTop: '80px', height: '467px' }}
       >
         <MapComponent
           locations={[
