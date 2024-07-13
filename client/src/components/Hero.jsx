@@ -31,7 +31,7 @@ const Hero = React.memo(() => {
   useEffect(() => {
     fetchData()
     if (videoRef.current) {
-      videoRef.current.playbackRate = .8; 
+      videoRef.current.playbackRate = .5; 
     }
   }, [fetchData])
 
@@ -40,7 +40,7 @@ const Hero = React.memo(() => {
     navigate('/search-results', { state: { searchParams: data } })
   }
 
-  if (error) return <div>{t('error.loadingData')}</div>
+  // if (error) return <div>{t('error.loadingData')}</div>
   const imageProps = {
     src: '/home.jpg',
     alt: 'hero-section',

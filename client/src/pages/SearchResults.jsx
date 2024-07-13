@@ -13,7 +13,7 @@ export default function SearchResults() {
     const fetchResults = async () => {
       if (searchParams) {
         const results = await SearchProperties(searchParams)
-        console.log(results)
+
         setProperties(results)
       }
     }
@@ -28,7 +28,7 @@ export default function SearchResults() {
       <section className=" container">
         <div className=" d-flex justify-content-start align-items-end gap-2 mb-4">
           <h2 className="sup-title">Properties</h2>
-          <small> 7 Results</small>
+          <small> {properties?.length} {t('offers.results')}</small>
         </div>
         <div className="row">
           {properties?.map((item, index) => (
