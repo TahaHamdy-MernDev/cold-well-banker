@@ -188,9 +188,9 @@ const navigate = useNavigate()
       thumbnailFiles.forEach((image) => formData.append('thumbnail', image))
 
     // Log FormData content
-    for (let pair of formData.entries()) {
-      console.log(`${pair[0]}: ${pair[1]}`)
-    }
+    // for (let pair of formData.entries()) {
+    //   console.log(`${pair[0]}: ${pair[1]}`)
+    // }
 
     try {
       setButtonLoading(true)

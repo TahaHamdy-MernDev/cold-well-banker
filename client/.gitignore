@@ -22,3 +22,5 @@ public/input.mp4
 *.njsproj
 *.sln
 *.sw?
+*.Identifier
+*.identifier

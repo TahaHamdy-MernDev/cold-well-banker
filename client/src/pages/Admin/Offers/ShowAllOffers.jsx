@@ -64,7 +64,7 @@ export default function ShowAllOffers() {
     }
   }
 
-  const filteredOffers = offers.filter((offer) =>
+  const filteredOffers = offers?.filter((offer) =>
     offer.referenceNumber.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
@@ -93,7 +93,7 @@ export default function ShowAllOffers() {
             </tr>
           </thead>
           <tbody>
-            {filteredOffers.map((offer, index) => (
+            {filteredOffers?.map((offer, index) => (
               <tr key={offer._id}>
                 <td>{index + 1}</td>
                 <td>{offer.referenceNumber}</td>

@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next'
 import SpecialOffers from '../pages/SpecialOffers'
 import DashboardLayout from '../layouts/DashboardLayout'
 import Login from '../pages/Admin/Login'
-import { AdminHome,
+import CookiesProvider from '../Services/CookiesProvider'
+import { 
   CreateDeveloper,
   CreateArea,
   CreateCompound,
@@ -34,7 +35,8 @@ import { AdminHome,
   ShowAllOffers,
 
  } from '../pages/Admin'
-import CookiesProvider from '../Services/CookiesProvider'
+
+import SahelMap from '../pages/SahelMap'
 
 const Home = React.lazy(() => delay(import('../pages/Home')))
 const Developers = React.lazy(() => delay(import('../pages/Developers')))
@@ -57,7 +59,7 @@ const PropertyComparison = React.lazy(() =>
 )
 
 const ProjectRoutes = () => {
-  const isAuthenticated = CookiesProvider.get('jwt')
+  const isAuthenticated = CookiesProvider.get('cd-token')
 
   const { i18n } = useTranslation()
   const location = useLocation()
@@ -84,6 +86,29 @@ const ProjectRoutes = () => {
   }, [location, i18n, navigate])
   const element = useRoutes([
     { path: '/admin/login', element: <Login /> },
+    {
+      path: '/:lng',
+      element: <MainLayout />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: 'developers', element: <Developers /> },
+        { path: 'developer-details/:id', element: <Developer /> },
+        { path: 'property-details/:id', element: <PropertyDetails /> },
+        { path: 'launch-details/:id', element: <LaunchDetails /> },
+        { path: 'compound-details/:id', element: <CompoundDetails /> },
+        { path: 'area-details/:id', element: <AreaDetails /> },
+        { path: 'all-launches', element: <AllLaunches /> },
+        { path: 'contact-us', element: <ContactUs /> },
+        { path: 'our-partners', element: <OurPartners /> },
+        { path: 'about-us', element: <AboutUs /> },
+        { path: 'search-results', element: <SearchResults /> },
+        { path: 'academy', element: <Academy /> },
+        { path: 'sell-property', element: <SellProperty /> },
+        { path: 'compare', element: <PropertyComparison /> },
+        { path: 'special-offers', element: <SpecialOffers /> },
+        { path: 'sahel-map', element: <SahelMap /> },
+      ],
+    },
     {
       path: '/admin',
       element: <DashboardLayout isAuthenticated={isAuthenticated} />,
@@ -125,30 +150,9 @@ const ProjectRoutes = () => {
       ],
       // children: [],
     },
-    {
-      path: '/:lng',
-      element: <MainLayout />,
-      children: [
-        { index: true, element: <Home /> },
-        { path: 'developers', element: <Developers /> },
-        { path: 'developer-details/:id', element: <Developer /> },
-        { path: 'property-details/:id', element: <PropertyDetails /> },
-        { path: 'launch-details/:id', element: <LaunchDetails /> },
-        { path: 'compound-details/:id', element: <CompoundDetails /> },
-        { path: 'area-details/:id', element: <AreaDetails /> },
-        { path: 'all-launches', element: <AllLaunches /> },
-        { path: 'contact-us', element: <ContactUs /> },
-        { path: 'our-partners', element: <OurPartners /> },
-        { path: 'about-us', element: <AboutUs /> },
-        { path: 'search-results', element: <SearchResults /> },
-        { path: 'academy', element: <Academy /> },
-        { path: 'sell-property', element: <SellProperty /> },
-        { path: 'compare', element: <PropertyComparison /> },
-        { path: 'special-offers', element: <SpecialOffers /> },
-      ],
-    },
+ 
 
-    // { path: '*', element: <Navigate to={`/${i18n.language}`} /> },
+    { path: '*', element: <Navigate to={`/${i18n.language}`} /> },
   ])
 
   return <Suspense fallback={<Spinner />}>{element}</Suspense>

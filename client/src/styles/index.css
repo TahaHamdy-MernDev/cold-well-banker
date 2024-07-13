@@ -1601,14 +1601,22 @@ a:focus-visible {
   height: 220px;
 }
 .sahel-map{
- height: 250px
+
+  object-position: left;
+  height: 250px
+}
+[dir="rtl"]{
+  .sahel-map{
+    object-position: right;
+
+  }
 }
 @media (max-width: 769px) {
   .offer-height {
     height: 250px;
   }
   .sahel-map{
-    height: 150px
+    height: 140px
    }
 }
 .offer {
@@ -1659,9 +1667,7 @@ a:focus-visible {
 .special-offer {
   min-width: 273px;
   height: 151px;
-  /* background: linear-gradient(rgb(255, 145, 8) 0%, rgb(242, 192, 30) 50.52%, rgb(255, 145, 8) 100%); */
-}
-.special-offer .deals {
+
 }
 .special,
 .deals {
@@ -1676,9 +1682,7 @@ a:focus-visible {
 .deals {
   letter-spacing: 5px;
 }
-.sahel-map{
-  object-position: top;
-}
+
 .eye-password{
   border-right:none !important ;
 }
@@ -1700,6 +1704,20 @@ a:focus-visible {
   border: 1px solid #e7e7e7 !important;
   border-left: none !important;
 }
-
-
-
+.navbar-toggler{
+  border: none !important;
+}
+.navbar-toggler:focus{
+  box-shadow: none !important;
+}
+.navbar-collapse.collapse.show{
+  overflow: hidden;
+  position: absolute; 
+  top: 99%;
+  left: 0;
+  width: 100vw;
+  background: white;
+}
+.btn-check:checked+.btn, .btn.active, .btn.show, .btn:first-child:active, :not(.btn-check)+.btn:active{
+  border: none !important;
+}

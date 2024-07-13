@@ -27,7 +27,7 @@ const DashboardLayout = ({ isAuthenticated }) => {
     return <Navigate to="/admin/login" replace />
   }
   const logOut = () => {
-    CookiesProvider.remove('jwt')
+    CookiesProvider.remove('cd-token')
     setTimeout(() => {
       navigate('/admin/login')
     }, 500)

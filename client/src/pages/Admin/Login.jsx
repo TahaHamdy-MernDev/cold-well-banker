@@ -43,7 +43,7 @@ const Login = () => {
       const EXPIRES_IN_DAYS = 1000 * 60 * 60 * 24 * IN_DAYS
       date.setTime(date.getTime() + EXPIRES_IN_DAYS)
       const options = { path: '/', expires: date }
-      CookiesService.set('jwt', response.data.data, options)
+      CookiesService.set('cd-token', response.data.data, options)
       setTimeout(() => {
         navigate('/admin')
       }, 1000)
