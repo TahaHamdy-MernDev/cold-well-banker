@@ -57,7 +57,7 @@ try {
             className="p-4 border rounded shadow bg-white"
           >
             <Row>
-              <h2 className="text-center">{t('Academy.academy')}</h2>
+              <h3 className="text-center fs-3">{t('Academy.academy')}</h3>
             <p className="text-center">{t('Academy.description')}</p>
             <Form onSubmit={handleSubmit(onSubmit)}>
               <Form.Group className="mb-3" controlId="formName">

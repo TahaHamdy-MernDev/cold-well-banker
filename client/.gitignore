@@ -10,8 +10,6 @@ node_modules
 dist
 dist-ssr
 *.local
-input.mp4
-public/input.mp4
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

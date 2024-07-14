@@ -74,7 +74,7 @@ const AboutUs = () => {
                 <Card.Body>
                   <Card.Title>CEO</Card.Title>
                   <Card.Text>
-                    <strong>Mr Hussein Younis</strong>
+                    <h3 className=' fs-5'>Mr Hussein Younis</h3>
                   </Card.Text>
                 </Card.Body>
               </Card>

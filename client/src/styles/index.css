@@ -395,6 +395,12 @@ p {
 .navbar-custom.white-bg .navbar-brand {
   color: var(--primary-blue) !important;
 }
+.navbar-custom.transparent .navbar-collapse.collapse.show .nav-link{
+color: #000000 !important;
+}
+.navbar-custom.transparent .navbar-collapse.collapse.show .nav-link.active{
+color: var(--secondary-blue) !important;
+}
 
 /* Custom Navbar */
 /* Form Styles */

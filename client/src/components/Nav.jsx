@@ -101,7 +101,7 @@ console.log(isHomePage);
       </div>
 
       <div className="collapse navbar-collapse p-2" id="navbarCollapse">
-        <div className="navbar-nav ms-auto">
+       
         <div className="navbar-nav ms-auto">
         <Link to="/" className={`nav-item nav-link ${isActiveLink('/') ? 'active' : ''}`} aria-current="page">
             {t('Nav.home')}
@@ -122,7 +122,7 @@ console.log(isHomePage);
             {t('Nav.academy')}
           </Link>
         </div>
-        </div>
+       
         <div className="d-flex flex-column flex-md-row justify-content-start align-items-start gap-1">
           <Link to="/sell-property">
             <button className="btn button-primary mb-0">
