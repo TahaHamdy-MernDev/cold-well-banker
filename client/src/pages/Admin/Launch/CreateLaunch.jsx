@@ -108,7 +108,7 @@ export default function CreateLaunch() {
     setValue("location.longitude", longitude);
     setMapLocation((prevState) => ({ ...prevState, latitude, longitude }));
   };
-  console.log(errors);
+
   const onSubmit = async (data) => {
     const formData= new FormData()
 
@@ -127,7 +127,7 @@ export default function CreateLaunch() {
     }
     video.forEach((image) => formData.append("video", image));
     if (thumbnailFiles) formData.append("thumbnail", thumbnailFiles[0]);
-console.log(formData);
+
     try {
       const response = await Api.post("/launch/create", formData, {
         headers: {

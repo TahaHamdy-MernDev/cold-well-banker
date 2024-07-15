@@ -22,7 +22,7 @@ const paymentPlanSchema = Joi.object({
   monthly: Joi.number().required().label('Monthly Payment'),
   downPayment: Joi.number().required().label('Down Payment'),
   duration: Joi.number().required().label('Duration (Years)'),
-});
+})
 
 const schema = Joi.object({
   name: Joi.object({
@@ -64,7 +64,7 @@ const schema = Joi.object({
     .items(paymentPlanSchema)
     .min(1)
     .label('Payment Plans'),
-}).unknown(true); 
+}).unknown(true)
 
 export default function UpdateProperty() {
   const { id } = useParams()
@@ -101,7 +101,7 @@ export default function UpdateProperty() {
   const [compound, setCompound] = useState([])
   const [types, setTypes] = useState([])
   const [property, setProperty] = useState()
-  const navigate = useNavigate() 
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -112,7 +112,7 @@ export default function UpdateProperty() {
         const response = await Api.get(`/property/get/${id}`)
         const property = response.data.data
         setProperty(property)
-        setFormValues(property);
+        setFormValues(property)
         setAreas(areas.data.data)
         setDevelopers(developer.data.data)
         setCompound(compound.data.data)
@@ -131,28 +131,35 @@ export default function UpdateProperty() {
     fetchData()
   }, [])
   const setFormValues = (object, baseKey = '') => {
-    const excludedFields = ['_id', 'createdAt', 'updatedAt', '__v', 'images', 'thumbnail'];
+    const excludedFields = [
+      '_id',
+      'createdAt',
+      'updatedAt',
+      '__v',
+      'images',
+      'thumbnail',
+    ]
 
     Object.keys(object).forEach((key) => {
-      const fullKey = baseKey ? `${baseKey}.${key}` : key;
+      const fullKey = baseKey ? `${baseKey}.${key}` : key
 
       if (typeof object[key] === 'object' && object[key] !== null) {
         if (Array.isArray(object[key])) {
           object[key].forEach((item, index) => {
             if (typeof item === 'object' && item !== null) {
-              setFormValues(item, `${fullKey}[${index}]`);
+              setFormValues(item, `${fullKey}[${index}]`)
             } else {
-              setValue(`${fullKey}[${index}]`, item);
+              setValue(`${fullKey}[${index}]`, item)
             }
-          });
+          })
         } else {
-          setFormValues(object[key], fullKey);
+          setFormValues(object[key], fullKey)
         }
       } else if (!excludedFields.includes(key)) {
-        setValue(fullKey, object[key]);
+        setValue(fullKey, object[key])
       }
-    });
-  };
+    })
+  }
 
   const [images, setImages] = useState([])
   const [thumbnail, setThumbnail] = useState(null)
@@ -179,9 +186,8 @@ export default function UpdateProperty() {
       </div>
     )
   }
- 
+
   const onSubmit = async (data) => {
-    console.log(data);
     try {
       setButtonLoading(true)
       const formData = new FormData()
@@ -230,10 +236,10 @@ export default function UpdateProperty() {
           'Content-Type': 'multipart/form-data',
         },
       })
-     
+
       setTimeout(() => {
-              navigate(-1);
-            }, 500);
+        navigate(-1)
+      }, 500)
       notifySuccess('Successfully Updated!')
     } catch (error) {
       notifyError('Failed to update the property. Please try again.')

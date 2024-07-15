@@ -15,7 +15,7 @@ const PrivateRoute = ({ element }) => {
         const res = await Api.get('/auth/protected', {
           headers: { Authorization: token },
         });
-        console.log(res);
+  
         if (res.data) setIsAuthenticated(true);
       } catch (err) {
         console.error(err);

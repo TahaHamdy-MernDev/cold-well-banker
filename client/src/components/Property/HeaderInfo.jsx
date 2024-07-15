@@ -56,7 +56,7 @@ PropertyLocation.propTypes = {
 // const maxPrice = 111
 // 
 const PropertyPrices = ({minPrice, maxPrice, t }) => {
-  console.log(minPrice);
+
   let isEqual
   if (minPrice == maxPrice) {
     isEqual = true

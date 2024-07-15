@@ -47,10 +47,8 @@ export default function Nav() {
     height: '50',
   }
 
-  console.log(location.pathname);
   const isHomePage = /^\/(ar|en)?\/?$/.test(location.pathname);
 
-console.log(isHomePage);
    const isActiveLink = (link) => {
     const pathWithoutLang = location.pathname.replace(/^\/(ar|en)/, '');
     if (link === '/') {

@@ -22,10 +22,10 @@ export default function ComparisonPage() {
       const loadProperties = async () => {
         try {
           const data = await FetchPropertyToCompare(storedPropertyIds)
-          console.log(data)
+ 
           setProperties(data)
         } catch (error) {
-          console.log(error)
+console.log("error to get units data");
         }
       }
       loadProperties()

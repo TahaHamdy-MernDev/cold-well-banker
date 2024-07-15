@@ -40,21 +40,20 @@ const Hero = React.memo(() => {
     navigate('/search-results', { state: { searchParams: data } })
   }
 
-  // if (error) return <div>{t('error.loadingData')}</div>
-  const imageProps = {
-    src: '/home.jpg',
-    alt: 'hero-section',
-    width: '100%',
-    height: '750',
-    effect: 'opacity',
-    style: {
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      zIndex: -1,
-      filter: 'blur(20px)',
-    },
-  }
+  // const imageProps = {
+  //   src: '/home.jpg',
+  //   alt: 'hero-section',
+  //   width: '100%',
+  //   height: '750',
+  //   effect: 'opacity',
+  //   style: {
+  //     position: 'absolute',
+  //     top: 0,
+  //     left: 0,
+  //     zIndex: -1,
+  //     filter: 'blur(20px)',
+  //   },
+  // }
 
   return (
     <section
@@ -63,13 +62,15 @@ const Hero = React.memo(() => {
     >
 
        <video
-      ref={videoRef}
-      width="100%"
-      height="750"
-      playsInline
-      autoPlay
-      muted
-      loop
+       ref={videoRef}
+       width="100%"
+       height="750"
+       playsInline
+       autoPlay
+       muted
+       loop
+       preload="auto"
+       poster="/path-to-poster-image.jpg"
       className="lazy-background-hero bg-white"
     >
       <source src="/Untitled video - Made with Clipchamp (1).mp4" type="video/mp4" />

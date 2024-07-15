@@ -47,7 +47,7 @@ export default function SellProperty() {
     try {
     const loadingToastId = toast.loading("Submitting your data...");
       const response = await Api.post('/requests/sell-property', formattedData);
-      console.log(response);
+
       
       toast.update(loadingToastId, {
         render: "Successfully submitted!",

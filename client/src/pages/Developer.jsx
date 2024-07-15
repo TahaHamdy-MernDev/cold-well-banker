@@ -26,7 +26,6 @@ const [pricesStartFrom, setPricesStartFrom] = useState()
       setDeveloper(data.developer)
       setCompounds(data.compounds)
       setProperties(data.properties)
-      console.log(data.pricesStartFrom);
       setPricesStartFrom(data.pricesStartFrom[0].min_price)
     }
     fetchData()

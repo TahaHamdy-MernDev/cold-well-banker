@@ -13,7 +13,6 @@ const Form = ({ type }) => {
   } = useForm()
 
   const onSubmit = async (data) => {
-    console.log(type)
     const loadingToastId = toast.loading('Submitting your data...')
     try {
       if (type === 'contact') {

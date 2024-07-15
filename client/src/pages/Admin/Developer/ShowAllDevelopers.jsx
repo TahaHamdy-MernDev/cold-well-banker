@@ -7,7 +7,7 @@ import { DeleteModal } from '../../../components/Admin'
 import { notifyError, notifySuccess } from '../../../components/Admin/Toaster'
 const fetchDevelopers = async () => {
   const response = await Api.get('/developer/get-all')
-  console.log(response)
+
   return response.data.data
 }
 export default function ShowAllDevelopers() {
@@ -19,10 +19,10 @@ export default function ShowAllDevelopers() {
     const loadDevelopers = async () => {
       try {
         const data = await fetchDevelopers()
-        console.log(data)
+
         setDevelopers(data)
       } catch (error) {
-        console.log(error)
+ 
         console.error('Failed to fetch developers', error)
       } finally {
         setLoading(false)

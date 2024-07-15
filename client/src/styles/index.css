@@ -1632,7 +1632,7 @@ a:focus-visible {
   height: 650px !important;
 }
 .video-container video {
-  object-fit: cover !important;
+  /* object-fit: cover !important; */
 }
 .launch-image {
   height: 650px !important;

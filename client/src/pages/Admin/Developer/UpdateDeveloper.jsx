@@ -83,7 +83,7 @@ export default function UpdateDeveloper() {
       try {
         const response = await Api.get(`/developer/get/${id}`)
         const data = response.data.data.developer
-        console.log(data);
+
         setDeveloper(data)
         setValue('name.en', data.name.en)
         setValue('name.ar', data.name.ar)
@@ -113,7 +113,7 @@ export default function UpdateDeveloper() {
   const onSubmit = async (data) => {
     setButtonLoading(true)
     data = { ...data, images: developerImages[0] }
-    console.log(data);
+
     try {
       await Api.put(`/developer/update/${id}`, data, {
         headers: {

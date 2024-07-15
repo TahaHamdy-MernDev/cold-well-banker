@@ -15,60 +15,62 @@ export default function LunchDetails() {
   const [launch, setLaunch] = useState()
   const [developerLaunch, setDeveloperLaunch] = useState([])
   const { id } = useParams()
-  useEffect(() => {
-    async function fetchData() {
-      const data = await FetchLaunchDetails(id)
-      const developerId = data?.developer?._id
-      const developerLaunch = await FetchDeveloperLaunch(developerId)
-      setLaunch(data)
-      setDeveloperLaunch(developerLaunch)
-    }
+  async function fetchData() {
+    const data = await FetchLaunchDetails(id)
+    const developerId = data?.developer?._id
+    const developerLaunch = await FetchDeveloperLaunch(developerId)
+    setLaunch(data)
+    setDeveloperLaunch(developerLaunch)
+  }
 
+  useEffect(() => {
     fetchData()
-  }, [id, launch?.developer?._id])
+  }, [id])
   if (!launch) {
-    return <DataLoader />
+    return (
+      <div className="d-flex justify-content-center align-items-center ">
+        <DataLoader />
+      </div>
+    )
   }
+
   function isVideo(url) {
-    const videoExtensions = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv'];
-    return videoExtensions.some(extension => url.endsWith(extension));
+    const videoExtensions = ['.mp4', '.avi', '.mov', '.wmv', '.flv', '.mkv']
+    return videoExtensions.some((extension) => url.endsWith(extension))
   }
-  
+
   function isImage(url) {
-    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'];
-    return imageExtensions.some(extension => url.endsWith(extension));
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp']
+    return imageExtensions.some((extension) => url.endsWith(extension))
   }
-  const launchFileUrl = `${import.meta.env.VITE_IMAGE_ORIGIN}/${launch?.video[0].url}`;
+  const launchFileUrl = `${import.meta.env.VITE_IMAGE_ORIGIN}/${launch?.video[0].url}`
 
   const renderMedia = (url) => {
     if (isVideo(url)) {
-      return  <video
-      width="100%"
-      height="100%"
-      playsInline
-      controls
-      autoPlay
-      loop
-    >
-      <source src={url} type="video/mp4" />
-      <track kind="captions" srcLang="en" label="English captions" />
-    </video>
+      return (
+        <video width="100%" height="100%" playsInline controls autoPlay loop>
+          <source src={url} type="video/mp4" />
+          <track kind="captions" srcLang="en" label="English captions" />
+        </video>
+      )
     } else if (isImage(url)) {
-      const imageProps={
-        alt :"launch Media",
-        src : url,
-        width:"100%",
-        height:"550"
+      const imageProps = {
+        alt: 'launch Media',
+        src: url,
+        width: '100%',
+        height: '550',
       }
-      return   <Img
-      image={imageProps}
-      className="object-fit-cover rounded-2 launch-image"
-    />;
+      return (
+        <Img
+          image={imageProps}
+          className="object-fit-cover rounded-2 launch-image"
+        />
+      )
     } else {
-      return <p>Unsupported media type</p>;
+      return <p>Unsupported media type</p>
     }
-  };
-   const developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${launch?.developer.images[0].url}`
+  }
+  const developerImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${launch?.developer.images[0].url}`
   const launchDescription = launch?.description[i18n.language]
   const launchDetails = launch?.launchDetails[i18n.language]
   const decodeHtml = (html) => {
@@ -80,13 +82,14 @@ export default function LunchDetails() {
 
   return (
     <React.Fragment>
-      <Seo page={t('PagesName.launchDetails')}
-      description={t('PagesDescriptions.launch')}
+      <Seo
+        page={t('PagesName.launchDetails')}
+        description={t('PagesDescriptions.launch')}
       />
-      <section className=" container-xxl section-padding" >
+      <section className=" container-xxl section-padding min-vh-100">
         <div className="container">
-          <div className="video-container w-100" style={{height:"650px"}}>
-           {renderMedia(launchFileUrl)}
+          <div className="video-container w-100" style={{ height: '650px' }}>
+            {renderMedia(launchFileUrl)}
           </div>
 
           <div
@@ -118,98 +121,49 @@ export default function LunchDetails() {
               <p className="">{launch?.location.name[i18n.language]} </p>
             </div>
             <div className="col-md-4 d-flex justify-content-center gap-2 justify-content-md-end align-items-end">
-           
-                <Whatsapp
-                  itemName={launch?.launchName[i18n.language]}
-                  developerName={launch?.developer.name[i18n.language]}
-                  number={launch?.developer.callUsNumber}
-                />{' '}
-                <ContactUs number={launch?.developer.callUsNumber} />
-       
+              <Whatsapp
+                itemName={launch?.launchName[i18n.language]}
+                developerName={launch?.developer.name[i18n.language]}
+                number={launch?.developer.callUsNumber}
+              />{' '}
+              <ContactUs number={launch?.developer.callUsNumber} />
             </div>
           </div>
         </div>
       </section>
       <section className="container-xxl">
         <DetailsLayout>
-        <div className="row my-5">
-                <h2 className="title">{t('launches.details')}</h2>
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: launchDescription }}
-                />
-              </div>
-              <div className="row mb-4 ">
-                <h2 className="title">{t('launches.viewMap')}</h2>
-                <div className="map-container">
-                  <MapComponent
-                    locations={[
-                      {
-                        lng: launch?.location.longitude,
-                        lat: launch?.location.latitude,
-                        name: launch?.launchName[i18n.language],
-                      },
-                    ]}
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
-              </div>
-              <div className="row mb-4">
-                <h2 className="title">{t('launches.launchDescription')}</h2>
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: decodedHtml }}
-                />
-              </div>
-       
-
-        </DetailsLayout>
-        {/* <div className="container">
-          <div className="row gy-4 gx-5">
-            <div className="col-md-9">
-              <div className="row mb-4  card-style">
-                <h2 className="title">{t('launches.details')}</h2>
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: launchDescription }}
-                />
-              </div>
-              <div className="row mb-4  card-style">
-                <h2 className="title">{t('launches.viewMap')}</h2>
-                <div className="map-container">
-                  <MapComponent
-                    locations={[
-                      {
-                        lng: launch?.location.longitude,
-                        lat: launch?.location.latitude,
-                        name: launch?.launchName[i18n.language],
-                      },
-                    ]}
-                    width="100%"
-                    height="100%"
-                  />
-                </div>
-              </div>
-              <div className="row mb-4 card-style">
-                <h2 className="title">{t('launches.launchDescription')}</h2>
-                <div
-                  className="description"
-                  dangerouslySetInnerHTML={{ __html: decodedHtml }}
-                />
-              </div>
-            </div>
-
-            <div className="col-md-3 position-relative">
-              <div
-                className="card-style position-sticky w-100 h-auto px-2"
-                style={{ top: '100px' }}
-              >
-                <Form />
-              </div>
+          <div className="row my-5">
+            <h2 className="title">{t('launches.details')}</h2>
+            <div
+              className="description"
+              dangerouslySetInnerHTML={{ __html: launchDescription }}
+            />
+          </div>
+          <div className="row mb-4 ">
+            <h2 className="title">{t('launches.viewMap')}</h2>
+            <div className="map-container">
+              <MapComponent
+                locations={[
+                  {
+                    lng: launch?.location?.longitude,
+                    lat: launch?.location?.latitude,
+                    name: launch?.launchName[i18n.language],
+                  },
+                ]}
+                width="100%"
+                height="100%"
+              />
             </div>
           </div>
-        </div> */}
+          <div className="row mb-4">
+            <h2 className="title">{t('launches.launchDescription')}</h2>
+            <div
+              className="description"
+              dangerouslySetInnerHTML={{ __html: decodedHtml }}
+            />
+          </div>
+        </DetailsLayout>
       </section>
 
       <section className="container-xxl section-padding">
@@ -219,7 +173,6 @@ export default function LunchDetails() {
             <div className="developer-projects">
               {developerLaunch?.map((devLaunch, index) => {
                 const launchImage = `${import.meta.env.VITE_IMAGE_ORIGIN}/${devLaunch?.thumbnail[0].url}`
-
                 return (
                   <Link
                     key={index + 1}

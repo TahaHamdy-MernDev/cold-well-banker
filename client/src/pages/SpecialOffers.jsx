@@ -60,7 +60,7 @@ export default function SpecialOffers() {
 
   const loadOffers = async () => {
     const data = await FetchAllOffers();
-    console.log(data);
+
     setOffers(data);
     setFilteredOffers(data);
   };
@@ -83,7 +83,7 @@ export default function SpecialOffers() {
       }
     });
     setFilteredOffers(filtered);
-    console.log('Active offer value:', value);
+
   };
 
   function splitText(text, idx) {

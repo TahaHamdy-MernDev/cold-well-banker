@@ -47,7 +47,7 @@ export default function ShowAllCompounds() {
     const loadCompounds = async () => {
       try {
         const data = await fetchCompounds()
-        console.log(data)
+
         setCompounds(data)
       } catch (error) {
         console.error('Failed to fetch compounds', error)

@@ -56,7 +56,7 @@ export default function CreateArea() {
   const [areaImages, setAreaImages] = useState(null)
   const handleFilesSelect = (files) => {
     setAreaImages(files)
-    console.log('Selected files:', files)
+
   }
   const onSubmit = async (data) => {
     setLoading(true)

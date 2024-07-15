@@ -5,7 +5,6 @@ import Joi from 'joi'
 import {
   Container,
   Form,
-
   Row,
   Col,
   ToggleButtonGroup,
@@ -19,6 +18,7 @@ import { notifyError, notifySuccess } from '../../../components/Admin/Toaster'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import LoadingButton from '../../../components/Admin/LoadingButton'
+import Img from '../../../components/Img'
 
 const schema = Joi.object({
   title: Joi.object({
@@ -103,7 +103,7 @@ export default function UpdateArea() {
           'Content-Type': 'multipart/form-data',
         },
       })
-      notifySuccess("successfully updated")
+      notifySuccess('successfully updated')
       setTimeout(() => {
         navigate(-1)
       }, 500)
@@ -242,11 +242,18 @@ export default function UpdateArea() {
           {oldImages &&
             area?.images.map((item, index) => {
               return (
-                <img
+                <Img
+                  image={{
+                    src: `${import.meta.env.VITE_IMAGE_ORIGIN}/${item.url}`,
+                    alt: `Preview ${index + 1}`,
+                  }}
                   key={index + 1}
-                  src={`${import.meta.env.VITE_IMAGE_ORIGIN}/${item.url}`}
-                  alt={`Preview ${index + 1}`}
-                  style={{ maxWidth: '100px', marginRight: '10px' }}
+                  className="mb-3 rounded-2 object-fit-cover"
+                  style={{
+                    maxWidth: '200px',
+                    height: '100px',
+                    borderRadius: '8px',
+                  }}
                 />
               )
             })}

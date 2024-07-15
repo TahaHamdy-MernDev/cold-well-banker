@@ -21,7 +21,7 @@ export default function ShowAllProperties() {
     const loadProperties = async () => {
       try {
         const data = await fetchProperties()
-        console.log(data)
+
         setProperties(data)
       } catch (error) {
         console.error('Failed to fetch properties', error)

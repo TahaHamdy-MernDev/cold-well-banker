@@ -10,6 +10,7 @@ export default function MapComponent({ width, height, locations = [] }) {
   const { i18n } = useTranslation();
   const [zoom, setZoom] = useState(5);
   // Memoize marker creation and popup setup functions
+
   const createMarker = useMemo(() => (location) => {
     const el = document.createElement('div');
     el.className = 'custom-marker';
@@ -19,7 +20,7 @@ export default function MapComponent({ width, height, locations = [] }) {
     el.style.backgroundSize = '100%';
 
     const marker = new mapboxgl.Marker(el)
-      .setLngLat([location.lng, location.lat])
+      .setLngLat([location?.lng, location?.lat])
       .addTo(map.current);
 
     const currentLanguage = i18n.language;
@@ -31,9 +32,9 @@ export default function MapComponent({ width, height, locations = [] }) {
   useEffect(() => {
     if (!map.current) {
       map.current = new mapboxgl.Map({
-        container: mapContainer.current,
+        container: mapContainer?.current,
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: locations.length ? [locations[0].lng, locations[0].lat] : [-70.9, 42.35],
+        center: locations?.length ? [locations[0]?.lng, locations[0]?.lat] : [-70.9, 42.35],
         zoom: zoom,
       });
     }

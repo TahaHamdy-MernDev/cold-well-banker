@@ -46,7 +46,7 @@ const ContactUs = React.memo(({ t }) => (
     <div className="d-flex flex-column gap-2">
       <ContactDetail icon={MapPin} text={t('footer.dir')} />
       <ContactDetail icon={Mail} text="coldwellbanker@newalex.com" href="mailto:coldwellbanker@newalex.com" />
-      <ContactDetail icon={Phone} text="+2 03-4242098 - 012 22 24 24 88" />
+      <ContactDetail icon={Phone} dir="ltr" text="+2 03-4242098 - 012 22 24 24 88" />
       <div className="footer-social d-flex flex-wrap gap-1">
         {socialLinks?.map(({ href, icon, label }) => (
           <SocialLink key={label} href={href} icon={icon} label={label} />
@@ -56,18 +56,22 @@ const ContactUs = React.memo(({ t }) => (
   </div>
 ));
 
-const ContactDetail = ({ icon: Icon, text, href }) => (
+const ContactDetail = ({ icon: Icon, text, href,...props }) => 
+  { const {i18n}= useTranslation()
+    return(
   <div className="mb-2 d-flex gap-1 justify-content-start align-items-start">
+    <span>
     <Icon style={{ width: '20px', height: '20px' }} />
+    </span>
     {href ? (
       <a href={href} className="text-primary-black">
         {text}
       </a>
     ) : (
-      <p className="text-primary-black">{text}</p>
+      <p className="text-primary-black mb-0" {...props}>{text}</p>
     )}
   </div>
-);
+);}
 
 const SocialLink = ({ href, icon: Icon, label }) => (
   <div className="styled-social">
